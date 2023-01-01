@@ -72,6 +72,7 @@ class View extends PresenterState {
                   ),
                   documentReport(
                     data: data,
+                    title: "LHA Internal",
                     url: data?.linkLhaEksternal,
                   ),
                   documentReport(
