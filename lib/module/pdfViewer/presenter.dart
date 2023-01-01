@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'view.dart';
+
+class Presenter extends StatefulWidget {
+  final String title;
+  final String url;
+  final bool centerTile;
+
+  const Presenter({
+    super.key,
+    required this.title,
+    required this.url,
+    required this.centerTile,
+  });
+
+  @override
+  State<StatefulWidget> createState() {
+    return View();
+  }
+}
+
+abstract class PresenterState extends State<Presenter> {
+  final GlobalKey<SfPdfViewerState> pdfViewerKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    pdfViewerKey.currentState?.openBookmarkView();
+  }
+}
