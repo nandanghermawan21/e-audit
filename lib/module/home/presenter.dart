@@ -35,6 +35,7 @@ class Presenter extends StatefulWidget {
 }
 
 abstract class PresenterState extends State<Presenter> {
+  int? selectedYear;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   CircularLoaderController loadingController = CircularLoaderController();
   final dataRealisasiStream = StreamController<RealisasiDetailModel?>();
@@ -101,7 +102,7 @@ abstract class PresenterState extends State<Presenter> {
     dataRealisasiStream.add(null);
     RealisasiDetailModel.get(
       token: System.data.global.token,
-      tahun: DateTime.now().year,
+      tahun: selectedYear ?? DateTime.now().year,
     ).then((value) {
       dataRealisasiStream.add(value);
     }).catchError(

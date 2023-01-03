@@ -15,7 +15,7 @@ class Presenter extends StatefulWidget {
 }
 
 abstract class PresenterState extends State<Presenter> {
-  int selectedYear = DateTime.now().year;
+  int? selectedYear;
   ListDataComponentController<ReviewTaskModel> listController =
       ListDataComponentController<ReviewTaskModel>();
 }

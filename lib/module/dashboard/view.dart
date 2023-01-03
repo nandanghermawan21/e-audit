@@ -1,6 +1,17 @@
+import 'package:d_chart/d_chart.dart';
 import 'package:eaudit/component/list_data_component.dart';
+import 'package:eaudit/model/audit_rating_temuan_model.dart';
+import 'package:eaudit/model/audit_rating_unit_kerja.dart';
+import 'package:eaudit/model/bar_chart_model.dart';
+import 'package:eaudit/model/monitoring_external_model.dart';
+import 'package:eaudit/model/monitoring_tindak_lanjut_management_leter_model.dart';
+import 'package:eaudit/model/monitoring_tl_model.dart';
+import 'package:eaudit/model/pie_chart_model.dart';
+import 'package:eaudit/model/realisasi_bulanan_model.dart';
 import 'package:eaudit/model/realisasi_model.dart';
+import 'package:eaudit/model/temuan_per_unit_kerja_model.dart';
 import 'package:eaudit/model/year_model.dart';
+import 'package:eaudit/util/error_handling_util.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
@@ -52,6 +63,63 @@ class View extends PresenterState {
                   ),
                   childBuilder: programAuditTahunan,
                 );
+              case "realisasiBulanan":
+                return loader<RealisasiBulananModel?>(
+                  future: RealisasiBulananModel.get(
+                    token: System.data.global.token,
+                    tahun: selectedYear,
+                  ),
+                  childBuilder: realisasiBulanan,
+                );
+              case "auditRatingTemuan":
+                return loader<AuditRatingTemuanModel?>(
+                  future: AuditRatingTemuanModel.get(
+                    token: System.data.global.token,
+                    tahun: selectedYear,
+                  ),
+                  childBuilder: auditRatingTemuan,
+                );
+              case "auditRatingUnitKerja":
+                return loader<AuditRatingUnitKerjaModel?>(
+                  future: AuditRatingUnitKerjaModel.get(
+                    token: System.data.global.token,
+                    tahun: selectedYear,
+                  ),
+                  childBuilder: auditRatingUnitKerja,
+                );
+              case "temuanPerUnitKerja":
+                return loader<TemuanPerUnitKerjaModel?>(
+                  future: TemuanPerUnitKerjaModel.get(
+                    token: System.data.global.token,
+                    tahun: selectedYear,
+                  ),
+                  childBuilder: temuanPerUnitKerja,
+                );
+              case "monitoringTindakLanjut":
+                return loader<MonitoringTindakLanjutModel?>(
+                  future: MonitoringTindakLanjutModel.get(
+                    token: System.data.global.token,
+                    tahun: selectedYear,
+                  ),
+                  childBuilder: monitoringTindakLanjut,
+                );
+              case "monitoringTindakLanjutManagementLetter":
+                return loader<
+                    List<MonitoringTindakLanjutManagementLetterModel>?>(
+                  future: MonitoringTindakLanjutManagementLetterModel.get(
+                    token: System.data.global.token,
+                    tahun: selectedYear,
+                  ),
+                  childBuilder: monitoringTindakLanjutManagementLetter,
+                );
+              case "monitoringWxternal":
+                return loader<Map<String, MonitoringExternalModel>?>(
+                  future: MonitoringExternalModel.get(
+                    token: System.data.global.token,
+                    tahun: selectedYear,
+                  ),
+                  childBuilder: monitoringWxternal,
+                );
               default:
                 return const SizedBox();
             }
@@ -87,7 +155,29 @@ class View extends PresenterState {
             ),
           );
         } else {
-          return childBuilder(s.data);
+          if (s.hasData) {
+            return childBuilder(s.data);
+          } else {
+            return IntrinsicHeight(
+              child: Container(
+                color: Colors.transparent,
+                child: Stack(
+                  children: [
+                    childBuilder(s.data),
+                    Container(
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Text(
+                          ErrorHandlingUtil.handleApiError(s.error),
+                          style: System.data.textStyles!.basicLabelDanger,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }
         }
       },
     );
@@ -179,6 +269,469 @@ class View extends PresenterState {
     );
   }
 
+  Widget realisasiBulanan(RealisasiBulananModel? data) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black,
+        ),
+      ),
+      child: IntrinsicHeight(
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 30),
+              child: horizontalBarChart(data?.toBarChartData()),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Perencanaan dan Persiapan Audit",
+                style: System.data.textStyles!.basicLabel.copyWith(
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.transparent,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  children:
+                      List.generate(data?.toBarChartData().length ?? 0, (i) {
+                    return IntrinsicWidth(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        color: Colors.transparent,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: const EdgeInsets.all(3),
+                              color: data?.toBarChartData()[i].color,
+                            ),
+                            Text(
+                              data?.toBarChartData()[i].id ?? "",
+                              style: System.data.textStyles!.basicLabel,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget auditRatingTemuan(AuditRatingTemuanModel? data) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        border: Border.all(
+          color: Colors.black,
+        ),
+      ),
+      child: IntrinsicHeight(
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 30),
+              child: pieChart(data?.toPieChartData()),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Audit Rating Temuan",
+                style: System.data.textStyles!.basicLabel.copyWith(
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.transparent,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  children: List.generate(
+                      data?.toPieChartData().data?.length ?? 0, (i) {
+                    return IntrinsicWidth(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        color: Colors.transparent,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: const EdgeInsets.all(3),
+                              color: data?.toPieChartData().data?[i].color,
+                            ),
+                            Text(
+                              data?.toPieChartData().data?[i].domain ?? "",
+                              style: System.data.textStyles!.basicLabel,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget auditRatingUnitKerja(AuditRatingUnitKerjaModel? data) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        border: Border.all(
+          color: Colors.black,
+        ),
+      ),
+      child: IntrinsicHeight(
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 50),
+              child: pieChart(data?.toPieChartData()),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Audit Rating Unit Kerja",
+                style: System.data.textStyles!.basicLabel.copyWith(
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.transparent,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  children: List.generate(
+                      data?.toPieChartData().data?.length ?? 0, (i) {
+                    return IntrinsicWidth(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        color: Colors.transparent,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: const EdgeInsets.all(3),
+                              color: data?.toPieChartData().data?[i].color,
+                            ),
+                            Text(
+                              data?.toPieChartData().data?[i].domain ?? "",
+                              style: System.data.textStyles!.basicLabel,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget temuanPerUnitKerja(TemuanPerUnitKerjaModel? data) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black,
+        ),
+      ),
+      child: IntrinsicHeight(
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 30),
+              child: horizontalBarChart(data?.toBarChartData(),
+                  aspectRatio: 3 / 4),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Temuan Per Unit Kerja",
+                style: System.data.textStyles!.basicLabel.copyWith(
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.transparent,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  children:
+                      List.generate(data?.toBarChartData().length ?? 0, (i) {
+                    return IntrinsicWidth(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        color: Colors.transparent,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: const EdgeInsets.all(3),
+                              color: data?.toBarChartData()[i].color,
+                            ),
+                            Text(
+                              data?.toBarChartData()[i].id ?? "",
+                              style: System.data.textStyles!.basicLabel,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget monitoringTindakLanjut(MonitoringTindakLanjutModel? data) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        border: Border.all(
+          color: Colors.black,
+        ),
+      ),
+      child: IntrinsicHeight(
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 50),
+              child: pieChart(data?.toPieChartData()),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Monitoring Tindak Lanjut",
+                style: System.data.textStyles!.basicLabel.copyWith(
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.transparent,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  children: List.generate(
+                      data?.toPieChartData().data?.length ?? 0, (i) {
+                    return IntrinsicWidth(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        color: Colors.transparent,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: const EdgeInsets.all(3),
+                              color: data?.toPieChartData().data?[i].color,
+                            ),
+                            Text(
+                              data?.toPieChartData().data?[i].domain ?? "",
+                              style: System.data.textStyles!.basicLabel,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget monitoringTindakLanjutManagementLetter(
+      List<MonitoringTindakLanjutManagementLetterModel>? data) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        border: Border.all(
+          color: Colors.black,
+        ),
+      ),
+      child: IntrinsicHeight(
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 50, top: 30),
+              child: pieChart(
+                  MonitoringTindakLanjutManagementLetterModel.toPieChartData(
+                      data ?? [])),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Monitoring Tindak Lanjut\nManagement Letter",
+                style: System.data.textStyles!.basicLabel.copyWith(
+                  fontSize: 15,
+                ),
+                textAlign: TextAlign.start,
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.transparent,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  children: List.generate(data?.length ?? 0, (i) {
+                    return IntrinsicWidth(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        color: Colors.transparent,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: const EdgeInsets.all(3),
+                              color: data?[i].warna,
+                            ),
+                            Text(
+                              data?[i].name ?? "",
+                              style: System.data.textStyles!.basicLabel,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget monitoringWxternal(Map<String, MonitoringExternalModel>? data) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black,
+        ),
+      ),
+      child: IntrinsicHeight(
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 30),
+              child: horizontalBarChart(
+                  MonitoringExternalModel.toBarChartData(data ?? {})),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Monitoring External",
+                style: System.data.textStyles!.basicLabel.copyWith(
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.transparent,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  children: List.generate(
+                      MonitoringExternalModel.toBarChartData(data ?? {}).length,
+                      (i) {
+                    return IntrinsicWidth(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        color: Colors.transparent,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: const EdgeInsets.all(3),
+                              color: MonitoringExternalModel.toBarChartData(
+                                      data ?? {})[i]
+                                  .color,
+                            ),
+                            Text(
+                              MonitoringExternalModel.toBarChartData(
+                                          data ?? {})[i]
+                                      .id ??
+                                  "",
+                              style: System.data.textStyles!.basicLabel,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget radialGauge({
     double? angle = 90,
   }) {
@@ -248,7 +801,7 @@ class View extends PresenterState {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                "$angle%",
+                "${angle == double.infinity ? 0 : angle}%",
                 style: System.data.textStyles!.boldTitleLabel.copyWith(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -258,6 +811,80 @@ class View extends PresenterState {
           ),
         )
       ],
+    );
+  }
+
+  Widget horizontalBarChart(
+    List<BarChartModel>? data, {
+    double? aspectRatio,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: AspectRatio(
+        aspectRatio: aspectRatio ?? 5 / 9,
+        child: DChartBar(
+          data: data?.map((e) => e.toJson()).toList() ?? [],
+          measureMin: 0,
+          measureMax: null,
+          minimumPaddingBetweenLabel: 1,
+          domainLabelPaddingToAxisLine: 16,
+          axisLineTick: 2,
+          axisLinePointTick: 2,
+          axisLinePointWidth: 10,
+          axisLineColor: Colors.black,
+          measureLabelPaddingToAxisLine: 12,
+          measureLabelColor: Colors.black,
+          barColor: (barData, index, id) {
+            return data?.where((e) => e.id == id).first.color ?? Colors.green;
+          },
+          barValue: (barData, index) => '${barData['measure']}',
+          showBarValue: true,
+          barValuePosition: BarValuePosition.inside,
+          verticalDirection: false,
+          showMeasureLine: true,
+          showDomainLine: true,
+        ),
+      ),
+    );
+  }
+
+  Widget pieChart(PieChartModel? data) {
+    return Container(
+      margin: const EdgeInsets.only(top: 20, bottom: 20),
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: DChartPie(
+          data: data?.data?.isEmpty == null ||
+                  (data?.total ?? 0) == 0 ||
+                  data?.data?.map((e) => e.toJson()).toList() == null
+              ? [
+                  {'domain': '', 'measure': 100},
+                ]
+              : data?.data?.map((e) => e.toJson()).toList() ?? [],
+          fillColor: (pieData, index) {
+            if (data?.data?.isEmpty == null ||
+                (data?.total ?? 0) == 0 ||
+                data?.data?.map((e) => e.toJson()).toList() == null) {
+              return Colors.grey.shade400;
+            } else {
+              return data?.data
+                  ?.where((e) => e.domain == pieData["domain"])
+                  .first
+                  .color;
+            }
+          },
+          pieLabel: (pieData, index) {
+            return (data?.total ?? 0) == 0
+                ? ""
+                : "${(pieData['measure'] as double).ceil()}%\n${pieData['total']}";
+          },
+          labelPosition: PieLabelPosition.outside,
+          labelColor: Colors.black,
+          labelFontSize: 14,
+          labelLineColor: Colors.grey,
+          showLabelLine: true,
+        ),
+      ),
     );
   }
 }

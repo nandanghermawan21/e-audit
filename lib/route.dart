@@ -67,7 +67,7 @@ Map<String, WidgetBuilder> route = {
         );
       },
       onTapManualBook: () {
-        Navigator.of(context).pushNamed(RouteName.example);
+        Navigator.of(context).pushNamed(RouteName.manualBook);
       },
       onTapReport: () {
         Navigator.of(context).pushNamed(RouteName.report);

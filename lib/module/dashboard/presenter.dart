@@ -22,6 +22,13 @@ abstract class PresenterState extends State<Presenter> {
     return Future.value().then((value) {
       return [
         "realisasi",
+        "realisasiBulanan",
+        "auditRatingTemuan",
+        "auditRatingUnitKerja",
+        "temuanPerUnitKerja",
+        "monitoringTindakLanjut",
+        "monitoringTindakLanjutManagementLetter",
+        "monitoringWxternal",
       ];
     });
   }

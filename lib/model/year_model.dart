@@ -58,7 +58,7 @@ class YearModel {
               isDense: true,
               onChanged: (val) {
                 selectedYear = val ?? 0;
-                onChange!(val ?? 0);
+                onChange(val ?? 0);
               },
               dropdownColor: System.data.color!.primaryColor,
             );

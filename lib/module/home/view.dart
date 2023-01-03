@@ -1,5 +1,6 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/realisasi_detail_model.dart';
+import 'package:eaudit/model/year_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -44,6 +45,19 @@ class View extends PresenterState {
             child: Column(
               children: [
                 appbar(),
+                Container(
+                  height: 30,
+                  color: Colors.transparent,
+                  child: Center(
+                    child: YearModel.yearSelector(
+                      selectedYear: selectedYear,
+                      onChange: (v) {
+                        selectedYear = v;
+                        getRealisasiData();
+                      },
+                    ),
+                  ),
+                ),
                 StreamBuilder<RealisasiDetailModel?>(
                   initialData: null,
                   stream: dataRealisasiStream.stream,
@@ -70,7 +84,7 @@ class View extends PresenterState {
   Widget appbar() {
     return SafeArea(
       child: Container(
-        height: 80,
+        height: 70,
         width: double.infinity,
         color: Colors.transparent,
         child: Row(
@@ -179,7 +193,7 @@ class View extends PresenterState {
     RealisasiDetailModel? data,
   }) {
     return Container(
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
       color: Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
