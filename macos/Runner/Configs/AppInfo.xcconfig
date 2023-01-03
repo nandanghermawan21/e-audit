@@ -8,7 +8,7 @@
 PRODUCT_NAME = eaudit
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.eaudit
+PRODUCT_BUNDLE_IDENTIFIER = com.jamkrindo.eaudit
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2022 com.example. All rights reserved.

@@ -1,4 +1,4 @@
-package com.example.eaudit
+package com.jamkrindo.eaudit
 
 import io.flutter.embedding.android.FlutterActivity
 
