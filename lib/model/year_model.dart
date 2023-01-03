@@ -13,13 +13,16 @@ class YearModel {
   }) {
     StreamController<int?> selectedStream = StreamController<int?>();
 
-    return StreamBuilder(
-      initialData: selectedYear,
-      stream: selectedStream.stream,
-      builder: (c, s) {
-        return FutureBuilder<List<int>>(
-          future: get(token: System.data.global.token),
-          builder: (c, f) {
+    return FutureBuilder<List<int>>(
+      future: get(token: System.data.global.token),
+      builder: (c, f) {
+        selectedYear = f.data?.first;
+        selectedStream.add(selectedYear);
+        onChange!(selectedYear ?? 0);
+        return StreamBuilder<int?>(
+          initialData: selectedYear,
+          stream: selectedStream.stream,
+          builder: (c, s) {
             if (f.connectionState != ConnectionState.done) {
               return const Icon(
                 Icons.sync,
@@ -37,7 +40,7 @@ class YearModel {
                       "${f.data![index]}",
                       style: System.data.textStyles!.basicLightLabel,
                     ),
-                    value: DateTime.now().year - index,
+                    value: f.data![index],
                   );
                 },
               ),

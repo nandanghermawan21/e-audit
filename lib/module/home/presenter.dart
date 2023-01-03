@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/check_access_model.dart';
-import 'package:eaudit/model/realisasi_model.dart';
+import 'package:eaudit/model/realisasi_detail_model.dart';
 import 'package:eaudit/util/error_handling_util.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:eaudit/util/type.dart';
@@ -16,6 +16,7 @@ class Presenter extends StatefulWidget {
   final VoidCallback onTapManualBook;
   final VoidCallback onTapReport;
   final VoidCallback onTapReviewTask;
+  final VoidCallback onTapDashboard;
 
   const Presenter({
     super.key,
@@ -24,6 +25,7 @@ class Presenter extends StatefulWidget {
     required this.onTapManualBook,
     required this.onTapReport,
     required this.onTapReviewTask,
+    required this.onTapDashboard,
   });
 
   @override
@@ -35,7 +37,7 @@ class Presenter extends StatefulWidget {
 abstract class PresenterState extends State<Presenter> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   CircularLoaderController loadingController = CircularLoaderController();
-  final dataRealisasiStream = StreamController<RealisasiModel?>();
+  final dataRealisasiStream = StreamController<RealisasiDetailModel?>();
 
   @override
   void initState() {
@@ -97,7 +99,7 @@ abstract class PresenterState extends State<Presenter> {
 
   void getRealisasiData() {
     dataRealisasiStream.add(null);
-    RealisasiModel.get(
+    RealisasiDetailModel.get(
       token: System.data.global.token,
       tahun: DateTime.now().year,
     ).then((value) {

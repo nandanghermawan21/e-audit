@@ -1,5 +1,5 @@
 import 'package:eaudit/component/circular_loader_component.dart';
-import 'package:eaudit/model/realisasi_model.dart';
+import 'package:eaudit/model/realisasi_detail_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -44,7 +44,7 @@ class View extends PresenterState {
             child: Column(
               children: [
                 appbar(),
-                StreamBuilder<RealisasiModel?>(
+                StreamBuilder<RealisasiDetailModel?>(
                   initialData: null,
                   stream: dataRealisasiStream.stream,
                   builder: (c, s) {
@@ -176,7 +176,7 @@ class View extends PresenterState {
   Widget header({
     bool isLoading = false,
     bool isError = false,
-    RealisasiModel? data,
+    RealisasiDetailModel? data,
   }) {
     return Container(
       margin: const EdgeInsets.all(20),
@@ -332,7 +332,14 @@ class View extends PresenterState {
       child: Wrap(
         alignment: WrapAlignment.center,
         children: [
-          menuItem(),
+          menuItem(
+            onTap: () {
+              checkAccess(
+                method: "mobile_dashboard",
+                onGrandted: widget.onTapDashboard,
+              );
+            },
+          ),
           menuItem(
               icon: "assets/icon_menu_riview_task.png",
               label: "Review Task",

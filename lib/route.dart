@@ -1,6 +1,7 @@
 import 'package:eaudit/util/enum.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
+import 'package:eaudit/component/d_chart_example.dart' as example;
 import 'package:eaudit/module/splashScreen/main.dart' as splashscreen;
 import 'package:eaudit/module/login/main.dart' as login;
 import 'package:eaudit/module/home/main.dart' as home;
@@ -9,10 +10,12 @@ import 'package:eaudit/module/manualBook/main.dart' as manualbook;
 import 'package:eaudit/module/pdfViewer/main.dart' as pdfviewwer;
 import 'package:eaudit/module/report/main.dart' as report;
 import 'package:eaudit/module/reviewTask/main.dart' as reviewtask;
+import 'package:eaudit/module/dashboard/main.dart' as dashboard;
 
 String initialRouteName = RouteName.splashScreen;
 
 class RouteName {
+  static const String example = "example";
   static const String splashScreen = "splashScreen";
   static const String login = "login";
   static const String home = "home";
@@ -21,6 +24,7 @@ class RouteName {
   static const String pdfViewwer = "pdfviewer";
   static const String report = "report";
   static const String reviewtask = "reviewtask";
+  static const String dashboard = "dashboard";
 }
 
 enum ParamName {
@@ -30,6 +34,9 @@ enum ParamName {
 }
 
 Map<String, WidgetBuilder> route = {
+  RouteName.example: (BuildContext context) {
+    return example.Home();
+  },
   RouteName.splashScreen: (BuildContext context) {
     return splashscreen.Presenter(
       onFinishSplashScreen: () {
@@ -60,13 +67,16 @@ Map<String, WidgetBuilder> route = {
         );
       },
       onTapManualBook: () {
-        Navigator.of(context).pushNamed(RouteName.manualBook);
+        Navigator.of(context).pushNamed(RouteName.example);
       },
       onTapReport: () {
         Navigator.of(context).pushNamed(RouteName.report);
       },
       onTapReviewTask: () {
         Navigator.of(context).pushNamed(RouteName.reviewtask);
+      },
+      onTapDashboard: () {
+        Navigator.of(context).pushNamed(RouteName.dashboard);
       },
       onTapLogout: () {
         System.data.session!.setString(SessionKey.user, "");
@@ -118,6 +128,11 @@ Map<String, WidgetBuilder> route = {
   },
   RouteName.reviewtask: (BuildContext context) {
     return reviewtask.Presenter(
+      key: GlobalKey(),
+    );
+  },
+  RouteName.dashboard: (BuildContext context) {
+    return dashboard.Presenter(
       key: GlobalKey(),
     );
   }
