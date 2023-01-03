@@ -479,7 +479,7 @@ class View extends PresenterState {
             Container(
               margin: const EdgeInsets.only(bottom: 30),
               child: horizontalBarChart(data?.toBarChartData(),
-                  aspectRatio: 3 / 4),
+                  aspectRatio: 6 / 9),
             ),
             Align(
               alignment: Alignment.topLeft,
@@ -677,7 +677,18 @@ class View extends PresenterState {
             Container(
               margin: const EdgeInsets.only(bottom: 30),
               child: horizontalBarChart(
-                  MonitoringExternalModel.toBarChartData(data ?? {})),
+                labelPosition: BarValuePosition.outside,
+                MonitoringExternalModel.toBarChartData(data ?? {}),
+                barValue: (dataChart, index) {
+                  if (dataChart['measure'] ==
+                          data?[dataChart['domain']]?.jumlahTindakLanjut &&
+                      dataChart['measure'] > 0) {
+                    return '${dataChart['measure']}(${dataChart['percentage']}%)';
+                  } else {
+                    return '${dataChart['measure']}';
+                  }
+                },
+              ),
             ),
             Align(
               alignment: Alignment.topLeft,
@@ -817,6 +828,8 @@ class View extends PresenterState {
   Widget horizontalBarChart(
     List<BarChartModel>? data, {
     double? aspectRatio,
+    BarValuePosition? labelPosition,
+    Function(Map<String, dynamic>, int?)? barValue,
   }) {
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -825,7 +838,7 @@ class View extends PresenterState {
         child: DChartBar(
           data: data?.map((e) => e.toJson()).toList() ?? [],
           measureMin: 0,
-          measureMax: null,
+          measureMax: (BarChartModel.maxMeasureFromList(data) + 10),
           minimumPaddingBetweenLabel: 1,
           domainLabelPaddingToAxisLine: 16,
           axisLineTick: 2,
@@ -837,9 +850,15 @@ class View extends PresenterState {
           barColor: (barData, index, id) {
             return data?.where((e) => e.id == id).first.color ?? Colors.green;
           },
-          barValue: (barData, index) => '${barData['measure']}',
+          barValue: (barData, index) {
+            if (barValue != null) {
+              return barValue(barData, index);
+            } else {
+              return '${barData['measure']}';
+            }
+          },
           showBarValue: true,
-          barValuePosition: BarValuePosition.inside,
+          barValuePosition: labelPosition ?? BarValuePosition.inside,
           verticalDirection: false,
           showMeasureLine: true,
           showDomainLine: true,

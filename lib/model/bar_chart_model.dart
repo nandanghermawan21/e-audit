@@ -18,21 +18,44 @@ class BarChartModel {
       "data": data?.map((e) => e.toJson()).toList(),
     };
   }
+
+  double get maxMeasure {
+    double max = 0;
+    for (var e in data ?? <BarChartDataModel>[]) {
+      if ((e.measure?.toDouble() ?? 0) > max) {
+        max = e.measure?.toDouble() ?? 0;
+      }
+    }
+    return max;
+  }
+
+  static int maxMeasureFromList(List<BarChartModel>? soirce) {
+    double max = 0;
+    for (var e in soirce ?? <BarChartModel>[]) {
+      if ((e.maxMeasure.toDouble()) > max) {
+        max = e.maxMeasure.toDouble();
+      }
+    }
+    return max.round();
+  }
 }
 
 class BarChartDataModel {
   final String? domain;
   final int? measure;
+  final int? percentage;
 
   BarChartDataModel({
     this.domain,
     this.measure,
+    this.percentage,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'domain': domain,
       'measure': measure,
+      'percentage': percentage,
     };
   }
 }

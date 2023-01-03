@@ -10,12 +10,19 @@ class MonitoringExternalModel {
   final int? jumlahTemuan; //": 0,
   final int? jumlahRekomendasi; //": 0,
   final int? jumlahTindakLanjut;
+  int? percentage;
 
   MonitoringExternalModel({
     this.jumlahTemuan,
     this.jumlahRekomendasi,
     this.jumlahTindakLanjut,
-  }); //": 0
+    this.percentage = 0,
+  }) {
+    if ((jumlahTindakLanjut ?? 0) != 0 && (jumlahTemuan ?? 0) != 0) {
+      percentage =
+          (((jumlahTindakLanjut ?? 0) / (jumlahTemuan ?? 0)) * 100).ceil();
+    }
+  } //": 0
 
   static Map<String, MonitoringExternalModel> fromJson(
       Map<String, dynamic> json) {
@@ -23,9 +30,9 @@ class MonitoringExternalModel {
 
     for (var key in json.keys) {
       data[key] = MonitoringExternalModel(
-        jumlahTemuan: json["jumlah_temuan"] as int?,
-        jumlahRekomendasi: json["jumlah_rekomendasi"] as int?,
-        jumlahTindakLanjut: json["jumlah_tindak_lanjut"] as int?,
+        jumlahTemuan: json[key]["jumlah_temuan"] as int?,
+        jumlahRekomendasi: json[key]["jumlah_rekomendasi"] as int?,
+        jumlahTindakLanjut: json[key]["jumlah_tindak_lanjut"] as int?,
       );
     }
 
@@ -69,6 +76,7 @@ class MonitoringExternalModel {
           return BarChartDataModel(
             domain: source.keys.toList()[i].replaceFirst(" ", "\n"),
             measure: source[source.keys.toList()[i]]?.jumlahTemuan ?? 0,
+            percentage: source[source.keys.toList()[i]]?.percentage ?? 0,
           );
         })));
 
@@ -80,6 +88,7 @@ class MonitoringExternalModel {
           return BarChartDataModel(
             domain: source.keys.toList()[i].replaceFirst(" ", "\n"),
             measure: source[source.keys.toList()[i]]?.jumlahRekomendasi ?? 0,
+            percentage: source[source.keys.toList()[i]]?.percentage ?? 0,
           );
         })));
 
@@ -91,6 +100,7 @@ class MonitoringExternalModel {
           return BarChartDataModel(
             domain: source.keys.toList()[i].replaceFirst(" ", "\n"),
             measure: source[source.keys.toList()[i]]?.jumlahTindakLanjut ?? 0,
+            percentage: source[source.keys.toList()[i]]?.percentage ?? 0,
           );
         })));
 
