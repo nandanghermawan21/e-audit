@@ -5,8 +5,8 @@ import 'view.dart';
 
 class Presenter extends StatefulWidget {
   const Presenter({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

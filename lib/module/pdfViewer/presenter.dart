@@ -8,11 +8,11 @@ class Presenter extends StatefulWidget {
   final bool centerTile;
 
   const Presenter({
-    super.key,
+    Key? key,
     required this.title,
     required this.url,
     required this.centerTile,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

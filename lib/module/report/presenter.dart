@@ -8,9 +8,9 @@ class Presenter extends StatefulWidget {
   final ValueChanged2Param<String?, String?> onTapDocument;
 
   const Presenter({
-    super.key,
+    Key? key,
     required this.onTapDocument,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

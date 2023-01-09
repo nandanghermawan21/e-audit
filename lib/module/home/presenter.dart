@@ -19,14 +19,14 @@ class Presenter extends StatefulWidget {
   final VoidCallback onTapDashboard;
 
   const Presenter({
-    super.key,
+    Key? key,
     required this.onTapLogout,
     required this.onTapUrl,
     required this.onTapManualBook,
     required this.onTapReport,
     required this.onTapReviewTask,
     required this.onTapDashboard,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

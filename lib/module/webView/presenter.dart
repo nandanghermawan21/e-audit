@@ -6,10 +6,10 @@ class Presenter extends StatefulWidget {
   final String url;
 
   const Presenter({
-    super.key,
+    Key? key,
     required this.title,
     required this.url,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

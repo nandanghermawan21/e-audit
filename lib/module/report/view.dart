@@ -33,7 +33,7 @@ class View extends PresenterState {
       ),
       body: Container(
         color: const Color(0xffF4F4F4),
-        child: ListDataComponent(
+        child: ListDataComponent<ReportModel>(
           controller: listController,
           enableDrag: false,
           enableGetMore: false,

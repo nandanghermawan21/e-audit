@@ -133,7 +133,7 @@ class View extends PresenterState {
     required Widget Function(T?) childBuilder,
     Future<T?>? future,
   }) {
-    return FutureBuilder(
+    return FutureBuilder<T?>(
       future: future,
       builder: (c, s) {
         if (s.connectionState != ConnectionState.done) {
@@ -677,8 +677,8 @@ class View extends PresenterState {
             Container(
               margin: const EdgeInsets.only(bottom: 30),
               child: horizontalBarChart(
-                labelPosition: BarValuePosition.outside,
                 MonitoringExternalModel.toBarChartData(data ?? {}),
+                labelPosition: BarValuePosition.outside,
                 barValue: (dataChart, index) {
                   if (dataChart['measure'] ==
                           data?[dataChart['domain']]?.jumlahTindakLanjut &&

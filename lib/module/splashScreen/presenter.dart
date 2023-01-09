@@ -11,9 +11,9 @@ class Presenter extends StatefulWidget {
   final VoidCallback onFinishSplashScreen;
 
   const Presenter({
-    super.key,
+    Key? key,
     required this.onFinishSplashScreen,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

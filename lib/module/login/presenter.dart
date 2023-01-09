@@ -12,9 +12,9 @@ import 'view.dart';
 class Presenter extends StatefulWidget {
   final VoidCallback? onLoginSuccess;
   const Presenter({
-    super.key,
+    Key? key,
     required this.onLoginSuccess,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
