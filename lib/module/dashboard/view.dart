@@ -895,7 +895,7 @@ class View extends PresenterState {
           pieLabel: (pieData, index) {
             return (data?.total ?? 0) == 0
                 ? ""
-                : "${(pieData['measure'] as double).ceil()}%\n${pieData['total']}";
+                : "${(pieData['measure'] as double).round()}%\n${pieData['total']}";
           },
           labelPosition: PieLabelPosition.outside,
           labelColor: Colors.black,

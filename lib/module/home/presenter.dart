@@ -12,7 +12,7 @@ import 'view.dart';
 
 class Presenter extends StatefulWidget {
   final VoidCallback onTapLogout;
-  final ValueChanged2Param onTapUrl;
+  final ValueChanged3Param onTapUrl;
   final VoidCallback onTapManualBook;
   final VoidCallback onTapReport;
   final VoidCallback onTapReviewTask;

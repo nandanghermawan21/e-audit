@@ -36,6 +36,7 @@ void setting() {
           "https://api-eaudit.jamkrindo.co.id/Api";
       System.data.global.token =
           "MjAyMi0wNC0yMCAxMDowNjozMd6DKZ6cWXLIY-DODMQD37A";
+      System.data.global.urlEaudit = "https://eaudit.jamkrindo.co.id/";
     }
   }
   //setting permisson [haru didefinisikan juga pada manifest dan info.pls]

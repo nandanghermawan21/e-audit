@@ -486,13 +486,14 @@ class View extends PresenterState {
                 drawerMenuItem(
                     label: "E-Audit",
                     onTap: () {
-                      widget.onTapUrl("E-Audit", System.data.global.urlEaudit);
+                      widget.onTapUrl("E-Audit", System.data.global.urlEaudit,
+                          "Anda mungkin harus menggunakan jaringan lokal atau menggunakan VPN untuk mengakses halaman ini");
                     }),
                 drawerMenuItem(
                     label: "Jamkrindo",
                     onTap: () {
                       widget.onTapUrl(
-                          "Jamkrindo", "https://www.jamkrindo.co.id/");
+                          "Jamkrindo", "https://www.jamkrindo.co.id/", "");
                     }),
                 drawerMenuItem(
                     label: "IFG",
@@ -500,6 +501,7 @@ class View extends PresenterState {
                       widget.onTapUrl(
                         "IFG",
                         "https://ifg.id/id",
+                        "",
                       );
                     }),
                 drawerMenuItem(

@@ -31,6 +31,7 @@ enum ParamName {
   title,
   url,
   centerTitle,
+  message,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -57,12 +58,13 @@ Map<String, WidgetBuilder> route = {
   },
   RouteName.home: (BuildContext context) {
     return home.Presenter(
-      onTapUrl: (title, url) {
+      onTapUrl: (title, url, message) {
         Navigator.of(context).pushNamed(
           RouteName.webview,
           arguments: {
             ParamName.title: title,
             ParamName.url: url,
+            ParamName.message: message,
           },
         );
       },
@@ -93,6 +95,7 @@ Map<String, WidgetBuilder> route = {
     return webview.Presenter(
       title: arg[ParamName.title],
       url: arg[ParamName.url],
+      message: arg[ParamName.message],
     );
   },
   RouteName.manualBook: (BuildContext context) {

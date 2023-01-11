@@ -1,3 +1,4 @@
+import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -17,8 +18,11 @@ class View extends PresenterState {
           style: System.data.textStyles!.boldTitleLightLabel,
         ),
       ),
-      body: WebView(
-        initialUrl: widget.url,
+      body: CircularLoaderComponent(
+        controller: loadingController,
+        child: WebView(
+          initialUrl: widget.url,
+        ),
       ),
     );
   }

@@ -4,7 +4,9 @@ class PieChartModel {
   final List<PieChartDataModel>? data;
   int total = 0;
 
-  PieChartModel({required this.data}) {
+  PieChartModel({
+    required this.data,
+  }) {
     calculate();
   }
 
