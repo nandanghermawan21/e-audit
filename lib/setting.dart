@@ -15,7 +15,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:eaudit/route.dart' as route;
 
 void setting() {
-  System.data.versionName = "1.1.1";
+  System.data.versionName = "1.2.1";
   System.data.global.token = "MjAyMi0wNC0yMCAxMDowNjozMd6DKZ6cWXLIY-DODMQD37A";
   System.data.route = route.route;
   System.data.apiEndPoint = ApiEndPoint();
@@ -29,11 +29,13 @@ void setting() {
     System.data.apiEndPoint.baseUrlDebug =
         "http://dev-jamkrindo.banggasolution.com/Api/";
   } else {
-    if (System.data.versionName.split(" ").last == "Train") {
+    if (System.data.versionName.split(".")[1] == "2") {
       System.data.apiEndPoint.baseUrl =
-          "http://dev-jamkrindo.banggasolution.com/Api/";
+          "https://api-eaudit.jamkrindo.co.id/Api";
       System.data.apiEndPoint.baseUrlDebug =
-          "http://dev-jamkrindo.banggasolution.com/Api/";
+          "https://api-eaudit.jamkrindo.co.id/Api";
+      System.data.global.token =
+          "MjAyMi0wNC0yMCAxMDowNjozMd6DKZ6cWXLIY-DODMQD37A";
     }
   }
   //setting permisson [haru didefinisikan juga pada manifest dan info.pls]
