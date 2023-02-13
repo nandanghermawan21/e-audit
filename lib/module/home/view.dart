@@ -313,17 +313,15 @@ class View extends PresenterState {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Container(
-              height: 40,
+              height: 35,
               color: Colors.transparent,
-              child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  label ?? "On \n Going",
-                  style: System.data.textStyles!.boldTitleLightLabel.copyWith(
-                    fontSize: 60,
-                  ),
-                  textAlign: TextAlign.center,
+              child: Text(
+                label ?? "On \n Going",
+                style: System.data.textStyles!.basicLightLabel.copyWith(
+                  // fontSize: 12,
+                  fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
           )

@@ -10,7 +10,7 @@ class RealisasiModel {
 
   double get percentage {
     if ((rencana ?? 0) != 0 || (realisasi ?? 0) != 0) {
-      return (rencana ?? 0) / (realisasi ?? 0) * 100;
+      return (realisasi ?? 0) / (rencana ?? 0) * 100;
     } else {
       return 0;
     }

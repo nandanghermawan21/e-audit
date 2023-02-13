@@ -1,4 +1,5 @@
 import 'package:eaudit/component/list_data_component.dart';
+import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'view.dart';
 
@@ -27,7 +28,9 @@ abstract class PresenterState extends State<Presenter> {
         "auditRatingUnitKerja",
         "temuanPerUnitKerja",
         "monitoringTindakLanjut",
-        "monitoringTindakLanjutManagementLetter",
+        (System.data.global.user?.groupName ?? "").toLowerCase() != "direksi"
+            ? "monitoringTindakLanjutManagementLetter"
+            : "",
         "monitoringWxternal",
       ];
     });

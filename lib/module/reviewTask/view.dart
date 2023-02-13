@@ -124,7 +124,12 @@ class View extends PresenterState {
                             children: [
                               TextSpan(
                                 text: " ${data?.statusLhaInternal ?? "-"}",
-                                style: System.data.textStyles!.basicLabel,
+                                style:
+                                    System.data.textStyles!.basicLabel.copyWith(
+                                  color: getStatusColor(
+                                    data?.statusLhaInternal,
+                                  ),
+                                ),
                               )
                             ],
                           ),

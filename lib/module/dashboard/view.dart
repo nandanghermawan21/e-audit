@@ -549,7 +549,7 @@ class View extends PresenterState {
             Align(
               alignment: Alignment.topLeft,
               child: Text(
-                "Monitoring Tindak Lanjut",
+                "Tindak Lanjut Internal",
                 style: System.data.textStyles!.basicLabel.copyWith(
                   fontSize: 15,
                 ),
@@ -609,7 +609,7 @@ class View extends PresenterState {
         child: Stack(
           children: [
             Container(
-              margin: const EdgeInsets.only(bottom: 50, top: 30),
+              margin: const EdgeInsets.only(bottom: 50, top: 20),
               child: pieChart(
                   MonitoringTindakLanjutManagementLetterModel.toPieChartData(
                       data ?? [])),
@@ -617,7 +617,7 @@ class View extends PresenterState {
             Align(
               alignment: Alignment.topLeft,
               child: Text(
-                "Monitoring Tindak Lanjut\nManagement Letter",
+                "Tindak Lanjut Management Letter",
                 style: System.data.textStyles!.basicLabel.copyWith(
                   fontSize: 15,
                 ),
@@ -812,7 +812,7 @@ class View extends PresenterState {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                "${angle == double.infinity ? 0 : angle}%",
+                "${angle == double.infinity ? 0 : angle?.round()}%",
                 style: System.data.textStyles!.boldTitleLabel.copyWith(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -838,7 +838,10 @@ class View extends PresenterState {
         child: DChartBar(
           data: data?.map((e) => e.toJson()).toList() ?? [],
           measureMin: 0,
-          measureMax: (BarChartModel.maxMeasureFromList(data) + 10),
+          measureMax: BarChartModel.maxMeasureFromList(data) == 0
+              ? null
+              : (BarChartModel.maxMeasureFromList(data) +
+                  (BarChartModel.maxMeasureFromList(data) / 4).ceil()),
           minimumPaddingBetweenLabel: 1,
           domainLabelPaddingToAxisLine: 16,
           axisLineTick: 2,
@@ -858,7 +861,7 @@ class View extends PresenterState {
             }
           },
           showBarValue: true,
-          barValuePosition: labelPosition ?? BarValuePosition.inside,
+          barValuePosition: labelPosition ?? BarValuePosition.outside,
           verticalDirection: false,
           showMeasureLine: true,
           showDomainLine: true,
@@ -871,7 +874,7 @@ class View extends PresenterState {
     return Container(
       margin: const EdgeInsets.only(top: 20, bottom: 20),
       child: AspectRatio(
-        aspectRatio: 16 / 9,
+        aspectRatio: 12 / 9,
         child: DChartPie(
           data: data?.data?.isEmpty == null ||
                   (data?.total ?? 0) == 0 ||
@@ -895,11 +898,11 @@ class View extends PresenterState {
           pieLabel: (pieData, index) {
             return (data?.total ?? 0) == 0
                 ? ""
-                : "${(pieData['measure'] as double).round()}%\n${pieData['total']}";
+                : "${pieData['total']}\n(${(pieData['measure'] as double).toStringAsFixed(1)}%)";
           },
           labelPosition: PieLabelPosition.outside,
           labelColor: Colors.black,
-          labelFontSize: 14,
+          labelFontSize: 10,
           labelLineColor: Colors.grey,
           showLabelLine: true,
         ),
