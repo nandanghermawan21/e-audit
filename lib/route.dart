@@ -214,7 +214,7 @@ Map<String, WidgetBuilder> route = {
     return reviu_pka.Presenter(
       onSubmitSuccess: () {
         Navigator.of(context).pushNamedAndRemoveUntil(
-            RouteName.home, (r) => r.settings.name == "");
+            RouteName.reviu, (r) => r.settings.name == "");
       },
     );
   },
