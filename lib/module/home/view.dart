@@ -371,6 +371,15 @@ class View extends PresenterState {
                 );
               }),
           menuItem(
+              icon: "assets/icon_menu_review.png",
+              label: "Reviu",
+              onTap: () {
+                checkAccess(
+                  method: "mobile_reviu",
+                  onGrandted: widget.onTapReport,
+                );
+              }),
+          menuItem(
             icon: "assets/icon_menu_manual_book.png",
             label: "Manual Book",
             onTap: () {
@@ -394,8 +403,8 @@ class View extends PresenterState {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(5),
-        height: (MediaQuery.of(context).size.width / 2) - 80,
-        width: (MediaQuery.of(context).size.width / 2) - 80,
+        height: (MediaQuery.of(context).size.width / 2) - 90,
+        width: (MediaQuery.of(context).size.width / 2) - 90,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(
