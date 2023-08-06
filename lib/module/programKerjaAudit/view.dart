@@ -82,7 +82,7 @@ class View extends PresenterState {
                         child: ElevatedButton(
                           onPressed: () {},
                           child: Text(
-                            "Reviu KKA",
+                            "Reviu PKA",
                             style: System.data.textStyles!.boldTitleLabel,
                           ),
                         ),
