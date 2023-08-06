@@ -5,10 +5,12 @@ import 'view.dart';
 
 class Presenter extends StatefulWidget {
   final State<Presenter>? view;
+  final ValueChanged<ProgramKerjaAuditModel?>? onTapReviu;
 
   const Presenter({
     Key? key,
     this.view,
+    this.onTapReviu,
   }) : super(key: key);
 
   @override

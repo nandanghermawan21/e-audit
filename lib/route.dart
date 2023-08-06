@@ -15,6 +15,7 @@ import 'package:eaudit/module/reviu/main.dart' as reviu;
 import 'package:eaudit/module/persiapanAudit/main.dart' as persiapan_audit;
 import 'package:eaudit/module/programKerjaAudit/main.dart'
     as program_kerja_audit;
+import 'package:eaudit/module/reviuPKA/main.dart' as reviu_pka;
 
 String initialRouteName = RouteName.splashScreen;
 
@@ -32,6 +33,7 @@ class RouteName {
   static const String reviu = "reviu";
   static const String persiapanaudit = "persiapanaudit";
   static const String programKerjaAudit = "programKerjaAudit";
+  static const String reviuPka = "reviuPka";
 }
 
 enum ParamName {
@@ -201,7 +203,19 @@ Map<String, WidgetBuilder> route = {
   },
   RouteName.programKerjaAudit: (BuildContext context) {
     return program_kerja_audit.Presenter(
-      key: GlobalKey(),
+      onTapReviu: (data) {
+        Navigator.of(context).pushNamed(
+          RouteName.reviuPka,
+        );
+      },
+    );
+  },
+  RouteName.reviuPka: (BuildContext context) {
+    return reviu_pka.Presenter(
+      onSubmitSuccess: () {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            RouteName.home, (r) => r.settings.name == "");
+      },
     );
   },
 };

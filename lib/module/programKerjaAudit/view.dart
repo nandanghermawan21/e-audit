@@ -80,7 +80,9 @@ class View extends PresenterState {
                       SizedBox(
                         height: 25,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            widget.onTapReviu!(data);
+                          },
                           child: Text(
                             "Reviu PKA",
                             style: System.data.textStyles!.boldTitleLabel,
