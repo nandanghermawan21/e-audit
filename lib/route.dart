@@ -12,7 +12,9 @@ import 'package:eaudit/module/report/main.dart' as report;
 import 'package:eaudit/module/reviewTask/main.dart' as reviewtask;
 import 'package:eaudit/module/dashboard/main.dart' as dashboard;
 import 'package:eaudit/module/reviu/main.dart' as reviu;
-import 'package:eaudit/module/persiapanAudit/main.dart' as persiapanAudit;
+import 'package:eaudit/module/persiapanAudit/main.dart' as persiapan_audit;
+import 'package:eaudit/module/programKerjaAudit/main.dart'
+    as program_kerja_audit;
 
 String initialRouteName = RouteName.splashScreen;
 
@@ -29,6 +31,7 @@ class RouteName {
   static const String dashboard = "dashboard";
   static const String reviu = "reviu";
   static const String persiapanaudit = "persiapanaudit";
+  static const String programKerjaAudit = "programKerjaAudit";
 }
 
 enum ParamName {
@@ -187,8 +190,18 @@ Map<String, WidgetBuilder> route = {
     Map<dynamic, dynamic> arg =
         ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
             {};
-    return persiapanAudit.Presenter(
+    return persiapan_audit.Presenter(
       type: arg[ParamName.tipeReviu],
+      onTapItem: (data) {
+        Navigator.of(context).pushNamed(
+          RouteName.programKerjaAudit,
+        );
+      },
+    );
+  },
+  RouteName.programKerjaAudit: (BuildContext context) {
+    return program_kerja_audit.Presenter(
+      key: GlobalKey(),
     );
   },
 };

@@ -1,5 +1,8 @@
+import 'package:eaudit/component/list_data_component.dart';
+import 'package:eaudit/model/persiapan_audit_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'presenter.dart';
 
@@ -96,7 +99,80 @@ class View extends PresenterState {
         ),
         Expanded(
           child: Container(
-            color: Colors.green,
+            color: Colors.transparent,
+            child: ListDataComponent<PersiapanAuditModel>(
+              controller: listController,
+              enableDrag: false,
+              enableGetMore: false,
+              dataSource: (skip, key) {
+                return Future.value().then((value) {
+                  return PersiapanAuditModel.dummysPKA();
+                });
+              },
+              itemBuilder: (data, index) {
+                return GestureDetector(
+                  onTap: () {
+                    widget.onTapItem!(data);
+                  },
+                  child: Container(
+                    height: 100,
+                    color: Colors.white,
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              data?.divisi ?? "",
+                              style: System.data.textStyles!.boldTitleLabel,
+                            ),
+                            Text(
+                              data?.tanggal == null
+                                  ? "-"
+                                  : DateFormat("dd MMMM yyyy").format(
+                                      (data!.tanggal!),
+                                    ),
+                              style: System.data.textStyles!.boldTitleLabel,
+                            ),
+                          ],
+                        ),
+                        const Divider(
+                          color: Colors.black,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                data?.kegiatan ?? "",
+                                style: System.data.textStyles!.basicLabel,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade300,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                data?.status ?? "",
+                                style: System.data.textStyles!.basicLabel,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         )
       ],

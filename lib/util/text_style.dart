@@ -5,7 +5,7 @@ class TextStyles {
   TextStyle get basicLabel => TextStyle(
         color: System.data.color!.darkTextColor,
         fontFamily: System.data.font!.primary,
-        fontSize: System.data.font!.m,
+        fontSize: System.data.font!.xl,
       );
 
   TextStyle get basicLightLabel => TextStyle(
