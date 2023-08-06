@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/check_access_model.dart';
 import 'package:eaudit/model/realisasi_detail_model.dart';
@@ -17,6 +16,7 @@ class Presenter extends StatefulWidget {
   final VoidCallback onTapReport;
   final VoidCallback onTapReviewTask;
   final VoidCallback onTapDashboard;
+  final VoidCallback onTapReviu;
 
   const Presenter({
     Key? key,
@@ -26,6 +26,7 @@ class Presenter extends StatefulWidget {
     required this.onTapReport,
     required this.onTapReviewTask,
     required this.onTapDashboard,
+    required this.onTapReviu,
   }) : super(key: key);
 
   @override

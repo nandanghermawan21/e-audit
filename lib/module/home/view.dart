@@ -372,11 +372,11 @@ class View extends PresenterState {
               }),
           menuItem(
               icon: "assets/icon_menu_review.png",
-              label: "Reviu",
+              label: "mobile_report",
               onTap: () {
                 checkAccess(
-                  method: "mobile_reviu",
-                  onGrandted: widget.onTapReport,
+                  method: "mobile_report",
+                  onGrandted: widget.onTapReviu,
                 );
               }),
           menuItem(

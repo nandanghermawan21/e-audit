@@ -4,4 +4,5 @@ abstract class Strings {
   String get appName => "Mobile Survey";
   String get internetConnestionError => "Internet connection error";
   String get showMore => "Show more";
+  String get year => "year";
 }

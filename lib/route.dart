@@ -11,6 +11,8 @@ import 'package:eaudit/module/pdfViewer/main.dart' as pdfviewwer;
 import 'package:eaudit/module/report/main.dart' as report;
 import 'package:eaudit/module/reviewTask/main.dart' as reviewtask;
 import 'package:eaudit/module/dashboard/main.dart' as dashboard;
+import 'package:eaudit/module/reviu/main.dart' as reviu;
+import 'package:eaudit/module/persiapanAudit/main.dart' as persiapanAudit;
 
 String initialRouteName = RouteName.splashScreen;
 
@@ -25,6 +27,8 @@ class RouteName {
   static const String report = "report";
   static const String reviewtask = "reviewtask";
   static const String dashboard = "dashboard";
+  static const String reviu = "reviu";
+  static const String persiapanaudit = "persiapanaudit";
 }
 
 enum ParamName {
@@ -32,6 +36,7 @@ enum ParamName {
   url,
   centerTitle,
   message,
+  tipeReviu,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -86,6 +91,9 @@ Map<String, WidgetBuilder> route = {
         Navigator.of(context).pushNamedAndRemoveUntil(
             RouteName.login, (r) => r.settings.name == "");
       },
+      onTapReviu: () {
+        Navigator.of(context).pushNamed(RouteName.reviu);
+      },
     );
   },
   RouteName.webview: (BuildContext context) {
@@ -138,5 +146,49 @@ Map<String, WidgetBuilder> route = {
     return dashboard.Presenter(
       key: GlobalKey(),
     );
-  }
+  },
+  RouteName.reviu: (BuildContext context) {
+    return reviu.Presenter(
+      onTapReviuPKA: () {
+        Navigator.of(context).pushNamed(
+          RouteName.persiapanaudit,
+          arguments: {
+            ParamName.tipeReviu: "PKA",
+          },
+        );
+      },
+      onTapReviuKKA: () {
+        Navigator.of(context).pushNamed(
+          RouteName.persiapanaudit,
+          arguments: {
+            ParamName.tipeReviu: "KKA",
+          },
+        );
+      },
+      onTapReviuKKPT: () {
+        Navigator.of(context).pushNamed(
+          RouteName.persiapanaudit,
+          arguments: {
+            ParamName.tipeReviu: "KKPT",
+          },
+        );
+      },
+      onTapReviuTindakLanjut: () {
+        Navigator.of(context).pushNamed(
+          RouteName.persiapanaudit,
+          arguments: {
+            ParamName.tipeReviu: "TL",
+          },
+        );
+      },
+    );
+  },
+  RouteName.persiapanaudit: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
+    return persiapanAudit.Presenter(
+      type: arg[ParamName.tipeReviu],
+    );
+  },
 };

@@ -3,8 +3,13 @@ import 'view.dart';
 
 class Presenter extends StatefulWidget {
   final State<Presenter>? view;
+  final String type;
 
-  const Presenter({Key? key, this.view}) : super(key: key);
+  const Presenter({
+    Key? key,
+    this.view,
+    required this.type,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
