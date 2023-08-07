@@ -150,20 +150,21 @@ class CircularLoaderComponent extends StatelessWidget {
                 height: 20,
               ),
               Material(
-                child: !controller.value.message!.contains("<div")
-                    ? Text(
-                        controller.value.message ?? "Error",
-                        textAlign: TextAlign.center,
-                      )
-                    : Container(
-                        height: 300,
-                        color: Colors.transparent,
-                        child: SingleChildScrollView(
-                          child: Html(
-                            data: controller.value.message,
-                          ),
-                        ),
-                      ),
+                child: controller.value.messageWidget ??
+                    (!controller.value.message!.contains("<div")
+                        ? Text(
+                            controller.value.message ?? "Error",
+                            textAlign: TextAlign.center,
+                          )
+                        : Container(
+                            height: 300,
+                            color: Colors.transparent,
+                            child: SingleChildScrollView(
+                              child: Html(
+                                data: controller.value.message,
+                              ),
+                            ),
+                          )),
               )
             ],
           ),

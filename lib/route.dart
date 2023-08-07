@@ -16,6 +16,8 @@ import 'package:eaudit/module/persiapanAudit/main.dart' as persiapan_audit;
 import 'package:eaudit/module/programKerjaAudit/main.dart'
     as program_kerja_audit;
 import 'package:eaudit/module/reviuPKA/main.dart' as reviu_pka;
+import 'package:eaudit/module/kertasKerjaAudit/main.dart' as kertas_kerja_audit;
+import 'package:eaudit/module/reviuKKA/main.dart' as reviu_kka;
 
 String initialRouteName = RouteName.splashScreen;
 
@@ -34,6 +36,8 @@ class RouteName {
   static const String persiapanaudit = "persiapanaudit";
   static const String programKerjaAudit = "programKerjaAudit";
   static const String reviuPka = "reviuPka";
+  static const String kertaskerjaAudit = "kertaskerjaAudit";
+  static const String reviuKka = "reviuKka";
 }
 
 enum ParamName {
@@ -42,6 +46,7 @@ enum ParamName {
   centerTitle,
   message,
   tipeReviu,
+  kka,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -195,9 +200,21 @@ Map<String, WidgetBuilder> route = {
     return persiapan_audit.Presenter(
       type: arg[ParamName.tipeReviu],
       onTapItem: (data) {
-        Navigator.of(context).pushNamed(
-          RouteName.programKerjaAudit,
-        );
+        switch (data?.status) {
+          case "PKA":
+            Navigator.of(context).pushNamed(
+              RouteName.programKerjaAudit,
+            );
+            break;
+
+          case "KKA":
+            Navigator.of(context).pushNamed(
+              RouteName.kertaskerjaAudit,
+            );
+            break;
+
+          default:
+        }
       },
     );
   },
@@ -215,6 +232,31 @@ Map<String, WidgetBuilder> route = {
       onSubmitSuccess: () {
         Navigator.of(context).pushNamedAndRemoveUntil(
             RouteName.reviu, (r) => r.settings.name == "");
+      },
+    );
+  },
+  RouteName.kertaskerjaAudit: (BuildContext context) {
+    return kertas_kerja_audit.Presenter(
+      onSelectAction: (kka) {
+        Navigator.of(context).pushNamed(
+          RouteName.reviuKka,
+          arguments: {
+            ParamName.kka: kka,
+          },
+        );
+      },
+    );
+  },
+  RouteName.reviuKka: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
+    return reviu_kka.Presenter(
+      kka: arg[ParamName.kka],
+      onSubmitSuccess: () {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            RouteName.kertaskerjaAudit,
+            (r) => r.settings.name == RouteName.reviu);
       },
     );
   },

@@ -105,9 +105,13 @@ class View extends PresenterState {
               enableDrag: false,
               enableGetMore: false,
               dataSource: (skip, key) {
-                return Future.value().then((value) {
-                  return PersiapanAuditModel.dummysPKA();
-                });
+                return Future.value().then(
+                  (value) {
+                    return PersiapanAuditModel.dummys(
+                      status: widget.type,
+                    );
+                  },
+                );
               },
               itemBuilder: (data, index) {
                 return GestureDetector(

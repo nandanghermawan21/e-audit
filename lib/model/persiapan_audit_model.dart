@@ -34,14 +34,16 @@ class PersiapanAuditModel {
   }
 
   //create list dummy
-  static List<PersiapanAuditModel> dummysPKA() {
+  static List<PersiapanAuditModel> dummys({
+    String? status = "PKA",
+  }) {
     return [
       PersiapanAuditModel(
         divisi: "Divisi Akuntansi",
         tanggal: DateTime.parse("2021-09-01 08:00:00"),
         kegiatan:
             "Pelaksanaan Kegiatan Operasional, Administrasi, dan Kepatuhan Divisi Akuntansi",
-        status: "PKA",
+        status: status,
         menungguReviu: 3,
       ),
       PersiapanAuditModel(
@@ -49,7 +51,7 @@ class PersiapanAuditModel {
         tanggal: DateTime.parse("2021-09-01 08:00:00"),
         kegiatan:
             "Pelaksanaan Kegiatan Operasional, Administrasi, dan Kepatuhan Divisi Umum P3DN Tahap 2",
-        status: "PKA",
+        status: status,
         menungguReviu: 2,
       ),
     ];
