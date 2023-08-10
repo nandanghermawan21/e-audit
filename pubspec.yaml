@@ -54,7 +54,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^20.4.41
   url_launcher: ^6.1.7
   flutter_launcher_icons: ^0.9.0
-  d_chart: ^1.0.0
+  d_chart: ^2.3.0
   syncfusion_flutter_gauges: ^20.4.41
 
 
