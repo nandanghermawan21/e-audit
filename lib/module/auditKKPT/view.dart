@@ -1,8 +1,8 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/component/list_data_component.dart';
 import 'package:eaudit/model/action_model.dart';
-import 'package:eaudit/model/audit_kka_model.dart';
-import 'package:eaudit/model/audit_kka_reviu_model.dart';
+import 'package:eaudit/model/audit_kkpt_model.dart';
+import 'package:eaudit/model/audit_kkpt_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,7 +41,7 @@ class View extends PresenterState {
       color: Colors.transparent,
       height: double.infinity,
       width: double.infinity,
-      child: ListDataComponent<AuditkaReviuModel>(
+      child: ListDataComponent<AuditKKPTReviuModel>(
         controller: listController,
         enableGetMore: false,
         enableDrag: false,
@@ -49,7 +49,7 @@ class View extends PresenterState {
         dataSource: (skip, key) {
           return Future.value().then(
             (value) {
-              return [AuditkaReviuModel.dummy()];
+              return [AuditKKPTReviuModel.dummy()];
             },
           );
         },
@@ -70,8 +70,8 @@ class View extends PresenterState {
                 const SizedBox(
                   height: 10,
                 ),
-                ...List.generate(data?.listKka?.length ?? 0, (index) {
-                  return kkaItem(data, data?.listKka?[index]);
+                ...List.generate(data?.listKKPT?.length ?? 0, (index) {
+                  return kkptItem(data, data?.listKKPT?[index]);
                 })
               ],
             ),
@@ -81,7 +81,7 @@ class View extends PresenterState {
     );
   }
 
-  Widget description(AuditkaReviuModel? data) {
+  Widget description(AuditKKPTReviuModel? data) {
     return Column(
       children: [
         Row(
@@ -91,7 +91,7 @@ class View extends PresenterState {
               color: Colors.transparent,
               width: 100,
               child: Text(
-                "Obyek Audit",
+                "Nama kegiatan",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -100,7 +100,7 @@ class View extends PresenterState {
             ),
             Expanded(
               child: Text(
-                data?.objectAudit ?? "",
+                data?.namakegiatan ?? "",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -116,7 +116,7 @@ class View extends PresenterState {
               color: Colors.transparent,
               width: 100,
               child: Text(
-                "Auditor",
+                "Auditee",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -124,7 +124,7 @@ class View extends PresenterState {
               width: 10,
             ),
             Text(
-              data?.auditor ?? "",
+              data?.auditee ?? "",
               style: System.data.textStyles!.basicLabel,
             ),
           ],
@@ -139,7 +139,7 @@ class View extends PresenterState {
               color: Colors.transparent,
               width: 100,
               child: Text(
-                "Judul Program",
+                "Tipe Audit",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -147,7 +147,7 @@ class View extends PresenterState {
               width: 10,
             ),
             Text(
-              data?.judulProgram ?? "",
+              data?.tipeAudit ?? "",
               style: System.data.textStyles!.basicLabel,
             ),
           ],
@@ -162,7 +162,34 @@ class View extends PresenterState {
               color: Colors.transparent,
               width: 100,
               child: Text(
-                "Prosedur Audit",
+                "Tanggal Audit",
+                style: System.data.textStyles!.basicLabel,
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              data?.tanggalAudit == null
+                  ? "-"
+                  : DateFormat("dd MMMM yyyy").format(
+                      (data!.tanggalAudit!),
+                    ),
+              style: System.data.textStyles!.basicLabel,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              color: Colors.transparent,
+              width: 100,
+              child: Text(
+                "No KKA",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -171,17 +198,42 @@ class View extends PresenterState {
             ),
             Expanded(
               child: Text(
-                data?.proseduAudit ?? "",
+                data?.noKKa ?? "",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
           ],
-        )
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              color: Colors.transparent,
+              width: 100,
+              child: Text(
+                "Bidang Subtansi",
+                style: System.data.textStyles!.basicLabel,
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Text(
+                data?.bidangSubtansi ?? "",
+                style: System.data.textStyles!.basicLabel,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
 
-  Widget kkaItem(AuditkaReviuModel? data, AuditKKAModel? kka) {
+  Widget kkptItem(AuditKKPTReviuModel? data, AuditKKPTModel? kkpt) {
     return Container(
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.all(10),
@@ -202,31 +254,8 @@ class View extends PresenterState {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                kka?.noKka ?? "",
+                kkpt?.judulTemuan ?? "",
                 style: System.data.textStyles!.boldTitleLabel,
-              ),
-              Text(
-                kka?.tanggal == null
-                    ? ""
-                    : DateFormat("dd MMMM yyyy").format(kka!.tanggal!),
-                style: System.data.textStyles!.boldTitleLabel,
-              ),
-            ],
-          ),
-          Divider(
-            height: 10,
-            color: Colors.grey.shade400,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Judul", style: System.data.textStyles!.boldTitleLabel),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                kka?.judulKka ?? "",
-                style: System.data.textStyles!.basicLabel,
               ),
             ],
           ),
@@ -244,7 +273,7 @@ class View extends PresenterState {
                     height: 5,
                   ),
                   Text(
-                    kka?.status ?? "",
+                    kkpt?.status ?? "",
                     style: System.data.textStyles!.basicLabel,
                   ),
                 ],
@@ -252,30 +281,34 @@ class View extends PresenterState {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("Temuan", style: System.data.textStyles!.boldTitleLabel),
+                  Text("Rekomendasi",
+                      style: System.data.textStyles!.boldTitleLabel),
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    kka?.temuan?.toString() ?? "",
-                    style: System.data.textStyles!.basicLabel,
+                  CircleAvatar(
+                    radius: 15,
+                    child: Text(
+                      kkpt?.rekomendasi?.toString() ?? "",
+                      style: System.data.textStyles!.basicLightLabel,
+                    ),
                   ),
                 ],
               ),
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: List.generate(
-              kka?.actions?.length ?? 0,
+              kkpt?.actions.length ?? 0,
               (index) {
                 return buttonAction(
-                  action: kka?.actions?[index],
+                  action: kkpt?.actions[index],
                   data: data,
-                  kka: kka,
+                  kkpt: kkpt,
                 );
               },
             ),
@@ -287,8 +320,8 @@ class View extends PresenterState {
 
   Widget buttonAction({
     required ActionModel? action,
-    required AuditkaReviuModel? data,
-    required AuditKKAModel? kka,
+    required AuditKKPTReviuModel? data,
+    required AuditKKPTModel? kkpt,
   }) {
     return GestureDetector(
       onTap: () {
@@ -317,13 +350,11 @@ class View extends PresenterState {
                         onPressed: () {
                           loadingController.forceStop();
                           widget.onSelectAction!(
-                            AuditkaReviuModel(
-                              objectAudit: data?.objectAudit,
-                              judulProgram: data?.judulProgram,
-                              auditor: data?.auditor,
-                              proseduAudit: data?.proseduAudit,
-                              listKka: [kka],
-                            ),
+                            AuditKKPTReviuModel(
+                                id: data?.id,
+                                auditee: data?.auditee,
+                                bidangSubtansi: data?.bidangSubtansi,
+                                listKKPT: [kkpt]),
                           );
                         },
                         child: Text(

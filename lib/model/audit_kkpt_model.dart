@@ -1,18 +1,22 @@
-class AuditKPTModel {
+import 'package:eaudit/model/action_model.dart';
+
+class AuditKKPTModel {
   String? id;
   String? judulTemuan;
   int? rekomendasi;
   String? status;
+  List<ActionModel> actions;
 
-  AuditKPTModel({
+  AuditKKPTModel({
     this.id,
     this.judulTemuan,
     this.rekomendasi,
     this.status,
+    this.actions = const [],
   });
 
-  static AuditKPTModel fromJson(Map<String, dynamic> json) {
-    return AuditKPTModel(
+  static AuditKKPTModel fromJson(Map<String, dynamic> json) {
+    return AuditKKPTModel(
       id: json["id"],
       judulTemuan: json["judul_temuan"],
       rekomendasi: json["rekomendasi"],
@@ -29,19 +33,21 @@ class AuditKPTModel {
   }
 
   //create list dummy
-  static List<AuditKPTModel> dummys({
+  static List<AuditKKPTModel> dummys({
     String? status = "PKA",
   }) {
     return [
-      AuditKPTModel(
+      AuditKKPTModel(
         judulTemuan: "Tidak ada SOP",
         rekomendasi: 3,
         status: status,
+        actions: ActionModel.dummy(),
       ),
-      AuditKPTModel(
+      AuditKKPTModel(
         judulTemuan: "Tidak ada Pengawasan",
         rekomendasi: 3,
         status: status,
+        actions: ActionModel.dummy(),
       ),
     ];
   }
