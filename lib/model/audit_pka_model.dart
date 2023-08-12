@@ -1,7 +1,8 @@
 import 'package:eaudit/model/anggota_model.dart';
 import 'package:eaudit/model/program_audit_model.dart';
 
-class ProgramKerjaAuditModel {
+class AuditPKAModel {
+  String? id;
   String? namaKegiatan;
   String? auditee;
   String? tipeAudit;
@@ -9,7 +10,8 @@ class ProgramKerjaAuditModel {
   List<AnggotaModel>? anggota;
   List<ProgramAuditModel>? programAudit;
 
-  ProgramKerjaAuditModel({
+  AuditPKAModel({
+    this.id,
     this.namaKegiatan,
     this.auditee,
     this.tipeAudit,
@@ -18,8 +20,9 @@ class ProgramKerjaAuditModel {
     this.programAudit,
   });
 
-  static ProgramKerjaAuditModel fromJson(Map<String, dynamic> json) {
-    return ProgramKerjaAuditModel(
+  static AuditPKAModel fromJson(Map<String, dynamic> json) {
+    return AuditPKAModel(
+      id: json["id"],
       namaKegiatan: json["nama_kegiatan"],
       auditee: json["auditee"],
       tipeAudit: json["tipe_audit"],
@@ -35,6 +38,7 @@ class ProgramKerjaAuditModel {
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "nama_kegiatan": namaKegiatan,
       "auditee": auditee,
       "tipe_audit": tipeAudit,
@@ -44,8 +48,9 @@ class ProgramKerjaAuditModel {
   }
 
   //create list dummy
-  static ProgramKerjaAuditModel dummy() {
-    return ProgramKerjaAuditModel(
+  static AuditPKAModel dummy() {
+    return AuditPKAModel(
+      id: "1",
       namaKegiatan:
           "Pelaksanaan Kegiatan Operasional, Administrasi, dan Kepatuhan Divisi Akuntansi",
       auditee: "Divisi Akuntansi",

@@ -1,8 +1,8 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/component/list_data_component.dart';
 import 'package:eaudit/model/action_model.dart';
-import 'package:eaudit/model/kertas_kerja_audit.dart';
-import 'package:eaudit/model/reviu_kka_model.dart';
+import 'package:eaudit/model/audit_kka_model.dart';
+import 'package:eaudit/model/audit_kka_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,7 +41,7 @@ class View extends PresenterState {
       color: Colors.transparent,
       height: double.infinity,
       width: double.infinity,
-      child: ListDataComponent<ReviuKkaModel>(
+      child: ListDataComponent<AuditkaReviuModel>(
         controller: listController,
         enableGetMore: false,
         enableDrag: false,
@@ -49,7 +49,7 @@ class View extends PresenterState {
         dataSource: (skip, key) {
           return Future.value().then(
             (value) {
-              return [ReviuKkaModel.dummy()];
+              return [AuditkaReviuModel.dummy()];
             },
           );
         },
@@ -81,7 +81,7 @@ class View extends PresenterState {
     );
   }
 
-  Widget description(ReviuKkaModel? data) {
+  Widget description(AuditkaReviuModel? data) {
     return Column(
       children: [
         Row(
@@ -181,7 +181,7 @@ class View extends PresenterState {
     );
   }
 
-  Widget kkaItem(ReviuKkaModel? data, KertasKerjaAudit? kka) {
+  Widget kkaItem(AuditkaReviuModel? data, AuditKKAModel? kka) {
     return Container(
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.all(10),
@@ -322,7 +322,7 @@ class View extends PresenterState {
                                         loadingController.forceStop();
                                         kka?.action = value?.value;
                                         widget.onSelectAction!(
-                                          ReviuKkaModel(
+                                          AuditkaReviuModel(
                                             objectAudit: data?.objectAudit,
                                             judulProgram: data?.judulProgram,
                                             auditor: data?.auditor,

@@ -1,6 +1,6 @@
 import 'package:eaudit/component/circular_loader_component.dart';
-import 'package:eaudit/model/kertas_kerja_audit.dart';
-import 'package:eaudit/model/reviu_kka_model.dart';
+import 'package:eaudit/model/audit_kka_model.dart';
+import 'package:eaudit/model/audit_kka_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -84,7 +84,7 @@ class View extends PresenterState {
     );
   }
 
-  Widget description(ReviuKkaModel? data) {
+  Widget description(AuditkaReviuModel? data) {
     return Column(
       children: [
         Row(
@@ -184,7 +184,7 @@ class View extends PresenterState {
     );
   }
 
-  Widget kertasKerja(KertasKerjaAudit? data) {
+  Widget kertasKerja(AuditKKAModel? data) {
     return Column(
       children: [
         Row(

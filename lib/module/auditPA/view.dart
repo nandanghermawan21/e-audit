@@ -1,5 +1,5 @@
 import 'package:eaudit/component/list_data_component.dart';
-import 'package:eaudit/model/persiapan_audit_model.dart';
+import 'package:eaudit/model/audit_pa_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -100,14 +100,14 @@ class View extends PresenterState {
         Expanded(
           child: Container(
             color: Colors.transparent,
-            child: ListDataComponent<PersiapanAuditModel>(
+            child: ListDataComponent<AuditPaModel>(
               controller: listController,
               enableDrag: false,
               enableGetMore: false,
               dataSource: (skip, key) {
                 return Future.value().then(
                   (value) {
-                    return PersiapanAuditModel.dummys(
+                    return AuditPaModel.dummys(
                       status: widget.type,
                     );
                   },

@@ -1,5 +1,5 @@
 import 'package:eaudit/component/list_data_component.dart';
-import 'package:eaudit/model/program_kerja_audit_model.dart';
+import 'package:eaudit/model/audit_pka_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -32,7 +32,7 @@ class View extends PresenterState {
   Widget body() {
     return Container(
       color: Colors.transparent,
-      child: ListDataComponent<ProgramKerjaAuditModel>(
+      child: ListDataComponent<AuditPKAModel>(
         controller: listController,
         enableGetMore: false,
         enableDrag: false,
@@ -40,7 +40,7 @@ class View extends PresenterState {
           return Future.value().then(
             (value) {
               return [
-                ProgramKerjaAuditModel.dummy(),
+                AuditPKAModel.dummy(),
               ];
             },
           );
@@ -104,7 +104,7 @@ class View extends PresenterState {
     );
   }
 
-  Widget description(ProgramKerjaAuditModel? data) {
+  Widget description(AuditPKAModel? data) {
     return Column(
       children: [
         Row(
@@ -206,7 +206,7 @@ class View extends PresenterState {
     );
   }
 
-  Widget tableAnggota(ProgramKerjaAuditModel? data) {
+  Widget tableAnggota(AuditPKAModel? data) {
     return Table(
       columnWidths: const {
         0: FlexColumnWidth(1),
@@ -292,7 +292,7 @@ class View extends PresenterState {
     );
   }
 
-  Widget programKerja(ProgramKerjaAuditModel? data) {
+  Widget programKerja(AuditPKAModel? data) {
     return Column(
       children: List.generate(
         data?.programAudit?.length ?? 0,

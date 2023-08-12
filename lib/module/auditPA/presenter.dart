@@ -1,16 +1,18 @@
-import 'package:eaudit/model/program_kerja_audit_model.dart';
+import 'package:eaudit/component/list_data_component.dart';
+import 'package:eaudit/model/audit_pa_model.dart';
 import 'package:flutter/material.dart';
-import '../../component/list_data_component.dart';
 import 'view.dart';
 
 class Presenter extends StatefulWidget {
   final State<Presenter>? view;
-  final ValueChanged<ProgramKerjaAuditModel?>? onTapReviu;
+  final String type;
+  final ValueChanged<AuditPaModel?>? onTapItem;
 
   const Presenter({
     Key? key,
     this.view,
-    this.onTapReviu,
+    required this.type,
+    this.onTapItem,
   }) : super(key: key);
 
   @override
@@ -21,6 +23,6 @@ class Presenter extends StatefulWidget {
 }
 
 abstract class PresenterState extends State<Presenter> {
-  ListDataComponentController<ProgramKerjaAuditModel> listController =
-      ListDataComponentController<ProgramKerjaAuditModel>();
+  ListDataComponentController<AuditPaModel> listController =
+      ListDataComponentController<AuditPaModel>();
 }

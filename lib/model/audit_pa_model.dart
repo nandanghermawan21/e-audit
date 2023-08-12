@@ -1,11 +1,13 @@
-class PersiapanAuditModel {
+class AuditPaModel {
+  String? id;
   String? divisi;
   DateTime? tanggal;
   String? kegiatan;
   String? status;
   int? menungguReviu;
 
-  PersiapanAuditModel({
+  AuditPaModel({
+    this.id,
     this.divisi,
     this.tanggal,
     this.kegiatan,
@@ -13,8 +15,9 @@ class PersiapanAuditModel {
     this.menungguReviu,
   });
 
-  static PersiapanAuditModel fromJson(Map<String, dynamic> json) {
-    return PersiapanAuditModel(
+  static AuditPaModel fromJson(Map<String, dynamic> json) {
+    return AuditPaModel(
+      id: json["id"],
       divisi: json["divisi"],
       tanggal: DateTime.parse(json["tanggal"]),
       kegiatan: json["kegiatan"],
@@ -25,6 +28,7 @@ class PersiapanAuditModel {
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "divisi": divisi,
       "tanggal": tanggal,
       "kegiatan": kegiatan,
@@ -34,11 +38,12 @@ class PersiapanAuditModel {
   }
 
   //create list dummy
-  static List<PersiapanAuditModel> dummys({
+  static List<AuditPaModel> dummys({
     String? status = "PKA",
   }) {
     return [
-      PersiapanAuditModel(
+      AuditPaModel(
+        id: "45",
         divisi: "Divisi Akuntansi",
         tanggal: DateTime.parse("2021-09-01 08:00:00"),
         kegiatan:
@@ -46,7 +51,8 @@ class PersiapanAuditModel {
         status: status,
         menungguReviu: 3,
       ),
-      PersiapanAuditModel(
+      AuditPaModel(
+        id: "46",
         divisi: "Divisi Umum",
         tanggal: DateTime.parse("2021-09-01 08:00:00"),
         kegiatan:

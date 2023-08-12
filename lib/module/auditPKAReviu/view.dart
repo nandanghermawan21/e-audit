@@ -1,6 +1,6 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/component/list_data_component.dart';
-import 'package:eaudit/model/reviu_pka_model.dart';
+import 'package:eaudit/model/audit_pka_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 
@@ -61,13 +61,13 @@ class View extends PresenterState {
   Widget body() {
     return Container(
       color: Colors.transparent,
-      child: ListDataComponent<ReviuPkaModel>(
+      child: ListDataComponent<AuditPKAReviuModel>(
         controller: listController,
         enableDrag: false,
         enableGetMore: false,
         dataSource: (skip, key) {
           return Future.value().then((value) {
-            return ReviuPkaModel.dummys();
+            return AuditPKAReviuModel.dummys();
           });
         },
         itemBuilder: (data, index) {

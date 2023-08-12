@@ -1,11 +1,11 @@
 import 'package:eaudit/component/circular_loader_component.dart';
-import 'package:eaudit/model/reviu_kka_model.dart';
+import 'package:eaudit/model/audit_kka_reviu_model.dart';
 import 'package:flutter/material.dart';
 import 'view.dart';
 
 class Presenter extends StatefulWidget {
   final State<Presenter>? view;
-  final ReviuKkaModel? kka;
+  final AuditkaReviuModel? kka;
   final VoidCallback? onSubmitSuccess;
 
   const Presenter({Key? key, this.view, this.kka, this.onSubmitSuccess})

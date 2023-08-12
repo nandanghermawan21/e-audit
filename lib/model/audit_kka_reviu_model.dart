@@ -1,13 +1,15 @@
-import 'package:eaudit/model/kertas_kerja_audit.dart';
+import 'package:eaudit/model/audit_kka_model.dart';
 
-class ReviuKkaModel {
+class AuditkaReviuModel {
+  String? id;
   String? objectAudit;
   String? auditor;
   String? judulProgram;
   String? proseduAudit;
-  List<KertasKerjaAudit?>? listKka;
+  List<AuditKKAModel?>? listKka;
 
-  ReviuKkaModel({
+  AuditkaReviuModel({
+    this.id,
     this.objectAudit,
     this.auditor,
     this.judulProgram,
@@ -15,21 +17,23 @@ class ReviuKkaModel {
     this.listKka,
   });
 
-  static ReviuKkaModel fromJson(Map<String, dynamic> json) {
-    return ReviuKkaModel(
+  static AuditkaReviuModel fromJson(Map<String, dynamic> json) {
+    return AuditkaReviuModel(
+      id: json["id"],
       objectAudit: json["object_audit"],
       auditor: json["auditor"],
       judulProgram: json["judul_program"],
       proseduAudit: json["prosedu_audit"],
       listKka: json["list_kka"] != null
-          ? List<KertasKerjaAudit>.from(
-              json["list_kka"].map((x) => KertasKerjaAudit.fromJson(x)))
+          ? List<AuditKKAModel>.from(
+              json["list_kka"].map((x) => AuditKKAModel.fromJson(x)))
           : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "object_audit": objectAudit,
       "auditor": auditor,
       "judul_program": judulProgram,
@@ -41,13 +45,14 @@ class ReviuKkaModel {
   }
 
   //create list dummy
-  static ReviuKkaModel dummy() {
-    return ReviuKkaModel(
+  static AuditkaReviuModel dummy() {
+    return AuditkaReviuModel(
+        id: "1",
         objectAudit: "Divisi Akuntansi",
         auditor: "Andreas",
         judulProgram: "ASET - Penilaian",
         proseduAudit:
             "1. Periksa akun biaya perbaikan dan pemeliharaan.\n 2. Analisa kewajaran biaya penyusutan berdasarkan nilai perolehan aktiva\n dan tarif depresiasi yang berlaku. \n3. Lakukan test penghitungan kembali penyusutan.",
-        listKka: KertasKerjaAudit.dummys());
+        listKka: AuditKKAModel.dummys());
   }
 }

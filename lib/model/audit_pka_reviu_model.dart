@@ -1,4 +1,4 @@
-class ReviuPkaModel {
+class AuditPKAReviuModel {
   String? id;
   String? judul;
   String? langkahKerja;
@@ -7,7 +7,7 @@ class ReviuPkaModel {
   String? status;
   String? catatan;
 
-  ReviuPkaModel({
+  AuditPKAReviuModel({
     this.id,
     this.judul,
     this.langkahKerja,
@@ -17,8 +17,8 @@ class ReviuPkaModel {
     this.catatan,
   });
 
-  static ReviuPkaModel fromJson(Map<String, dynamic> json) {
-    return ReviuPkaModel(
+  static AuditPKAReviuModel fromJson(Map<String, dynamic> json) {
+    return AuditPKAReviuModel(
       id: json["id"],
       judul: json["judul"],
       langkahKerja: json["langkah_kerja"],
@@ -41,9 +41,9 @@ class ReviuPkaModel {
     };
   }
 
-  static List<ReviuPkaModel> dummys() {
+  static List<AuditPKAReviuModel> dummys() {
     return [
-      ReviuPkaModel(
+      AuditPKAReviuModel(
         id: "1",
         judul: "A ASET",
         langkahKerja:
@@ -53,7 +53,7 @@ class ReviuPkaModel {
         status: null,
         catatan: "",
       ),
-      ReviuPkaModel(
+      AuditPKAReviuModel(
         id: "2",
         judul: "A ASET",
         langkahKerja:
@@ -63,7 +63,7 @@ class ReviuPkaModel {
         status: null,
         catatan: "",
       ),
-      ReviuPkaModel(
+      AuditPKAReviuModel(
         id: "3",
         judul: "DIVISI BISNIS II",
         langkahKerja:

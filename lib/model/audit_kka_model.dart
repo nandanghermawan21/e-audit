@@ -1,7 +1,8 @@
 import 'package:eaudit/model/action_model.dart';
 import 'package:eaudit/model/komentar_odel.dart';
 
-class KertasKerjaAudit {
+class AuditKKAModel {
+  String? id;
   String? noKka;
   String? judulKka;
   DateTime? tanggal;
@@ -16,7 +17,8 @@ class KertasKerjaAudit {
   List<ActionModel>? actions;
   String? action;
 
-  KertasKerjaAudit({
+  AuditKKAModel({
+    this.id,
     this.noKka,
     this.judulKka,
     this.tanggal,
@@ -32,8 +34,9 @@ class KertasKerjaAudit {
     this.urlFileKertasKerja,
   });
 
-  static KertasKerjaAudit fromJson(Map<String, dynamic> json) {
-    return KertasKerjaAudit(
+  static AuditKKAModel fromJson(Map<String, dynamic> json) {
+    return AuditKKAModel(
+      id: json["id"],
       noKka: json["no_kka"],
       judulKka: json["judul_kka"],
       tanggal: DateTime.parse(json["tanggal"]),
@@ -59,6 +62,7 @@ class KertasKerjaAudit {
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "no_kka": noKka,
       "judul_kka": judulKka,
       "tanggal": tanggal,
@@ -79,9 +83,10 @@ class KertasKerjaAudit {
   }
 
   //create list dummy
-  static List<KertasKerjaAudit> dummys() {
+  static List<AuditKKAModel> dummys() {
     return [
-      KertasKerjaAudit(
+      AuditKKAModel(
+        id: "11",
         noKka: "6/KEU/08/2023",
         judulKka:
             "Pelaksanaan Kegiatan Operasional, Administrasi, dan Kepatuhan ",
@@ -96,7 +101,8 @@ class KertasKerjaAudit {
         urlFileKertasKerja: "test",
         komentar: KomentarModel.dummy(),
       ),
-      KertasKerjaAudit(
+      AuditKKAModel(
+        id: "12",
         noKka: "7/KEU/08/2023",
         judulKka:
             "Pelaksanaan Kegiatan Operasional, Administrasi, dan Kepatuhan",
