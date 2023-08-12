@@ -19,6 +19,7 @@ import 'package:eaudit/module/auditKKA/main.dart' as audit_kka;
 import 'package:eaudit/module/auditKKAReviu/main.dart' as audit_kka_reviu;
 import 'package:eaudit/module/auditKKPT/main.dart' as audit_kkpt;
 import 'package:eaudit/module/auditKKPTReviu/main.dart' as audit_kkpt_reviu;
+import 'package:eaudit/module/auditTL/main.dart' as audit_tl;
 
 String initialRouteName = RouteName.splashScreen;
 
@@ -41,6 +42,7 @@ class RouteName {
   static const String reviuKKAReviu = "reviuKKAReviu";
   static const String auditKKPT = "auditKKPT";
   static const String auditKKPTReviu = "auditKKPTReviu";
+  static const String auditTl = "auditTl";
 }
 
 enum ParamName {
@@ -189,10 +191,7 @@ Map<String, WidgetBuilder> route = {
       },
       onTapReviuTindakLanjut: () {
         Navigator.of(context).pushNamed(
-          RouteName.auditPA,
-          arguments: {
-            ParamName.tipeReviu: "TL",
-          },
+          RouteName.auditTl,
         );
       },
     );
@@ -298,5 +297,8 @@ Map<String, WidgetBuilder> route = {
             RouteName.auditKKPT, (r) => r.settings.name == RouteName.reviu);
       },
     );
+  },
+  RouteName.auditTl: (BuildContext context) {
+    return const audit_tl.Presenter();
   },
 };
