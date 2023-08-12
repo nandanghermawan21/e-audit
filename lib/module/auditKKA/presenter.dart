@@ -6,13 +6,11 @@ import 'view.dart';
 
 class Presenter extends StatefulWidget {
   final State<Presenter>? view;
-  final VoidCallback? onSubmitSuccess;
   final ValueChanged<AuditkaReviuModel?>? onSelectAction;
 
   const Presenter({
     Key? key,
     this.view,
-    this.onSubmitSuccess,
     this.onSelectAction,
   }) : super(key: key);
 

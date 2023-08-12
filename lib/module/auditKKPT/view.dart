@@ -84,150 +84,33 @@ class View extends PresenterState {
   Widget description(AuditKKPTReviuModel? data) {
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Nama kegiatan",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.namakegiatan ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
+        detail(
+          label: "Nama Kegiatan",
+          value: data?.namakegiatan ?? "",
         ),
-        const SizedBox(
-          height: 5,
+        detail(
+          label: "Auditee",
+          value: data?.auditee ?? "",
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Auditee",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              data?.auditee ?? "",
-              style: System.data.textStyles!.basicLabel,
-            ),
-          ],
+        detail(
+          label: "Tipe Audit",
+          value: data?.tipeAudit ?? "",
         ),
-        const SizedBox(
-          height: 5,
+        detail(
+          label: "Tanggal Audit",
+          value: data?.tanggalAudit == null
+              ? "-"
+              : DateFormat("dd MMMM yyyy").format(
+                  (data!.tanggalAudit!),
+                ),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Tipe Audit",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              data?.tipeAudit ?? "",
-              style: System.data.textStyles!.basicLabel,
-            ),
-          ],
+        detail(
+          label: "No KKA",
+          value: data?.noKKa ?? "",
         ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Tanggal Audit",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              data?.tanggalAudit == null
-                  ? "-"
-                  : DateFormat("dd MMMM yyyy").format(
-                      (data!.tanggalAudit!),
-                    ),
-              style: System.data.textStyles!.basicLabel,
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "No KKA",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.noKKa ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Bidang Subtansi",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.bidangSubtansi ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
+        detail(
+          label: "Bidang Subtansi",
+          value: data?.bidangSubtansi ?? "",
         ),
       ],
     );
@@ -354,6 +237,10 @@ class View extends PresenterState {
                                 id: data?.id,
                                 auditee: data?.auditee,
                                 bidangSubtansi: data?.bidangSubtansi,
+                                namakegiatan: data?.namakegiatan,
+                                noKKa: data?.noKKa,
+                                tipeAudit: data?.tipeAudit,
+                                tanggalAudit: data?.tanggalAudit,
                                 listKKPT: [kkpt]),
                           );
                         },
@@ -404,6 +291,41 @@ class View extends PresenterState {
           style: System.data.textStyles!.boldTitleLightLabel,
         ),
       ),
+    );
+  }
+
+  Widget detail({
+    String? label,
+    String? value,
+  }) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              color: Colors.transparent,
+              width: 100,
+              child: Text(
+                label ?? "",
+                style: System.data.textStyles!.basicLabel,
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Text(
+                value ?? "",
+                style: System.data.textStyles!.basicLabel,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -387,6 +387,7 @@ class View extends PresenterState {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               data?.komentar?[index].name ?? "",
@@ -397,8 +398,10 @@ class View extends PresenterState {
                             ),
                             Text(
                               data?.komentar?[index].tanggal == null
-                                  ? ""
-                                  : timeAgo(data!.komentar![index].tanggal!),
+                                  ? "-"
+                                  : DateFormat("dd MMMM yyyy").format(
+                                      (data?.komentar?[index].tanggal!)!,
+                                    ),
                               style: System.data.textStyles!.basicLabel,
                             ),
                           ],

@@ -17,7 +17,8 @@ import 'package:eaudit/module/auditPKA/main.dart' as audit_pka;
 import 'package:eaudit/module/auditPKAReviu/main.dart' as audit_pka_reviu;
 import 'package:eaudit/module/auditKKA/main.dart' as audit_kka;
 import 'package:eaudit/module/auditKKAReviu/main.dart' as audit_kka_reviu;
-import 'package:eaudit/module/auditKKPT/main.dart' as reviu_kkpt;
+import 'package:eaudit/module/auditKKPT/main.dart' as audit_kkpt;
+import 'package:eaudit/module/auditKKPTReviu/main.dart' as audit_kkpt_reviu;
 
 String initialRouteName = RouteName.splashScreen;
 
@@ -38,7 +39,8 @@ class RouteName {
   static const String auditPKAReviu = "auditPKAReviu";
   static const String auditKKA = "auditKKA";
   static const String reviuKKAReviu = "reviuKKAReviu";
-  static const String reviuKKPT = "reviuKKPT";
+  static const String auditKKPT = "auditKKPT";
+  static const String auditKKPTReviu = "auditKKPTReviu";
 }
 
 enum ParamName {
@@ -48,6 +50,7 @@ enum ParamName {
   message,
   tipeReviu,
   kka,
+  kkpt,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -216,7 +219,7 @@ Map<String, WidgetBuilder> route = {
 
           case "KKPT":
             Navigator.of(context).pushNamed(
-              RouteName.reviuKKPT,
+              RouteName.auditKKPT,
             );
             break;
 
@@ -266,11 +269,33 @@ Map<String, WidgetBuilder> route = {
       },
     );
   },
-  RouteName.reviuKKPT: (BuildContext context) {
-    return reviu_kkpt.Presenter(
+  RouteName.auditKKPT: (BuildContext context) {
+    return audit_kkpt.Presenter(
+      onSelectAction: (kkpt) {
+        Navigator.of(context).pushNamed(
+          RouteName.auditKKPTReviu,
+          arguments: {
+            ParamName.kkpt: kkpt,
+          },
+        );
+      },
+    );
+  },
+  RouteName.auditKKPTReviu: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
+    return audit_kkpt_reviu.Presenter(
+      kkpt: arg[ParamName.kkpt],
+      onTapFile: (title, url) {
+        Navigator.of(context).pushNamed(RouteName.pdfViewwer, arguments: {
+          ParamName.title: title,
+          ParamName.url: url,
+        });
+      },
       onSubmitSuccess: () {
         Navigator.of(context).pushNamedAndRemoveUntil(
-            RouteName.dashboard, (r) => r.settings.name == "");
+            RouteName.auditKKPT, (r) => r.settings.name == RouteName.reviu);
       },
     );
   },
