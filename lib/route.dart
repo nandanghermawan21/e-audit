@@ -22,6 +22,7 @@ import 'package:eaudit/module/auditKKPTReviu/main.dart' as audit_kkpt_reviu;
 import 'package:eaudit/module/auditTL/main.dart' as audit_tl;
 import 'package:eaudit/module/auditTLRekomendasi/main.dart'
     as audit_tl_rekomendasi;
+import 'package:eaudit/module/auditTLDetail/main.dart' as audit_tl_detail;
 import 'package:eaudit/module/auditTLReviu/main.dart' as audit_tl_reviu;
 
 String initialRouteName = RouteName.splashScreen;
@@ -47,6 +48,7 @@ class RouteName {
   static const String auditKKPTReviu = "auditKKPTReviu";
   static const String auditTl = "auditTl";
   static const String auditTlRekomendasi = "auditTlRekomendasi";
+  static const String auditTlDetail = "auditTlDetail";
   static const String auditTlReviu = "auditTlReviu";
 }
 
@@ -240,6 +242,11 @@ Map<String, WidgetBuilder> route = {
           RouteName.auditPKAReviu,
         );
       },
+      onTapKKA: (data) {
+        Navigator.of(context).pushNamed(
+          RouteName.auditKKA,
+        );
+      },
     );
   },
   RouteName.auditPKAReviu: (BuildContext context) {
@@ -322,11 +329,30 @@ Map<String, WidgetBuilder> route = {
             {};
     return audit_tl_rekomendasi.Presenter(
       onSelectAction: (val) {
-        Navigator.of(context).pushNamed(RouteName.auditTlReviu, arguments: {
+        Navigator.of(context).pushNamed(RouteName.auditTlDetail, arguments: {
           ParamName.tL: val,
         });
       },
       auditTLReviu: arg[ParamName.tL],
+    );
+  },
+  RouteName.auditTlDetail: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
+    return audit_tl_detail.Presenter(
+      auditTLReviu: arg[ParamName.tL],
+      onTapFile: (title, url) {
+        Navigator.of(context).pushNamed(RouteName.pdfViewwer, arguments: {
+          ParamName.title: title,
+          ParamName.url: url,
+        });
+      },
+      onSelectAction: (val) {
+        Navigator.of(context).pushNamed(RouteName.auditTlReviu, arguments: {
+          ParamName.tL: val,
+        });
+      },
     );
   },
   RouteName.auditTlReviu: (BuildContext context) {
@@ -340,6 +366,10 @@ Map<String, WidgetBuilder> route = {
           ParamName.title: title,
           ParamName.url: url,
         });
+      },
+      onSubmitSuccess: () {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            RouteName.auditTl, (r) => r.settings.name == RouteName.reviu);
       },
     );
   },

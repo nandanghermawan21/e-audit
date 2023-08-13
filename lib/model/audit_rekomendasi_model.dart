@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 class AuditRekomendasiModel {
   String? deskripsi;
   String? status;
+  String? statusRekomensai;
   int? sisaHariTindakLanjut;
   Color? color;
-  List<AuditTLItemModel>? listItem;
+  List<AuditTLItemModel?>? listItem;
 
   AuditRekomendasiModel({
     this.deskripsi,

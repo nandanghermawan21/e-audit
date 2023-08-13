@@ -1,4 +1,5 @@
 import 'package:eaudit/component/list_data_component.dart';
+import 'package:eaudit/model/audit_kka_model.dart';
 import 'package:eaudit/model/audit_pka_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
@@ -367,27 +368,38 @@ class View extends PresenterState {
                       color: Colors.transparent,
                       child: Column(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          GestureDetector(
+                            onTap: () {
+                              widget.onTapKKA?.call(
+                                AuditKKAModel.dummys().first,
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: System.data.color!.primaryColor
+                                    .withOpacity(0.5),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "KKA",
-                                  style: System.data.textStyles!.basicLabel,
+                              child: SizedBox(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "KKA",
+                                      style: System.data.textStyles!.basicLabel,
+                                    ),
+                                    Text(
+                                      "2",
+                                      style: System.data.textStyles!.basicLabel,
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "0",
-                                  style: System.data.textStyles!.basicLabel,
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                           const SizedBox(
