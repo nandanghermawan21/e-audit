@@ -1,16 +1,18 @@
-import 'package:eaudit/component/list_data_component.dart';
+import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/audit_tl_reviu_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'view.dart';
 
 class Presenter extends StatefulWidget {
   final State<Presenter>? view;
-  final ValueChanged<AuditTLReviuModel?>? onSelectItem;
+  final AuditTLReviuModel? auditTLReviu;
+  final ValueChanged<AuditTLReviuModel> onSelectAction;
 
   const Presenter({
     Key? key,
     this.view,
-    this.onSelectItem,
+    this.auditTLReviu,
+    required this.onSelectAction,
   }) : super(key: key);
 
   @override
@@ -21,6 +23,5 @@ class Presenter extends StatefulWidget {
 }
 
 abstract class PresenterState extends State<Presenter> {
-  ListDataComponentController<AuditTLReviuModel> listDataComponentController =
-      ListDataComponentController<AuditTLReviuModel>();
+  CircularLoaderController loadingController = CircularLoaderController();
 }

@@ -1,32 +1,31 @@
-import 'package:eaudit/model/audit_rekomendasi_model.dart';
+import 'package:eaudit/model/audit_tl_model.dart';
 
 class AuditTLReviuModel {
-  String? uraianTemuan;
-  String? rekomendasi;
-  List<AuditRekomendasiModel?>? listRekomendasi;
+  String? obyekAudit;
+  String? nomorLha;
+  List<AuditTLModel?>? listAuditTL;
 
   AuditTLReviuModel({
-    this.uraianTemuan,
-    this.rekomendasi,
-    this.listRekomendasi,
+    this.obyekAudit,
+    this.nomorLha,
+    this.listAuditTL,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      "uraian_temuan": uraianTemuan,
-      "rekomendasi": rekomendasi,
-      "list_rekomendasi": listRekomendasi,
+      "obyekAudit": obyekAudit,
+      "nomorLha": nomorLha,
+      "listAuditTL": listAuditTL?.map((e) => e?.toJson()).toList(),
     };
   }
 
   static AuditTLReviuModel fromJson(Map<String, dynamic> json) {
     return AuditTLReviuModel(
-      uraianTemuan: json["uraian_temuan"],
-      rekomendasi: json["rekomendasi"],
-      listRekomendasi: json["list_rekomendasi"] != null
-          ? List<AuditRekomendasiModel>.from(
-              json["list_rekomendasi"]
-                  .map((x) => AuditRekomendasiModel.fromJson(x)),
+      obyekAudit: json["obyekAudit"],
+      nomorLha: json["nomorLha"],
+      listAuditTL: json["listAuditTL"] != null
+          ? List<AuditTLModel>.from(
+              json["listAuditTL"].map((x) => AuditTLModel.fromJson(x)),
             )
           : null,
     );
@@ -36,19 +35,19 @@ class AuditTLReviuModel {
   static List<AuditTLReviuModel> dummys() {
     return <AuditTLReviuModel>[
       AuditTLReviuModel(
-        uraianTemuan: "Kantor Cabang Serang",
-        rekomendasi: "4/LHA/II/2023",
-        listRekomendasi: AuditRekomendasiModel.dummys(),
+        obyekAudit: "Kantor Cabang Serang",
+        nomorLha: "4/LHA/II/2023",
+        listAuditTL: AuditTLModel.dummys(),
       ),
       AuditTLReviuModel(
-        uraianTemuan: "Kantor Cabang Batam",
-        rekomendasi: "4/LHA/I3/2023",
-        listRekomendasi: AuditRekomendasiModel.dummys(),
+        obyekAudit: "Kantor Cabang Batam",
+        nomorLha: "4/LHA/I3/2023",
+        listAuditTL: AuditTLModel.dummys(),
       ),
       AuditTLReviuModel(
-        uraianTemuan: "Kantor Cabang Sorong",
-        rekomendasi: "14/LHA/I9/2023",
-        listRekomendasi: AuditRekomendasiModel.dummys(),
+        obyekAudit: "Kantor Cabang Sorong",
+        nomorLha: "14/LHA/I9/2023",
+        listAuditTL: AuditTLModel.dummys(),
       ),
     ];
   }

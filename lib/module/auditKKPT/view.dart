@@ -218,7 +218,7 @@ class View extends PresenterState {
             child: Column(
               children: [
                 Text(
-                  "Anda Yakin Untuk ${action?.description} KKA?",
+                  "Anda Yakin Untuk ${action?.description} KKPT?",
                   style: System.data.textStyles!.basicLabel,
                 ),
                 const SizedBox(

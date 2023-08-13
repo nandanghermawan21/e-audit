@@ -34,11 +34,11 @@ class ActionModel {
       ActionModel(
         label: "Setujui",
         value: "Disetujui",
-        description: "menyetujui",
+        description: "Menyetujui",
         color: Colors.green,
       ),
       ActionModel(
-        label: "Tolak KKA",
+        label: "Tolak",
         value: "Ditolak",
         description: "Menolak",
         color: Colors.red,

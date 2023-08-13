@@ -20,6 +20,9 @@ import 'package:eaudit/module/auditKKAReviu/main.dart' as audit_kka_reviu;
 import 'package:eaudit/module/auditKKPT/main.dart' as audit_kkpt;
 import 'package:eaudit/module/auditKKPTReviu/main.dart' as audit_kkpt_reviu;
 import 'package:eaudit/module/auditTL/main.dart' as audit_tl;
+import 'package:eaudit/module/auditTLRekomendasi/main.dart'
+    as audit_tl_rekomendasi;
+import 'package:eaudit/module/auditTLReviu/main.dart' as audit_tl_reviu;
 
 String initialRouteName = RouteName.splashScreen;
 
@@ -43,6 +46,8 @@ class RouteName {
   static const String auditKKPT = "auditKKPT";
   static const String auditKKPTReviu = "auditKKPTReviu";
   static const String auditTl = "auditTl";
+  static const String auditTlRekomendasi = "auditTlRekomendasi";
+  static const String auditTlReviu = "auditTlReviu";
 }
 
 enum ParamName {
@@ -53,6 +58,7 @@ enum ParamName {
   tipeReviu,
   kka,
   kkpt,
+  tL,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -299,6 +305,42 @@ Map<String, WidgetBuilder> route = {
     );
   },
   RouteName.auditTl: (BuildContext context) {
-    return const audit_tl.Presenter();
+    return audit_tl.Presenter(
+      onSelectItem: (item) {
+        Navigator.of(context).pushNamed(
+          RouteName.auditTlRekomendasi,
+          arguments: {
+            ParamName.tL: item,
+          },
+        );
+      },
+    );
+  },
+  RouteName.auditTlRekomendasi: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
+    return audit_tl_rekomendasi.Presenter(
+      onSelectAction: (val) {
+        Navigator.of(context).pushNamed(RouteName.auditTlReviu, arguments: {
+          ParamName.tL: val,
+        });
+      },
+      auditTLReviu: arg[ParamName.tL],
+    );
+  },
+  RouteName.auditTlReviu: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
+    return audit_tl_reviu.Presenter(
+      auditTLReviu: arg[ParamName.tL],
+      onTapFile: (title, url) {
+        Navigator.of(context).pushNamed(RouteName.pdfViewwer, arguments: {
+          ParamName.title: title,
+          ParamName.url: url,
+        });
+      },
+    );
   },
 };

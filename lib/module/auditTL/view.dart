@@ -1,5 +1,5 @@
 import 'package:eaudit/component/list_data_component.dart';
-import 'package:eaudit/model/audit_tl_model.dart';
+import 'package:eaudit/model/audit_tl_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 
@@ -99,13 +99,13 @@ class View extends PresenterState {
         Expanded(
           child: Container(
             padding: const EdgeInsets.all(0),
-            child: ListDataComponent<AuditTLModel>(
+            child: ListDataComponent<AuditTLReviuModel>(
               controller: listDataComponentController,
               enableDrag: false,
               enableGetMore: false,
               dataSource: (skip, key) {
                 return Future.value().then((value) {
-                  return AuditTLModel.dummys();
+                  return AuditTLReviuModel.dummys();
                 });
               },
               itemBuilder: (item, index) {
@@ -146,14 +146,17 @@ class View extends PresenterState {
                           button(
                             label: "Matriks TL",
                             icon: "assets/icons/temuan.png",
+                            data: item,
                           ),
                           button(
                             label: "Matrikx Tindak Lanjut",
                             icon: "assets/icons/rekomendasi.png",
+                            data: item,
                           ),
                           button(
                             label: "Matriks TL ML",
                             icon: "assets/icons/tindak_lanjut.png",
+                            data: item,
                           ),
                         ],
                       )
@@ -171,31 +174,37 @@ class View extends PresenterState {
   Widget button({
     String? label,
     String? icon,
+    AuditTLReviuModel? data,
   }) {
-    return IntrinsicWidth(
-      child: SizedBox(
-        child: Column(
-          children: [
-            Text(
-              label ?? '',
-              style: System.data.textStyles!.basicLabel,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                color: System.data.color!.primaryColor,
-                borderRadius: BorderRadius.circular(5),
+    return GestureDetector(
+      onTap: () {
+        widget.onSelectItem!(data);
+      },
+      child: IntrinsicWidth(
+        child: SizedBox(
+          child: Column(
+            children: [
+              Text(
+                label ?? '',
+                style: System.data.textStyles!.basicLabel,
               ),
-              child: const Icon(
-                Icons.search,
-                color: Colors.white,
+              const SizedBox(
+                height: 10,
               ),
-            )
-          ],
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: System.data.color!.primaryColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
