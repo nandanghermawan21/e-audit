@@ -20,7 +20,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'global.dart';
 
 class Data extends ChangeNotifier {
-  String versionName = "";
+  String versionName = "2.0.1";
   int versionCode = 0;
   String copyrightName = "E-Audit Jamkrindo \u00A9 2022";
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

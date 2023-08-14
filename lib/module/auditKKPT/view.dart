@@ -19,7 +19,7 @@ class View extends PresenterState {
           backgroundColor: System.data.color!.primaryColor,
           centerTitle: true,
           title: Text(
-            "Kertas Kerja Audit",
+            "Temuan Audit",
             style: System.data.textStyles!.boldTitleLightLabel,
           ),
           actions: [
@@ -64,7 +64,7 @@ class View extends PresenterState {
                   height: 10,
                 ),
                 Text(
-                  "Daftar Kertas Kerja Audit",
+                  "Daftar Temuan (KKPT)",
                   style: System.data.textStyles!.boldTitleLabel,
                 ),
                 const SizedBox(
