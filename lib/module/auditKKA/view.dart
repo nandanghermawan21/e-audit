@@ -1,11 +1,9 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/component/list_data_component.dart';
-import 'package:eaudit/model/action_model.dart';
 import 'package:eaudit/model/audit_kka_model.dart';
 import 'package:eaudit/model/audit_kka_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'presenter.dart';
 
@@ -182,195 +180,89 @@ class View extends PresenterState {
   }
 
   Widget kkaItem(AuditkaReviuModel? data, AuditKKAModel? kka) {
-    return Container(
-      margin: const EdgeInsets.all(5),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey.shade300),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          )
-        ],
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                kka?.noKka ?? "",
-                style: System.data.textStyles!.boldTitleLabel,
-              ),
-              Text(
-                kka?.tanggal == null
-                    ? ""
-                    : DateFormat("dd MMMM yyyy").format(kka!.tanggal!),
-                style: System.data.textStyles!.boldTitleLabel,
-              ),
-            ],
-          ),
-          Divider(
-            height: 10,
-            color: Colors.grey.shade400,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Judul", style: System.data.textStyles!.boldTitleLabel),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                kka?.judulKka ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Status", style: System.data.textStyles!.boldTitleLabel),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    kka?.status ?? "",
-                    style: System.data.textStyles!.basicLabel,
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text("Temuan", style: System.data.textStyles!.boldTitleLabel),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    kka?.temuan?.toString() ?? "",
-                    style: System.data.textStyles!.basicLabel,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: List.generate(
-              kka?.actions?.length ?? 0,
-              (index) {
-                return buttonAction(
-                  action: kka?.actions?[index],
-                  data: data,
-                  kka: kka,
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget buttonAction({
-    required ActionModel? action,
-    required AuditkaReviuModel? data,
-    required AuditKKAModel? kka,
-  }) {
     return GestureDetector(
       onTap: () {
-        loadingController.stopLoading(
-          icon: const Icon(
-            FontAwesomeIcons.questionCircle,
-            color: Colors.orange,
-            size: 50,
-          ),
-          messageWidget: IntrinsicHeight(
-            child: Column(
-              children: [
-                Text(
-                  "Anda Yakin Untuk ${action?.description} KKA?",
-                  style: System.data.textStyles!.basicLabel,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      height: 30,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          loadingController.forceStop();
-                          widget.onSelectAction!(
-                            AuditkaReviuModel(
-                              objectAudit: data?.objectAudit,
-                              judulProgram: data?.judulProgram,
-                              auditor: data?.auditor,
-                              proseduAudit: data?.proseduAudit,
-                              listKka: [kka],
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "Ya",
-                          style: System.data.textStyles!.boldTitleLightLabel,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          loadingController.forceStop();
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            Colors.red.shade300,
-                          ),
-                        ),
-                        child: Text(
-                          "Tidak",
-                          style: System.data.textStyles!.boldTitleLightLabel,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+        widget.onSelectAction!(
+          AuditkaReviuModel(
+            objectAudit: data?.objectAudit,
+            judulProgram: data?.judulProgram,
+            auditor: data?.auditor,
+            proseduAudit: data?.proseduAudit,
+            listKka: [kka],
           ),
         );
       },
       child: Container(
-        height: 40,
-        width: 100,
-        margin: const EdgeInsets.only(left: 5),
-        alignment: Alignment.center,
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: action?.color,
-          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade300,
+              blurRadius: 5,
+              offset: const Offset(0, 2),
+            )
+          ],
         ),
-        child: Text(
-          action?.label ?? "",
-          style: System.data.textStyles!.boldTitleLightLabel,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  kka?.noKka ?? "",
+                  style: System.data.textStyles!.boldTitleLabel,
+                ),
+                Text(
+                  kka?.tanggal == null
+                      ? ""
+                      : DateFormat("dd MMMM yyyy").format(kka!.tanggal!),
+                  style: System.data.textStyles!.boldTitleLabel,
+                ),
+              ],
+            ),
+            Divider(
+              height: 10,
+              color: Colors.grey.shade400,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Judul", style: System.data.textStyles!.boldTitleLabel),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  kka?.judulKka ?? "",
+                  style: System.data.textStyles!.basicLabel,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Status",
+                        style: System.data.textStyles!.boldTitleLabel),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      kka?.status ?? "",
+                      style: System.data.textStyles!.basicLabel,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

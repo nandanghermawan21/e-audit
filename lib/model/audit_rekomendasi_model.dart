@@ -1,4 +1,5 @@
 import 'package:eaudit/model/audit_tl_item_model.dart';
+import 'package:eaudit/model/komentar_odel.dart';
 import 'package:flutter/material.dart';
 
 class AuditRekomendasiModel {
@@ -8,6 +9,7 @@ class AuditRekomendasiModel {
   int? sisaHariTindakLanjut;
   Color? color;
   List<AuditTLItemModel?>? listItem;
+  List<KomentarModel?>? komentar;
 
   AuditRekomendasiModel({
     this.deskripsi,
@@ -15,6 +17,7 @@ class AuditRekomendasiModel {
     this.sisaHariTindakLanjut,
     this.color,
     this.listItem,
+    this.komentar,
   });
 
   static AuditRekomendasiModel fromJson(Map<String, dynamic> json) {
@@ -28,6 +31,11 @@ class AuditRekomendasiModel {
               .map((e) => AuditTLItemModel.fromJson(e))
               .toList()
           : null,
+      komentar: json["komentar"] != null
+          ? (json["komentar"] as List)
+              .map((e) => KomentarModel.fromJson(e))
+              .toList()
+          : null,
     );
   }
 
@@ -37,6 +45,7 @@ class AuditRekomendasiModel {
       "status": status,
       "sisa_hari_tindak_lanjut": sisaHariTindakLanjut,
       "color": color?.value,
+      "komentar": komentar?.map((e) => e?.toJson()).toList()
     };
   }
 
@@ -49,6 +58,7 @@ class AuditRekomendasiModel {
         status: "Selesai",
         color: Colors.green,
         sisaHariTindakLanjut: 10,
+        komentar: KomentarModel.dummy(),
         listItem: AuditTLItemModel.dummy(),
       ),
       AuditRekomendasiModel(
@@ -57,6 +67,7 @@ class AuditRekomendasiModel {
         status: "Belum Tindak Lanjut",
         sisaHariTindakLanjut: 10,
         color: Colors.orange,
+        komentar: KomentarModel.dummy(),
         listItem: AuditTLItemModel.dummy(),
       ),
     ];

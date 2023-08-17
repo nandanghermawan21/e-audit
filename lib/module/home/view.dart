@@ -372,7 +372,7 @@ class View extends PresenterState {
               }),
           menuItem(
               icon: "assets/icon_menu_review.png",
-              label: "mobile_report",
+              label: "Reviu",
               onTap: () {
                 checkAccess(
                   method: "mobile_report",

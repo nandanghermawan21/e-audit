@@ -1,12 +1,12 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/audit_kkpt_model.dart';
 import 'package:eaudit/model/audit_kkpt_reviu_model.dart';
-import 'package:eaudit/module/auditKKPTReviu/view_model.dart';
+import 'package:eaudit/model/komentar_odel.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:eaudit/component/decoration_component.dart';
 import 'presenter.dart';
 
 class View extends PresenterState {
@@ -35,25 +35,21 @@ class View extends PresenterState {
         bottomNavigationBar: Container(
           height: 50,
           margin: const EdgeInsets.all(20),
-          child: ElevatedButton(
-            onPressed: () {
-              loadingController.stopLoading(
-                message: "Data Berhasil Tersimpan",
-                isError: false,
-                duration: const Duration(seconds: 3),
-                onCloseCallBack: () {
-                  widget.onSubmitSuccess!();
-                },
-              );
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                System.data.color!.primaryColor,
-              ),
-            ),
-            child: Text(
-              "Simpan",
-              style: System.data.textStyles!.boldTitleLightLabel,
+          child: Row(
+            children: List.generate(
+              widget.kkpt?.listKKPT?.first?.actions.length ?? 0,
+              (index) {
+                return Expanded(
+                  child: DecorationComponent.buttonAction(
+                    loadingController: loadingController,
+                    action: widget.kkpt?.listKKPT?.first?.actions[index],
+                    data: widget.kkpt?.listKKPT?.first,
+                    onCofirmAction: (data) {
+                      widget.onSubmitSuccess?.call();
+                    },
+                  ),
+                );
+              },
             ),
           ),
         ),
@@ -79,6 +75,21 @@ class View extends PresenterState {
                     fontSize: 16,
                   )),
               detailKKPT(widget.kkpt?.listKKPT?.first),
+              const SizedBox(
+                height: 20,
+              ),
+              Text("Komentar",
+                  style: System.data.textStyles!.boldTitleLabel.copyWith(
+                    fontSize: 16,
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
+              komentar(widget.kkpt?.listKKPT?.first?.komentar),
+              const SizedBox(
+                height: 10,
+              ),
+              catatan(),
             ],
           ),
         ),
@@ -89,32 +100,32 @@ class View extends PresenterState {
   Widget description(AuditKKPTReviuModel? data) {
     return Column(
       children: [
-        detail(
-          label: "Nama Kegiatan",
+        DecorationComponent.item(
+          title: "Nama Kegiatan",
           value: data?.namakegiatan ?? "",
         ),
-        detail(
-          label: "Auditee",
+        DecorationComponent.item(
+          title: "Auditee",
           value: data?.auditee ?? "",
         ),
-        detail(
-          label: "Tipe Audit",
+        DecorationComponent.item(
+          title: "Tipe Audit",
           value: data?.tipeAudit ?? "",
         ),
-        detail(
-          label: "Tanggal Audit",
+        DecorationComponent.item(
+          title: "Tanggal Audit",
           value: data?.tanggalAudit == null
               ? "-"
               : DateFormat("dd MMMM yyyy").format(
                   (data!.tanggalAudit!),
                 ),
         ),
-        detail(
-          label: "No KKA",
+        DecorationComponent.item(
+          title: "No KKA",
           value: data?.noKKa ?? "",
         ),
-        detail(
-          label: "Bidang Subtansi",
+        DecorationComponent.item(
+          title: "Bidang Subtansi",
           value: data?.bidangSubtansi ?? "",
         ),
       ],
@@ -127,36 +138,36 @@ class View extends PresenterState {
         const SizedBox(
           height: 5,
         ),
-        detail(
-          label: "No Temuan",
+        DecorationComponent.item(
+          title: "No Temuan",
           value: data?.noTemuan ?? "",
         ),
-        detail(
-          label: "Judul Temuan",
+        DecorationComponent.item(
+          title: "Judul Temuan",
           value: data?.judulTemuan ?? "",
         ),
-        detail(
-          label: "Tanggal Temuan",
+        DecorationComponent.item(
+          title: "Tanggal Temuan",
           value: data?.tanggalTemuan == null
               ? "-"
               : DateFormat("dd MMMM yyyy").format(
                   (data!.tanggalTemuan!),
                 ),
         ),
-        detail(
-          label: "Kriteria",
+        DecorationComponent.item(
+          title: "Kriteria",
           value: data?.kriteria ?? "",
         ),
-        detail(
-          label: "Sebab",
+        DecorationComponent.item(
+          title: "Sebab",
           value: data?.sebab ?? "",
         ),
-        detail(
-          label: "Akibat",
+        DecorationComponent.item(
+          title: "Akibat",
           value: data?.akibat ?? "",
         ),
-        detail(
-          label: "Lampirn",
+        DecorationComponent.item(
+          title: "Lampirn",
           value: data?.namaLampiran ?? "",
           valueColor: System.data.color!.link,
           onTap: () {
@@ -164,116 +175,38 @@ class View extends PresenterState {
             widget.onTapFile!(data?.namaLampiran, data?.lampiranUrl);
           },
         ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Komentar",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                children: List.generate(data?.komentar?.length ?? 0, (index) {
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              data?.komentar?[index].name ?? "",
-                              style: System.data.textStyles!.boldTitleLabel,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              data?.komentar?[index].tanggal == null
-                                  ? "-"
-                                  : DateFormat("dd MMMM yyyy").format(
-                                      (data?.komentar?[index].tanggal!)!,
-                                    ),
-                              style: System.data.textStyles!.basicLabel,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          data?.komentar?[index].komentar ?? "",
-                          style: System.data.textStyles!.basicLabel,
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: TextField(
-            onChanged: (val) {
-              // data?.catatan = val;
-              // listController.commit();
-            },
-            maxLines: 5,
-            decoration: InputDecoration.collapsed(
-              hintText: "Catatan",
-              hintStyle: System.data.textStyles!.basicLabel,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 50,
-          width: double.infinity,
-          child: Row(
-            children: [
-              Consumer<ViewMOdel>(
-                builder: (c, d, w) {
-                  return Checkbox(
-                    value: data?.masukLha ?? false,
-                    onChanged: (val) {
-                      data?.masukLha = val ?? false;
-                      model.commit();
-                    },
-                  );
-                },
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Text(
-                  "Masuk LHA",
-                  style: System.data.textStyles!.basicLabel,
-                ),
-              ),
-            ],
-          ),
-        )
       ],
+    );
+  }
+
+  Widget komentar(List<KomentarModel?>? data) {
+    return SizedBox(
+      child: Column(
+        children: List.generate(data?.length ?? 0, (index) {
+          return DecorationComponent.itemKomentar((data![index]!));
+        }),
+      ),
+    );
+  }
+
+  Widget catatan() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: TextField(
+        onChanged: (val) {
+          // data?.catatan = val;
+          // listController.commit();
+        },
+        maxLines: 5,
+        decoration: InputDecoration.collapsed(
+          hintText: "Catatan",
+          hintStyle: System.data.textStyles!.basicLabel,
+        ),
+      ),
     );
   }
 

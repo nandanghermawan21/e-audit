@@ -45,4 +45,15 @@ class ActionModel {
       ),
     ];
   }
+
+  static List<ActionModel> kkptDisetujui() {
+    return [
+      ActionModel(
+        label: "Masuk LHA",
+        value: "Masuk LHA",
+        description: "Masukan Ke LHA",
+        color: Colors.green,
+      ),
+    ];
+  }
 }

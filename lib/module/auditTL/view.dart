@@ -43,7 +43,8 @@ class View extends PresenterState {
               ),
             ],
           ),
-          padding: const EdgeInsets.all(5),
+          padding:
+              const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 15),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -140,25 +141,39 @@ class View extends PresenterState {
                       const Divider(
                         color: Colors.grey,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          button(
-                            label: "Matriks TL",
-                            icon: "assets/icons/temuan.png",
-                            data: item,
-                          ),
-                          button(
-                            label: "Matrikx Tindak Lanjut",
-                            icon: "assets/icons/rekomendasi.png",
-                            data: item,
-                          ),
-                          button(
-                            label: "Matriks TL ML",
-                            icon: "assets/icons/tindak_lanjut.png",
-                            data: item,
-                          ),
-                        ],
+                      IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              child: button(
+                                label: "Matriks TL",
+                                icon: "assets/icons/temuan.png",
+                                data: item,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: button(
+                                label: "Matrikx Tindak Lanjut",
+                                icon: "assets/icons/rekomendasi.png",
+                                data: item,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: button(
+                                label: "Matriks TL ML",
+                                icon: "assets/icons/tindak_lanjut.png",
+                                data: item,
+                              ),
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -180,31 +195,38 @@ class View extends PresenterState {
       onTap: () {
         widget.onSelectItem!(data);
       },
-      child: IntrinsicWidth(
-        child: SizedBox(
-          child: Column(
-            children: [
-              Text(
-                label ?? '',
-                style: System.data.textStyles!.basicLabel,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: System.data.color!.primaryColor,
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label ?? '',
+              style: System.data.textStyles!.basicLightLabel.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
               ),
-              const SizedBox(
-                height: 10,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                color: System.data.color!.primaryColor,
+                borderRadius: BorderRadius.circular(5),
               ),
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: System.data.color!.primaryColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
-              )
-            ],
-          ),
+              child: const Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+            )
+          ],
         ),
       ),
     );

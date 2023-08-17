@@ -1,9 +1,11 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/audit_kka_model.dart';
 import 'package:eaudit/model/audit_kka_reviu_model.dart';
+import 'package:eaudit/model/komentar_odel.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:eaudit/component/decoration_component.dart';
 
 import 'presenter.dart';
 
@@ -33,26 +35,21 @@ class View extends PresenterState {
         bottomNavigationBar: Container(
           height: 50,
           margin: const EdgeInsets.all(20),
-          child: ElevatedButton(
-            onPressed: () {
-              loadingController.stopLoading(
-                message: "Data Berhasil Tersimpan",
-                isError: false,
-                duration: const Duration(seconds: 3),
-                onCloseCallBack: () {
-                  widget.onSubmitSuccess!();
-                },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: List.generate(
+                widget.kka?.listKka?.first?.actions?.length ?? 0, (index) {
+              return Expanded(
+                child: DecorationComponent.buttonAction(
+                  loadingController: loadingController,
+                  action: widget.kka?.listKka?.first?.actions?[index],
+                  data: widget.kka,
+                  onCofirmAction: (data){
+                    widget.onSubmitSuccess?.call();
+                  }
+                ),
               );
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                System.data.color!.primaryColor,
-              ),
-            ),
-            child: Text(
-              "Simpan",
-              style: System.data.textStyles!.boldTitleLightLabel,
-            ),
+            }),
           ),
         ),
       ),
@@ -78,6 +75,18 @@ class View extends PresenterState {
               height: 10,
             ),
             kertasKerja(widget.kka?.listKka?.first),
+             const SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Komentar",
+              style: System.data.textStyles!.boldTitleLabel,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            komentar(widget.kka?.listKka?.first?.komentar),
+            catatan(),
           ],
         ),
       ),
@@ -87,357 +96,89 @@ class View extends PresenterState {
   Widget description(AuditkaReviuModel? data) {
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Obyek Audit",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.objectAudit ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
+        DecorationComponent.item(
+          title: "Obyek Audit",
+          value: data?.objectAudit ?? "",
         ),
-        const SizedBox(
-          height: 5,
+        DecorationComponent.item(
+          title: "Auditor",
+          value: data?.auditor ?? "",
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Auditor",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              data?.auditor ?? "",
-              style: System.data.textStyles!.basicLabel,
-            ),
-          ],
+        DecorationComponent.item(
+          title: "Judul Program",
+          value: data?.judulProgram ?? "",
         ),
-        const SizedBox(
-          height: 5,
+        DecorationComponent.item(
+          title: "Prosedur Audit",
+          value: data?.proseduAudit ?? "",
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Judul Program",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              data?.judulProgram ?? "",
-              style: System.data.textStyles!.basicLabel,
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Prosedur Audit",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.proseduAudit ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
-        )
       ],
+    );
+  }
+
+  Widget komentar(List<KomentarModel?>? data) {
+    return SizedBox(
+      child: Column(
+        children: List.generate(data?.length ?? 0, (index) {
+          return DecorationComponent.itemKomentar((data![index]!));
+        }),
+      ),
+    );
+  }
+
+  Widget catatan() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: TextField(
+        onChanged: (val) {
+          // data?.catatan = val;
+          // listController.commit();
+        },
+        maxLines: 5,
+        decoration: InputDecoration.collapsed(
+          hintText: "Catatan",
+          hintStyle: System.data.textStyles!.basicLabel,
+        ),
+      ),
     );
   }
 
   Widget kertasKerja(AuditKKAModel? data) {
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Nomor KKA",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.noKka ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
+        DecorationComponent.item(
+          title: "Nomor KKA",
+          value: data?.noKka ?? "",
         ),
-        const SizedBox(
-          height: 5,
+        DecorationComponent.item(
+          title: "Judul KKA",
+          value: data?.judulKka ?? "",
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Judul KKA",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.judulKka ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
+        DecorationComponent.item(
+          title: "Dokumen yang diperiksa",
+          value: data?.dokumenYangDiperiksa ?? "",
         ),
-        const SizedBox(
-          height: 5,
+        DecorationComponent.item(
+          title: "Tanggal KKA",
+          value: data?.tanggal == null
+              ? "-"
+              : DateFormat("dd MMMM yyyy").format(data!.tanggal!),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Dokumen yang diperiksa",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.dokumenYangDiperiksa ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
+        DecorationComponent.item(
+          title: "Uraian",
+          value: data?.uraian ?? "",
         ),
-        const SizedBox(
-          height: 5,
+        DecorationComponent.item(
+          title: "Kesimpulan",
+          value: data?.uraian ?? "",
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Tanggal KKA",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.tanggal == null
-                    ? "-"
-                    : DateFormat("dd MMMM yyyy").format(data!.tanggal!),
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Uraian",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.uraian ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Kesimpulan",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.kesimpulan ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "File Kertas Kerja",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                data?.fileKertasKerja ?? "",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.transparent,
-              width: 100,
-              child: Text(
-                "Komentar",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                children: List.generate(data?.komentar?.length ?? 0, (index) {
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              data?.komentar?[index].name ?? "",
-                              style: System.data.textStyles!.boldTitleLabel,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              data?.komentar?[index].tanggal == null
-                                  ? "-"
-                                  : DateFormat("dd MMMM yyyy").format(
-                                      (data?.komentar?[index].tanggal!)!,
-                                    ),
-                              style: System.data.textStyles!.basicLabel,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          data?.komentar?[index].komentar ?? "",
-                          style: System.data.textStyles!.basicLabel,
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-              ),
-            ),
-          ],
-        ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: TextField(
-            onChanged: (val) {
-              // data?.catatan = val;
-              // listController.commit();
-            },
-            maxLines: 5,
-            decoration: InputDecoration.collapsed(
-              hintText: "Catatan",
-              hintStyle: System.data.textStyles!.basicLabel,
-            ),
-          ),
+        DecorationComponent.item(
+          title: "File Kertas Kerja",
+          value: data?.fileKertasKerja ?? "",
         ),
       ],
     );
