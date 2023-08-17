@@ -38,9 +38,7 @@ class AuditkaReviuModel {
       "auditor": auditor,
       "judul_program": judulProgram,
       "prosedu_audit": proseduAudit,
-      "list_kka": listKka != null
-          ? List<dynamic>.from(listKka!.map((x) => x?.toJson()))
-          : null,
+      "list_kka": listKka?.map((e) => e?.toJson()).toList(),
     };
   }
 

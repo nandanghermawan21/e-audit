@@ -42,7 +42,7 @@ class AuditKKPTReviuModel {
       "nama_kegiatan": namakegiatan,
       "auditee": auditee,
       "tipe_audit": tipeAudit,
-      "tanggal_audit": tanggalAudit,
+      "tanggal_audit": tanggalAudit?.toIso8601String(),
       "no_kka": noKKa,
       "bidang_subbidang": bidangSubtansi,
       "list_kkpt": listKKPT?.map((e) => e?.toJson()).toList(),

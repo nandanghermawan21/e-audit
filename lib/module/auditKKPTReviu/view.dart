@@ -37,12 +37,12 @@ class View extends PresenterState {
           margin: const EdgeInsets.all(20),
           child: Row(
             children: List.generate(
-              widget.kkpt?.listKKPT?.first?.actions.length ?? 0,
+              widget.kkpt?.listKKPT?.first?.actions?.length ?? 0,
               (index) {
                 return Expanded(
                   child: DecorationComponent.buttonAction(
                     loadingController: loadingController,
-                    action: widget.kkpt?.listKKPT?.first?.actions[index],
+                    action: widget.kkpt?.listKKPT?.first?.actions?[index],
                     data: widget.kkpt?.listKKPT?.first,
                     onCofirmAction: (data) {
                       widget.onSubmitSuccess?.call();

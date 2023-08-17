@@ -1,3 +1,5 @@
+import 'package:eaudit/model/audit_kka_reviu_model.dart';
+import 'package:eaudit/model/audit_kkpt_reviu_model.dart';
 import 'package:eaudit/util/enum.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,9 @@ import 'package:eaudit/module/auditTLRekomendasi/main.dart'
     as audit_tl_rekomendasi;
 import 'package:eaudit/module/auditTLDetail/main.dart' as audit_tl_detail;
 import 'package:eaudit/module/auditTLReviu/main.dart' as audit_tl_reviu;
+import 'package:eaudit/module/notification/main.dart' as notification;
+
+import 'model/audit_tl_reviu_model.dart';
 
 String initialRouteName = RouteName.splashScreen;
 
@@ -50,6 +55,7 @@ class RouteName {
   static const String auditTlRekomendasi = "auditTlRekomendasi";
   static const String auditTlDetail = "auditTlDetail";
   static const String auditTlReviu = "auditTlReviu";
+  static const String notification = "Notification";
 }
 
 enum ParamName {
@@ -87,6 +93,9 @@ Map<String, WidgetBuilder> route = {
   },
   RouteName.home: (BuildContext context) {
     return home.Presenter(
+      onTapNotification: () {
+        Navigator.of(context).pushNamed(RouteName.notification);
+      },
       onTapUrl: (title, url, message) {
         Navigator.of(context).pushNamed(
           RouteName.webview,
@@ -373,4 +382,44 @@ Map<String, WidgetBuilder> route = {
       },
     );
   },
+  RouteName.notification: (BuildContext context) {
+    return notification.Presenter(
+      onTapNotification: (data) {
+        if (data != null) {
+          switch (data.tyoe) {
+            case "PKA":
+              Navigator.of(context).pushNamed(
+                RouteName.auditPKAReviu,
+              );
+              break;
+            case "KKA":
+              Navigator.of(context).pushNamed(
+                RouteName.reviuKKAReviu,
+                arguments: {
+                  ParamName.kka: AuditkaReviuModel.fromJson(data.data ?? {}),
+                },
+              );
+              break;
+            case "KKPT":
+              Navigator.of(context).pushNamed(
+                RouteName.auditKKPTReviu,
+                arguments: {
+                  ParamName.kkpt: AuditKKPTReviuModel.fromJson(data.data ?? {}),
+                },
+              );
+              break;
+            case "TL":
+              Navigator.of(context).pushNamed(
+                RouteName.auditTlReviu,
+                arguments: {
+                  ParamName.tL: AuditTLReviuModel.fromJson(data.data ?? {}),
+                },
+              );
+              break;
+            default:
+          }
+        }
+      },
+    );
+  }
 };

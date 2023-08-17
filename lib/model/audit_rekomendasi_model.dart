@@ -6,7 +6,7 @@ class AuditRekomendasiModel {
   String? deskripsi;
   String? status;
   String? statusRekomensai;
-  int? sisaHariTindakLanjut;
+  String? sisaHariTindakLanjut;
   Color? color;
   List<AuditTLItemModel?>? listItem;
   List<KomentarModel?>? komentar;
@@ -25,7 +25,7 @@ class AuditRekomendasiModel {
       deskripsi: json["deskripsi"],
       status: json["status"],
       sisaHariTindakLanjut: json["sisa_hari_tindak_lanjut"],
-      color: json["status"] != null ? Color(json["status"]) : null,
+      color: json["color"] != null ? Color(json["color"]) : null,
       listItem: json["list_item"] != null
           ? (json["list_item"] as List)
               .map((e) => AuditTLItemModel.fromJson(e))
@@ -45,7 +45,8 @@ class AuditRekomendasiModel {
       "status": status,
       "sisa_hari_tindak_lanjut": sisaHariTindakLanjut,
       "color": color?.value,
-      "komentar": komentar?.map((e) => e?.toJson()).toList()
+      "komentar": komentar?.map((e) => e?.toJson()).toList(),
+      "list_item": listItem?.map((e) => e?.toJson()).toList(),
     };
   }
 
@@ -57,7 +58,7 @@ class AuditRekomendasiModel {
             "Pemimpin Cabang Serang agar memberikan instruksi tertulis kepada Manajer Bisnis KC Serang untuk mempedomani SLA Penerbitan SP KBG pada setiap pengajuan proses penjaminan.",
         status: "Selesai",
         color: Colors.green,
-        sisaHariTindakLanjut: 10,
+        sisaHariTindakLanjut: "10",
         komentar: KomentarModel.dummy(),
         listItem: AuditTLItemModel.dummy(),
       ),
@@ -65,7 +66,7 @@ class AuditRekomendasiModel {
         deskripsi:
             "Untuk selanjutnya, Pemimpin Cabang KC Serang agar lebih memperhatikan SLA dalam menerbitkan SP Kontra Bank Garansi.",
         status: "Belum Tindak Lanjut",
-        sisaHariTindakLanjut: 10,
+        sisaHariTindakLanjut: "10",
         color: Colors.orange,
         komentar: KomentarModel.dummy(),
         listItem: AuditTLItemModel.dummy(),

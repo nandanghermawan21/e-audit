@@ -13,6 +13,7 @@ class View extends PresenterState {
     return CircularLoaderComponent(
       controller: loadingController,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: System.data.color!.primaryColor,
           centerTitle: true,
@@ -33,21 +34,20 @@ class View extends PresenterState {
               (index) {
                 return Expanded(
                   child: DecorationComponent.buttonAction(
-                    loadingController: loadingController,
-                    action: widget
-                        .auditTLReviu
-                        ?.listAuditTL
-                        ?.first
-                        ?.listRekomendasi
-                        ?.first
-                        ?.listItem
-                        ?.first
-                        ?.action?[index],
-                    data: widget.auditTLReviu,
-                    onCofirmAction: (data){
-                      widget.onSubmitSuccess?.call();
-                    }
-                  ),
+                      loadingController: loadingController,
+                      action: widget
+                          .auditTLReviu
+                          ?.listAuditTL
+                          ?.first
+                          ?.listRekomendasi
+                          ?.first
+                          ?.listItem
+                          ?.first
+                          ?.action?[index],
+                      data: widget.auditTLReviu,
+                      onCofirmAction: (data) {
+                        widget.onSubmitSuccess?.call();
+                      }),
                 );
               },
             ),
@@ -66,7 +66,7 @@ class View extends PresenterState {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "REVIU TIndak lanjUT",
+              "Reviu Tidak Lanjut",
               style: System.data.textStyles!.boldTitleLabel,
             ),
             const SizedBox(

@@ -88,6 +88,7 @@ class View extends PresenterState {
         width: double.infinity,
         color: Colors.transparent,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
               onTap: () {
@@ -147,7 +148,7 @@ class View extends PresenterState {
                                 style: System.data.textStyles!.boldTitleLabel
                                     .copyWith(
                                   color: Colors.white,
-                                  fontSize: 25,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
@@ -174,9 +175,62 @@ class View extends PresenterState {
                       child: const Icon(
                         FontAwesomeIcons.userAlt,
                         color: Colors.white,
-                        size: 50,
+                        size: 20,
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        widget.onTapNotification.call();
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 40,
+                            width: 40,
+                            color: Colors.transparent,
+                            child: Stack(
+                              children: [
+                                const Center(
+                                  child: Icon(
+                                    FontAwesomeIcons.solidBell,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: IntrinsicWidth(
+                                    child: IntrinsicHeight(
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.only(
+                                            left: 5,
+                                            right: 5,
+                                            top: 3,
+                                            bottom: 2),
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Text(
+                                          "5",
+                                          style: System
+                                              .data.textStyles!.basicLightLabel,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),

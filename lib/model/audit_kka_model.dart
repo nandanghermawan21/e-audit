@@ -65,7 +65,7 @@ class AuditKKAModel {
       "id": id,
       "no_kka": noKka,
       "judul_kka": judulKka,
-      "tanggal": tanggal,
+      "tanggal": tanggal?.toIso8601String(),
       "status": status,
       "temuan": temuan,
       "action": actions != null
@@ -76,9 +76,7 @@ class AuditKKAModel {
       "kesimpulan": kesimpulan,
       "file_kertas_kerja": fileKertasKerja,
       "url_file_kertas_kerja": urlFileKertasKerja,
-      "komentar": komentar != null
-          ? List<dynamic>.from(komentar!.map((x) => x.toJson()))
-          : null,
+      "komentar": komentar?.map((e) => e.toJson()).toList(),
     };
   }
 

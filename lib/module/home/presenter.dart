@@ -17,6 +17,7 @@ class Presenter extends StatefulWidget {
   final VoidCallback onTapReviewTask;
   final VoidCallback onTapDashboard;
   final VoidCallback onTapReviu;
+  final VoidCallback onTapNotification;
 
   const Presenter({
     Key? key,
@@ -27,6 +28,7 @@ class Presenter extends StatefulWidget {
     required this.onTapReviewTask,
     required this.onTapDashboard,
     required this.onTapReviu,
+    required this.onTapNotification,
   }) : super(key: key);
 
   @override

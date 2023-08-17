@@ -21,7 +21,7 @@ class AuditTLModel {
       "judul_temuan": judulTemuan,
       "uraian_temuan": uraianTemuan,
       "rekomendasi": rekomendasi,
-      "list_rekomendasi": listRekomendasi,
+      "list_rekomendasi": listRekomendasi?.map((e) => e?.toJson()).toList(),
     };
   }
 

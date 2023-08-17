@@ -15,7 +15,7 @@ class AuditKKPTModel {
   String? status;
   bool? masukLha;
   List<KomentarModel>? komentar;
-  List<ActionModel> actions;
+  List<ActionModel>? actions;
 
   AuditKKPTModel({
     this.id,
@@ -52,20 +52,26 @@ class AuditKKPTModel {
             )
           : null,
       status: json["status"],
+      actions: json["actions"] != null
+          ? List<ActionModel>.from(
+              json["actions"].map((x) => ActionModel.fromJson(x)),
+            )
+          : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       "judul_temuan": judulTemuan,
-      "tanggal_temuan": tanggalTemuan,
+      "tanggal_temuan": tanggalTemuan?.toIso8601String(),
       "kriteria": kriteria,
       "sebab": sebab,
       "akibat": akibat,
       "lampiran": lampiranUrl,
       "rekomendasi": rekomendasi,
-      "komentar": komentar,
+      "komentar": komentar?.map((e) => e.toJson()).toList(),
       "status": status,
+      "actions": actions?.map((e) => e.toJson()).toList(),
     };
   }
 
