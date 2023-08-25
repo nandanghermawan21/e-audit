@@ -1,4 +1,5 @@
 import 'package:eaudit/component/circular_loader_component.dart';
+import 'package:eaudit/model/audit_rekomendasi_status_model.dart';
 import 'package:eaudit/model/audit_tl_model.dart';
 import 'package:eaudit/model/audit_tl_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
@@ -38,6 +39,7 @@ class View extends PresenterState {
         child: Column(
           children: [
             searchBox(),
+            lagend(),
             ...List.generate(
               widget.auditTLReviu?.listAuditTL?.length ?? 0,
               (index) {
@@ -224,8 +226,11 @@ class View extends PresenterState {
                                         margin: const EdgeInsets.only(left: 5),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: System
-                                              .data.color!.primaryColorLight,
+                                          color: widget
+                                              .auditTLReviu
+                                              ?.listAuditTL?[index]
+                                              ?.listRekomendasi?[index2]
+                                              ?.statusRekomendasiColor,
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
@@ -271,29 +276,31 @@ class View extends PresenterState {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 100,
-            height: double.infinity,
-            color: Colors.transparent,
-            child: DropdownButton<int>(
-              isExpanded: true,
-              hint: Text(
-                "status",
-                style: System.data.textStyles!.basicLabel.copyWith(
-                  color: Colors.grey,
+          IntrinsicWidth(
+            child: Container(
+              height: double.infinity,
+              color: Colors.transparent,
+              child: DropdownButton<int>(
+                isExpanded: true,
+                hint: Text(
+                  "status",
+                  style: System.data.textStyles!.basicLabel.copyWith(
+                    color: Colors.grey,
+                  ),
                 ),
+                items: List.generate(
+                  AuditRekomendasiStatusModel.dummys().length,
+                  (index) {
+                    return DropdownMenuItem<int>(
+                      value: AuditRekomendasiStatusModel.dummys()[index].id,
+                      child: Text(
+                          AuditRekomendasiStatusModel.dummys()[index].name!,
+                          style: System.data.textStyles!.basicLabel),
+                    );
+                  },
+                ),
+                onChanged: (val) {},
               ),
-              items: List.generate(
-                5,
-                (index) {
-                  return DropdownMenuItem<int>(
-                    value: index,
-                    child: Text("${2023 - index}}",
-                        style: System.data.textStyles!.basicLabel),
-                  );
-                },
-              ),
-              onChanged: (val) {},
             ),
           ),
           const SizedBox(
@@ -318,6 +325,42 @@ class View extends PresenterState {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget lagend() {
+    return IntrinsicHeight(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        color: Colors.grey.shade200,
+        width: double.infinity,
+        child: Wrap(
+          children: List.generate(AuditRekomendasiStatusModel.dummys().length,
+              (index) {
+            return IntrinsicWidth(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Container(
+                      height: 15,
+                      width: 15,
+                      color: AuditRekomendasiStatusModel.dummys()[index].color,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      AuditRekomendasiStatusModel.dummys()[index].name!,
+                      style: System.data.textStyles!.basicLabel,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }
