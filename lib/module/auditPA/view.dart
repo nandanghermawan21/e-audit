@@ -134,11 +134,11 @@ class View extends PresenterState {
                               style: System.data.textStyles!.boldTitleLabel,
                             ),
                             Text(
-                              data?.tanggal == null
-                                  ? "-"
-                                  : DateFormat("dd MMMM yyyy").format(
-                                      (data!.tanggal!),
-                                    ),
+                              "${data?.tanggalMulai == null ? "-" : DateFormat("dd MMM yyyy").format(
+                                  (data!.tanggalMulai!),
+                                )} ${data?.tanggalSelesai == null ? "-" : DateFormat("dd MMM yyyy").format(
+                                  (data!.tanggalSelesai!),
+                                )}",
                               style: System.data.textStyles!.boldTitleLabel,
                             ),
                           ],

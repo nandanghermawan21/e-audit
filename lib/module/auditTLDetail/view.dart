@@ -64,7 +64,7 @@ class View extends PresenterState {
             DecorationComponent.item(
               title: "Status Rekomendasi",
               value: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
-                  ?.first?.status,
+                  ?.first?.statusRekomendasi,
             ),
             const SizedBox(
               height: 5,
@@ -154,10 +154,12 @@ class View extends PresenterState {
                                       ?.listRekomendasi
                                       ?.first
                                       ?.sisaHariTindakLanjut,
-                                  status: widget.auditTLReviu?.listAuditTL
-                                      ?.first?.listRekomendasi?.first?.status,
-                                  color: widget.auditTLReviu?.listAuditTL?.first
-                                      ?.listRekomendasi?.first?.color,
+                                  // status: widget.auditTLReviu?.listAuditTL
+                                  //     ?.first?.listRekomendasi?.first?.status,
+                                  statusRekomendasi: widget.auditTLReviu?.listAuditTL
+                                      ?.first?.listRekomendasi?.first?.statusRekomendasi,
+                                  statusRekomendasiColor: widget.auditTLReviu?.listAuditTL?.first
+                                      ?.listRekomendasi?.first?.statusRekomendasiColor,
                                   listItem: [
                                     widget
                                         .auditTLReviu
@@ -273,15 +275,18 @@ class View extends PresenterState {
                                     height: 5,
                                   ),
                                   Text(
-                                    widget
-                                            .auditTLReviu
-                                            ?.listAuditTL
-                                            ?.first
-                                            ?.listRekomendasi
-                                            ?.first
-                                            ?.listItem?[index]
-                                            ?.status ??
-                                        "",
+                                    // 'disini',
+                                    widget.auditTLReviu?.listAuditTL?.first
+                                        ?.listRekomendasi?.first?.statusTindakLanjut ?? "",
+                                    // widget
+                                    //         .auditTLReviu
+                                    //         ?.listAuditTL
+                                    //         ?.first
+                                    //         ?.listRekomendasi
+                                    //         ?.first
+                                    //         ?.listItem?[index]
+                                    //         ?.status ??
+                                    //     "",
                                     style: System.data.textStyles!.basicLabel,
                                   ),
                                 ],
@@ -361,7 +366,7 @@ class View extends PresenterState {
                       child: ElevatedButton(
                         onPressed: () {
                           loadingController.forceStop();
-                          data?.statusRekomensai = status;
+                          data?.statusTindakLanjut = status;
                           model.commit();
                         },
                         child: Text(
@@ -404,7 +409,7 @@ class View extends PresenterState {
         margin: const EdgeInsets.only(left: 10),
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: data?.statusRekomensai == status
+          color: data?.statusTindakLanjut == status
               ? System.data.color!.primaryColor
               : Colors.transparent,
           borderRadius: const BorderRadius.all(
@@ -415,7 +420,7 @@ class View extends PresenterState {
         child: Text(
           status ?? "",
           style: System.data.textStyles!.basicLabel.copyWith(
-            color: data?.statusRekomensai == status
+            color: data?.statusTindakLanjut == status
                 ? Colors.white
                 : Colors.grey.shade500,
           ),

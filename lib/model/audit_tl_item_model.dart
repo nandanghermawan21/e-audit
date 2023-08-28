@@ -66,22 +66,22 @@ class AuditTLItemModel {
         komentar: KomentarModel.dummy(),
         action: ActionModel.dummy(),
       ),
-      AuditTLItemModel(
-        tindakLanjut: "Tindak Lanjut 2",
-        tanggal: DateTime.now(),
-        status: "Disetujui Staff QA Review kabag QA",
-        lampiran: AuditFileModel.dummy(),
-        komentar: KomentarModel.dummy(),
-        action: ActionModel.dummy(),
-      ),
-      AuditTLItemModel(
-        tindakLanjut: "Tindak Lanjut 3",
-        tanggal: DateTime.now(),
-        status: "Disetujui Staff QA Review kabag QA",
-        lampiran: AuditFileModel.dummy(),
-        komentar: KomentarModel.dummy(),
-        action: ActionModel.dummy(),
-      ),
+      // AuditTLItemModel(
+      //   tindakLanjut: "Tindak Lanjut 2",
+      //   tanggal: DateTime.now(),
+      //   status: "Disetujui Staff QA Review kabag QA",
+      //   lampiran: AuditFileModel.dummy(),
+      //   komentar: KomentarModel.dummy(),
+      //   action: ActionModel.dummy(),
+      // ),
+      // AuditTLItemModel(
+      //   tindakLanjut: "Tindak Lanjut 3",
+      //   tanggal: DateTime.now(),
+      //   status: "Disetujui Staff QA Review kabag QA",
+      //   lampiran: AuditFileModel.dummy(),
+      //   komentar: KomentarModel.dummy(),
+      //   action: ActionModel.dummy(),
+      // ),
     ];
   }
 }

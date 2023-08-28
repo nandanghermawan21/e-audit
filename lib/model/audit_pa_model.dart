@@ -1,7 +1,8 @@
 class AuditPaModel {
   String? id;
   String? divisi;
-  DateTime? tanggal;
+  DateTime? tanggalMulai;
+  DateTime? tanggalSelesai;
   String? kegiatan;
   String? status;
   int? menungguReviu;
@@ -9,7 +10,8 @@ class AuditPaModel {
   AuditPaModel({
     this.id,
     this.divisi,
-    this.tanggal,
+    this.tanggalMulai,
+    this.tanggalSelesai,
     this.kegiatan,
     this.status,
     this.menungguReviu,
@@ -19,7 +21,8 @@ class AuditPaModel {
     return AuditPaModel(
       id: json["id"],
       divisi: json["divisi"],
-      tanggal: DateTime.parse(json["tanggal"]),
+      tanggalMulai: DateTime.parse(json["tanggal_mulai"]),
+      tanggalSelesai: DateTime.parse(json["tanggal_selesai"]),
       kegiatan: json["kegiatan"],
       status: json["status"],
       menungguReviu: json["menunggu_reviu"],
@@ -30,7 +33,8 @@ class AuditPaModel {
     return {
       "id": id,
       "divisi": divisi,
-      "tanggal": tanggal,
+      "tanggal_mulai": tanggalMulai,
+      "tanggal_selesai": tanggalSelesai,
       "kegiatan": kegiatan,
       "status": status,
       "menunggu_reviu": menungguReviu,
@@ -45,7 +49,8 @@ class AuditPaModel {
       AuditPaModel(
         id: "45",
         divisi: "Divisi Akuntansi",
-        tanggal: DateTime.parse("2021-09-01 08:00:00"),
+        tanggalMulai: DateTime.parse("2021-09-01 08:00:00"),
+        tanggalSelesai: DateTime.parse("2021-09-10 08:00:00"),
         kegiatan:
             "Pelaksanaan Kegiatan Operasional, Administrasi, dan Kepatuhan Divisi Akuntansi",
         status: status,
@@ -54,7 +59,8 @@ class AuditPaModel {
       AuditPaModel(
         id: "46",
         divisi: "Divisi Umum",
-        tanggal: DateTime.parse("2021-09-01 08:00:00"),
+        tanggalMulai: DateTime.parse("2021-09-10 08:00:00"),
+        tanggalSelesai: DateTime.parse("2021-09-15 08:00:00"),
         kegiatan:
             "Pelaksanaan Kegiatan Operasional, Administrasi, dan Kepatuhan Divisi Umum P3DN Tahap 2",
         status: status,

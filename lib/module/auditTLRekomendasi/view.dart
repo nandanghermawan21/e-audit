@@ -127,7 +127,7 @@ class View extends PresenterState {
                                                                 index]
                                                             ?.listRekomendasi?[
                                                                 index2]
-                                                            ?.color ??
+                                                            ?.statusRekomendasiColor ??
                                                         Colors.green,
                                                     borderRadius:
                                                         const BorderRadius.all(
@@ -139,7 +139,7 @@ class View extends PresenterState {
                                                           ?.listAuditTL?[index]
                                                           ?.listRekomendasi?[
                                                               index2]
-                                                          ?.status ??
+                                                          ?.statusRekomendasi ??
                                                       "",
                                                   style: System.data.textStyles!
                                                       .boldTitleLightLabel,
@@ -222,20 +222,21 @@ class View extends PresenterState {
                                       },
                                       child: Container(
                                         height: 40,
-                                        width: 100,
                                         margin: const EdgeInsets.only(left: 5),
+                                        padding: const EdgeInsets.all(8),
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
                                           color: widget
                                               .auditTLReviu
                                               ?.listAuditTL?[index]
                                               ?.listRekomendasi?[index2]
-                                              ?.statusRekomendasiColor,
+                                              ?.statusTindakLanjutColor,
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
                                         child: Text(
-                                          "Tindak Lanjut",
+                                          'Tindak Lanjut',
+                                          // "${widget.auditTLReviu?.listAuditTL?[index]?.listRekomendasi?[index2]?.statusTindakLanjut ?? ""}}",
                                           style: System.data.textStyles!
                                               .boldTitleLightLabel,
                                         ),

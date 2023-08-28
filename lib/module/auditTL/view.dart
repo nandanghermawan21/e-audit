@@ -147,7 +147,7 @@ class View extends PresenterState {
                           children: [
                             Expanded(
                               child: button(
-                                label: "Matriks TL",
+                                label: "TL",
                                 icon: "assets/icons/temuan.png",
                                 data: item,
                               ),
@@ -157,7 +157,7 @@ class View extends PresenterState {
                             ),
                             Expanded(
                               child: button(
-                                label: "Matrikx Tindak Lanjut",
+                                label: "Tindak Lanjut",
                                 icon: "assets/icons/rekomendasi.png",
                                 data: item,
                               ),
@@ -167,7 +167,7 @@ class View extends PresenterState {
                             ),
                             Expanded(
                               child: button(
-                                label: "Matriks TL ML",
+                                label: "TL ML",
                                 icon: "assets/icons/tindak_lanjut.png",
                                 data: item,
                               ),
