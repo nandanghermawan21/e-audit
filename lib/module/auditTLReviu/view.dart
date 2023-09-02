@@ -1,6 +1,6 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/audit_file_model.dart';
-import 'package:eaudit/model/komentar_odel.dart';
+import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:eaudit/component/decoration_component.dart';
@@ -66,7 +66,7 @@ class View extends PresenterState {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Reviu Tidak Lanjut",
+              "Reviu Tnidak Lanjut",
               style: System.data.textStyles!.boldTitleLabel,
             ),
             const SizedBox(

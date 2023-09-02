@@ -288,6 +288,12 @@ Map<String, WidgetBuilder> route = {
         Navigator.of(context).pushNamedAndRemoveUntil(
             RouteName.auditKKA, (r) => r.settings.name == RouteName.reviu);
       },
+      onTapDocument: (title, url) {
+        Navigator.of(context).pushNamed(RouteName.pdfViewwer, arguments: {
+          ParamName.title: title,
+          ParamName.url: url,
+        });
+      },
     );
   },
   RouteName.auditKKPT: (BuildContext context) {

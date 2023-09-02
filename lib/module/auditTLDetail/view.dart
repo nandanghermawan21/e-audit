@@ -2,7 +2,7 @@ import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/audit_rekomendasi_model.dart';
 import 'package:eaudit/model/audit_tl_model.dart';
 import 'package:eaudit/model/audit_tl_reviu_model.dart';
-import 'package:eaudit/model/komentar_odel.dart';
+import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

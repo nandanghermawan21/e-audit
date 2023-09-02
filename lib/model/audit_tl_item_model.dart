@@ -1,6 +1,6 @@
 import 'package:eaudit/model/action_model.dart';
 import 'package:eaudit/model/audit_file_model.dart';
-import 'package:eaudit/model/komentar_odel.dart';
+import 'package:eaudit/model/komentar_model.dart';
 
 class AuditTLItemModel {
   String? tindakLanjut;

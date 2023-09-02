@@ -1,5 +1,6 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/audit_kka_reviu_model.dart';
+import 'package:eaudit/util/type.dart';
 import 'package:flutter/material.dart';
 import 'view.dart';
 
@@ -7,8 +8,9 @@ class Presenter extends StatefulWidget {
   final State<Presenter>? view;
   final AuditkaReviuModel? kka;
   final VoidCallback? onSubmitSuccess;
+  final ValueChanged2Param<String, String>? onTapDocument;
 
-  const Presenter({Key? key, this.view, this.kka, this.onSubmitSuccess})
+  const Presenter({Key? key, this.view, this.kka, this.onSubmitSuccess, this.onTapDocument})
       : super(key: key);
 
   @override

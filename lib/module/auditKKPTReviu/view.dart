@@ -1,7 +1,7 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/audit_kkpt_model.dart';
 import 'package:eaudit/model/audit_kkpt_reviu_model.dart';
-import 'package:eaudit/model/komentar_odel.dart';
+import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -89,7 +89,9 @@ class View extends PresenterState {
               const SizedBox(
                 height: 10,
               ),
-              catatan(),
+              (widget.kkpt?.listKKPT?.first?.actions?.length ?? 0) <= 1
+                  ? const SizedBox.shrink()
+                  : catatan(),
             ],
           ),
         ),
@@ -167,7 +169,7 @@ class View extends PresenterState {
           value: data?.akibat ?? "",
         ),
         DecorationComponent.item(
-          title: "Lampirn",
+          title: "Lampiran",
           value: data?.namaLampiran ?? "",
           valueColor: System.data.color!.link,
           onTap: () {

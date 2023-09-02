@@ -59,7 +59,7 @@ class View extends PresenterState {
                     height: 20,
                   ),
                   Text(
-                    "Daftar ANggota Tim",
+                    "Daftar Anggota Tim",
                     style: System.data.textStyles!.boldTitleLabel,
                   ),
                   const SizedBox(
@@ -230,7 +230,7 @@ class View extends PresenterState {
               padding: const EdgeInsets.all(5),
               color: Colors.grey.shade200,
               child: Text(
-                "Nama Auditpr",
+                "Nama Auditor",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -363,98 +363,112 @@ class View extends PresenterState {
                     const SizedBox(
                       width: 10,
                     ),
-                    Container(
-                      width: 120,
-                      color: Colors.transparent,
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              widget.onTapKKA?.call(
-                                AuditKKAModel.dummys().first,
-                              );
-                            },
-                            child: Container(
+                    IntrinsicWidth(
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                widget.onTapKKA?.call(
+                                  AuditKKAModel.dummys().first,
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: System.data.color!.primaryColor
+                                      .withOpacity(0.5),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
+                                child: SizedBox(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "KKA",
+                                        style:
+                                            System.data.textStyles!.basicLabel,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "2",
+                                        style:
+                                            System.data.textStyles!.basicLabel,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Container(
                               padding: const EdgeInsets.all(8),
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: System.data.color!.primaryColor
-                                    .withOpacity(0.5),
+                                color: Colors.grey.shade200,
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(8),
                                 ),
                               ),
-                              child: SizedBox(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "KKA",
-                                      style: System.data.textStyles!.basicLabel,
-                                    ),
-                                    Text(
-                                      "2",
-                                      style: System.data.textStyles!.basicLabel,
-                                    ),
-                                  ],
-                                ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Temuan",
+                                    style: System.data.textStyles!.basicLabel,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "0",
+                                    style: System.data.textStyles!.basicLabel,
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Rekomendasi",
+                                    style: System.data.textStyles!.basicLabel,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "0",
+                                    style: System.data.textStyles!.basicLabel,
+                                  ),
+                                ],
                               ),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Temuan",
-                                  style: System.data.textStyles!.basicLabel,
-                                ),
-                                Text(
-                                  "0",
-                                  style: System.data.textStyles!.basicLabel,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Remonendasi",
-                                  style: System.data.textStyles!.basicLabel,
-                                ),
-                                Text(
-                                  "0",
-                                  style: System.data.textStyles!.basicLabel,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

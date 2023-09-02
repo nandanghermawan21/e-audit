@@ -37,7 +37,7 @@ class AuditRekomendasiStatusModel {
       ),
       AuditRekomendasiStatusModel(
         id: 2,
-        name: "Dalam Proses Reviu AUditor",
+        name: "Dalam Proses Reviu Auditor",
         color: Colors.blue,
       ),
       AuditRekomendasiStatusModel(

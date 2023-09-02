@@ -1,5 +1,5 @@
 import 'package:eaudit/model/action_model.dart';
-import 'package:eaudit/model/komentar_odel.dart';
+import 'package:eaudit/model/komentar_model.dart';
 
 class AuditKKAModel {
   String? id;

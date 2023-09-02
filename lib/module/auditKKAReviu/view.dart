@@ -1,7 +1,7 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/audit_kka_model.dart';
 import 'package:eaudit/model/audit_kka_reviu_model.dart';
-import 'package:eaudit/model/komentar_odel.dart';
+import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +20,7 @@ class View extends PresenterState {
           backgroundColor: System.data.color!.primaryColor,
           centerTitle: true,
           title: Text(
-            "Reviu Program Kerja Audit",
+            "Reviu Kertas Kerja Audit",
             style: System.data.textStyles!.boldTitleLightLabel,
           ),
           actions: [
@@ -44,9 +44,9 @@ class View extends PresenterState {
                   loadingController: loadingController,
                   action: widget.kka?.listKka?.first?.actions?[index],
                   data: widget.kka,
-                  onCofirmAction: (data){
+                  onCofirmAction: (data) {
                     widget.onSubmitSuccess?.call();
-                  }
+                  },
                 ),
               );
             }),
@@ -75,7 +75,7 @@ class View extends PresenterState {
               height: 10,
             ),
             kertasKerja(widget.kka?.listKka?.first),
-             const SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
@@ -178,7 +178,18 @@ class View extends PresenterState {
         ),
         DecorationComponent.item(
           title: "File Kertas Kerja",
-          value: data?.fileKertasKerja ?? "",
+          // value: data?.fileKertasKerja ?? "",
+          valueWidget: GestureDetector(
+            onTap: () {
+              widget.onTapDocument?.call(data?.fileKertasKerja ?? "", data?.urlFileKertasKerja ?? "");
+            },
+            child: Text(
+              data?.fileKertasKerja ?? "",
+              style: System.data.textStyles!.basicLabel.copyWith(
+                color: System.data.color!.link,
+              ),
+            ),
+          ),
         ),
       ],
     );

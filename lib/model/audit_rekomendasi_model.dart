@@ -1,5 +1,5 @@
 import 'package:eaudit/model/audit_tl_item_model.dart';
-import 'package:eaudit/model/komentar_odel.dart';
+import 'package:eaudit/model/komentar_model.dart';
 import 'package:flutter/material.dart';
 
 class AuditRekomendasiModel {

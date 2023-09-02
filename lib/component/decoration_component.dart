@@ -1,6 +1,6 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/action_model.dart';
-import 'package:eaudit/model/komentar_odel.dart';
+import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,7 +25,7 @@ class DecorationComponent {
             child: Column(
               children: [
                 Text(
-                  "Anda Yakin Untuk ${action?.description} KKA?",
+                  "Anda Yakin Untuk ${action?.description}?",
                   style: System.data.textStyles!.basicLabel,
                 ),
                 const SizedBox(
@@ -110,10 +110,11 @@ class DecorationComponent {
               Text(
                 komentar.tanggal == null
                     ? "-"
-                    : DateFormat("dd MMMM yyyy").format(
+                    : DateFormat("dd MMMM yyyy (hh:mm:ss)",System.data.strings!.locale).format(
                         (komentar.tanggal!),
                       ),
                 style: System.data.textStyles!.basicLabel,
+                textAlign: TextAlign.end,
               ),
             ],
           ),

@@ -14,7 +14,7 @@ class View extends PresenterState {
         backgroundColor: System.data.color!.primaryColor,
         centerTitle: true,
         title: Text(
-          "Daftar Perisapan Audit",
+          "Daftar Pelaksanaan Audit",
           style: System.data.textStyles!.boldTitleLightLabel,
         ),
         actions: [
@@ -134,9 +134,9 @@ class View extends PresenterState {
                               style: System.data.textStyles!.boldTitleLabel,
                             ),
                             Text(
-                              "${data?.tanggalMulai == null ? "-" : DateFormat("dd MMM yyyy").format(
+                              "${data?.tanggalMulai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
                                   (data!.tanggalMulai!),
-                                )} ${data?.tanggalSelesai == null ? "-" : DateFormat("dd MMM yyyy").format(
+                                )} ${data?.tanggalSelesai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
                                   (data!.tanggalSelesai!),
                                 )}",
                               style: System.data.textStyles!.boldTitleLabel,
