@@ -66,7 +66,7 @@ class View extends PresenterState {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Reviu Tnidak Lanjut",
+              "Reviu Tindak Lanjut",
               style: System.data.textStyles!.boldTitleLabel,
             ),
             const SizedBox(

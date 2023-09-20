@@ -119,7 +119,6 @@ class View extends PresenterState {
                     widget.onTapItem!(data);
                   },
                   child: Container(
-                    height: 100,
                     color: Colors.white,
                     margin: const EdgeInsets.all(5),
                     padding: const EdgeInsets.all(10),
@@ -129,17 +128,22 @@ class View extends PresenterState {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              data?.divisi ?? "",
-                              style: System.data.textStyles!.boldTitleLabel,
+                            Expanded(
+                              child: Text(
+                               ( data?.divisi ?? ""),
+                                style: System.data.textStyles!.boldTitleLabel,
+                              ),
                             ),
-                            Text(
-                              "${data?.tanggalMulai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
-                                  (data!.tanggalMulai!),
-                                )} ${data?.tanggalSelesai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
-                                  (data!.tanggalSelesai!),
-                                )}",
-                              style: System.data.textStyles!.boldTitleLabel,
+                            Expanded(
+                              child: Text(
+                                "${data?.tanggalMulai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+                                    (data!.tanggalMulai!),
+                                  )}\ns/d ${data?.tanggalSelesai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+                                    (data!.tanggalSelesai!),
+                                  )}",
+                                style: System.data.textStyles!.boldTitleLabel,
+                                textAlign: TextAlign.end,
+                              ),
                             ),
                           ],
                         ),
