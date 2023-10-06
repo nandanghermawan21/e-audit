@@ -7,7 +7,7 @@ import 'package:eaudit/util/system.dart';
 import 'package:eaudit/util/type.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'view.dart';
+import 'main.dart' as main;
 
 class Presenter extends StatefulWidget {
   final VoidCallback onTapLogout;
@@ -33,7 +33,7 @@ class Presenter extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return View();
+    return main.View();
   }
 }
 

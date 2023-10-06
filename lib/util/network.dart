@@ -118,6 +118,10 @@ class Network {
       "appVersion": System.data.versionName,
       "appVersionCode": "${System.data.versionCode}",
       "messagingToken": "${System.data.global.messagingToken}",
+      "User-Agent": "PostmanRuntime/7.33.0",
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Connection": "keep-alive",
     });
 
     Map<String, String> newQuery = {};

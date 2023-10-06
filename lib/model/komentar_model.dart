@@ -11,17 +11,17 @@ class KomentarModel {
 
   static KomentarModel fromJson(Map<String, dynamic> json) {
     return KomentarModel(
-      tanggal: DateTime.parse(json["tanggal"]),
-      name: json["name"],
-      komentar: json["komentar"],
+      tanggal: DateTime.parse(json["program_comment_date"]),
+      name: json["auditor_name"],
+      komentar: json["program_comment_desc"],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "tanggal": tanggal?.toIso8601String(),
-      "name": name,
-      "komentar": komentar,
+      "program_comment_date": tanggal?.toIso8601String(),
+      "auditor_name": name,
+      "program_comment_desc": komentar,
     };
   }
 

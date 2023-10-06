@@ -1,6 +1,7 @@
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/component/list_data_component.dart';
-import 'package:eaudit/model/audit_pka_reviu_model.dart';
+import 'package:eaudit/model/audit_pka_model.dart';
+import 'package:eaudit/model/program_audit_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 
@@ -61,13 +62,15 @@ class View extends PresenterState {
   Widget body() {
     return Container(
       color: Colors.transparent,
-      child: ListDataComponent<AuditPKAReviuModel>(
+      child: ListDataComponent<ProgramAuditModel>(
         controller: listController,
         enableDrag: false,
         enableGetMore: false,
         dataSource: (skip, key) {
-          return Future.value().then((value) {
-            return AuditPKAReviuModel.dummys();
+          return AuditPKAModel.get(
+                  token: System.data.global.token, assignId: widget.auditPA?.id)
+              .then((value) {
+            return value.programAudit ?? [];
           });
         },
         itemBuilder: (data, index) {
@@ -121,7 +124,7 @@ class View extends PresenterState {
                   height: 5,
                 ),
                 Text(
-                  "${data?.waktuhari.toString() ?? ""} Hari",
+                  "${data?.jumlahHari.toString() ?? ""} Hari",
                   style: System.data.textStyles!.basicLabel,
                 ),
                 const SizedBox(
@@ -139,9 +142,9 @@ class View extends PresenterState {
                       children: [
                         Radio(
                           value: "approve",
-                          groupValue: data?.status,
+                          groupValue: data?.approve,
                           onChanged: (val) {
-                            data?.status = val.toString();
+                            data?.approve = val.toString();
                             listController.commit();
                           },
                         ),
@@ -151,9 +154,9 @@ class View extends PresenterState {
                         ),
                         Radio(
                           value: "Tolak",
-                          groupValue: data?.status,
+                          groupValue: data?.approve,
                           onChanged: (val) {
-                            data?.status = val.toString();
+                            data?.approve = val.toString();
                             listController.commit();
                           },
                         ),

@@ -11,17 +11,17 @@ class AnggotaModel {
 
   static AnggotaModel fromJson(Map<String, dynamic> json) {
     return AnggotaModel(
-      namaAuditor: json["nama_auditor"],
-      namaAuditee: json["nama_auditee"],
-      posisi: json["posisi"],
+      namaAuditor: json["auditor_name"],
+      namaAuditee: json["auditee_name"],
+      posisi: json["posisi_name"],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "nama_auditor": namaAuditor,
-      "nama_auditee": namaAuditee,
-      "posisi": posisi,
+      "auditor_name": namaAuditor,
+      "auditee_name": namaAuditee,
+      "posisi_name": posisi,
     };
   }
 

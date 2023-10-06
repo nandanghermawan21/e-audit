@@ -1,9 +1,9 @@
 import 'package:eaudit/component/list_data_component.dart';
-import 'package:eaudit/model/audit_kka_model.dart';
 import 'package:eaudit/model/audit_pka_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 import 'presenter.dart';
 
@@ -38,13 +38,11 @@ class View extends PresenterState {
         enableGetMore: false,
         enableDrag: false,
         dataSource: (skip, key) {
-          return Future.value().then(
-            (value) {
-              return [
-                AuditPKAModel.dummy(),
-              ];
-            },
-          );
+          return AuditPKAModel.get(
+                  token: System.data.global.token, assignId: widget.auditPA?.id)
+              .then((value) {
+            return [value];
+          });
         },
         itemBuilder: (data, index) {
           return Padding(
@@ -82,7 +80,7 @@ class View extends PresenterState {
                         height: 25,
                         child: ElevatedButton(
                           onPressed: () {
-                            widget.onTapReviu!(data);
+                            widget.onTapReviu!(widget.auditPA);
                           },
                           child: Text(
                             "Reviu PKA",
@@ -101,6 +99,14 @@ class View extends PresenterState {
             ),
           );
         },
+        loaderWidget: SkeletonAnimation(
+          shimmerColor: Colors.grey.shade300,
+          child: Container(
+            color: Colors.white,
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+          ),
+        ),
       ),
     );
   }
@@ -371,7 +377,7 @@ class View extends PresenterState {
                             GestureDetector(
                               onTap: () {
                                 widget.onTapKKA?.call(
-                                  AuditKKAModel.dummys().first,
+                                  widget.auditPA,
                                 );
                               },
                               child: Container(

@@ -2,7 +2,7 @@ import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/component/list_data_component.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
-import 'view.dart';
+import 'main.dart' as main;
 
 class Presenter extends StatefulWidget {
   const Presenter({
@@ -11,7 +11,7 @@ class Presenter extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return View();
+    return main.View();
   }
 }
 

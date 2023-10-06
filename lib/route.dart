@@ -67,6 +67,8 @@ enum ParamName {
   kka,
   kkpt,
   tL,
+  year,
+  persiapanAudit,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -182,31 +184,34 @@ Map<String, WidgetBuilder> route = {
   },
   RouteName.reviu: (BuildContext context) {
     return reviu.Presenter(
-      onTapReviuPKA: () {
+      onTapReviuPKA: (tahun) {
         Navigator.of(context).pushNamed(
           RouteName.auditPA,
           arguments: {
             ParamName.tipeReviu: "PKA",
+            ParamName.year: tahun,
           },
         );
       },
-      onTapReviuKKA: () {
+      onTapReviuKKA: (tahun) {
         Navigator.of(context).pushNamed(
           RouteName.auditPA,
           arguments: {
             ParamName.tipeReviu: "KKA",
+            ParamName.year: tahun,
           },
         );
       },
-      onTapReviuKKPT: () {
+      onTapReviuKKPT: (tahun) {
         Navigator.of(context).pushNamed(
           RouteName.auditPA,
           arguments: {
             ParamName.tipeReviu: "KKPT",
+            ParamName.year: tahun,
           },
         );
       },
-      onTapReviuTindakLanjut: () {
+      onTapReviuTindakLanjut: (tahun) {
         Navigator.of(context).pushNamed(
           RouteName.auditTl,
         );
@@ -219,12 +224,13 @@ Map<String, WidgetBuilder> route = {
             {};
     return audit_pa.Presenter(
       type: arg[ParamName.tipeReviu],
+      tahun: arg[ParamName.year],
       onTapItem: (data) {
-        switch (data?.status) {
+        switch (arg[ParamName.tipeReviu]) {
           case "PKA":
-            Navigator.of(context).pushNamed(
-              RouteName.auditPKA,
-            );
+            Navigator.of(context).pushNamed(RouteName.auditPKA, arguments: {
+              ParamName.persiapanAudit: data,
+            });
             break;
 
           case "KKA":
@@ -245,11 +251,15 @@ Map<String, WidgetBuilder> route = {
     );
   },
   RouteName.auditPKA: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
     return audit_pka.Presenter(
+      auditPA: arg[ParamName.persiapanAudit],
       onTapReviu: (data) {
-        Navigator.of(context).pushNamed(
-          RouteName.auditPKAReviu,
-        );
+        Navigator.of(context).pushNamed(RouteName.auditPKAReviu, arguments: {
+          ParamName.persiapanAudit: data,
+        });
       },
       onTapKKA: (data) {
         Navigator.of(context).pushNamed(
@@ -259,7 +269,11 @@ Map<String, WidgetBuilder> route = {
     );
   },
   RouteName.auditPKAReviu: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
     return audit_pka_reviu.Presenter(
+      auditPA: arg[ParamName.persiapanAudit],
       onSubmitSuccess: () {
         Navigator.of(context).pushNamedAndRemoveUntil(
             RouteName.reviu, (r) => r.settings.name == "");

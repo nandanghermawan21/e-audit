@@ -5,7 +5,7 @@ import 'package:eaudit/model/user_model.dart';
 import 'package:eaudit/util/enum.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
-import 'view.dart';
+import 'main.dart' as main;
 
 class Presenter extends StatefulWidget {
   final VoidCallback onFinishSplashScreen;
@@ -17,7 +17,7 @@ class Presenter extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return View();
+    return main.View();
   }
 }
 

@@ -2,7 +2,7 @@ import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'view.dart';
+import 'main.dart' as main;
 
 class Presenter extends StatefulWidget {
   final String title;
@@ -18,7 +18,7 @@ class Presenter extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return View();
+    return main.View();
   }
 }
 

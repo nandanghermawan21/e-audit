@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'view.dart';
+import 'main.dart' as main;
+import 'view_model.dart';
 
 class Presenter extends StatefulWidget {
   final State<Presenter>? view;
-  final VoidCallback? onTapReviuPKA;
-  final VoidCallback? onTapReviuKKA;
-  final VoidCallback? onTapReviuKKPT;
-  final VoidCallback? onTapReviuTindakLanjut;
+  final ValueChanged<int>? onTapReviuPKA;
+  final ValueChanged<int>? onTapReviuKKA;
+  final ValueChanged<int>? onTapReviuKKPT;
+  final ValueChanged<int>? onTapReviuTindakLanjut;
 
   const Presenter({
     Key? key,
@@ -20,8 +21,10 @@ class Presenter extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // ignore: no_logic_in_create_state
-    return view ?? View();
+    return view ?? main.View();
   }
 }
 
-abstract class PresenterState extends State<Presenter> {}
+abstract class PresenterState extends State<Presenter> {
+  ViewModel model = ViewModel();
+}

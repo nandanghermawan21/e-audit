@@ -50,12 +50,13 @@ dependencies:
   onesignal_flutter: ^3.3.0
   uni_links: ^0.5.1
   webview_flutter: ^2.0.4
-  skeleton_text: ^3.0.0
+  skeleton_text: ^3.0.1
   syncfusion_flutter_pdfviewer: ^20.4.41
   url_launcher: ^6.1.7
   flutter_launcher_icons: ^0.9.0
   d_chart: ^2.3.0
   syncfusion_flutter_gauges: ^20.4.41
+  dio: ^5.3.3
 
 
 

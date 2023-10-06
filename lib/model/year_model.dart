@@ -10,6 +10,13 @@ class YearModel {
   static Widget yearSelector({
     int? selectedYear,
     ValueChanged<int>? onChange,
+    Color? dropdownColor,
+    Color? textColor,
+    Color? iconColor,
+    bool? isExpanded,
+    Alignment? alignment,
+    Text? hint,
+    Container? underline,
   }) {
     StreamController<int?> selectedStream = StreamController<int?>();
 
@@ -66,6 +73,74 @@ class YearModel {
         );
       },
     );
+  }
+
+  static Widget yearSelector2({
+    required int? selectedYear,
+    required ValueChanged<int?>? onChange,
+  }) {
+    StreamController<int?> selectedStream = StreamController<int?>();
+    return FutureBuilder<List<int?>>(
+        future: YearModel.get(
+          token: System.data.global.token,
+        ),
+        builder: (c, s) {
+          if (s.connectionState != ConnectionState.done) {
+            return const SizedBox(
+              width: 100,
+              child: Center(
+                child: Icon(
+                  Icons.refresh,
+                  color: Colors.black,
+                ),
+              ),
+            );
+          } else {
+            if (!(s.data ?? []).contains(selectedYear)) {
+              s.data?.add(selectedYear);
+            }
+            return StreamBuilder<int?>(
+              initialData: selectedYear,
+              stream: selectedStream.stream,
+              builder: (cc, ss) {
+              return Container(
+                width: 100,
+                height: double.infinity,
+                color: Colors.transparent,
+                child: DropdownButton<int>(
+                  isExpanded: true,
+                  value: ss.data,
+                  underline: Container(
+                    height: 1,
+                    decoration: const BoxDecoration(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  hint: Text(
+                    System.data.strings!.year,
+                    style: System.data.textStyles!.basicLabel.copyWith(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  items: List.generate(
+                    (s.data ?? []).length,
+                    (index) {
+                      return DropdownMenuItem<int>(
+                        value: s.data![index],
+                        child: Text("${s.data![index]}",
+                            style: System.data.textStyles!.basicLabel),
+                      );
+                    },
+                  ),
+                  onChanged: (val) {
+                    selectedStream.add(val);
+                    onChange?.call(val);
+                  },
+                ),
+              );
+            });
+          }
+        });
   }
 
   static Future<List<int>> get({

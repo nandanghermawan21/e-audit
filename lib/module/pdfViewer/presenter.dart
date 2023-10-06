@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'view.dart';
+import 'main.dart' as main;
 
 class Presenter extends StatefulWidget {
   final String title;
@@ -16,7 +16,7 @@ class Presenter extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return View();
+    return main.View();
   }
 }
 

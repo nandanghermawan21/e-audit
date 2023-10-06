@@ -7,7 +7,7 @@ import 'package:eaudit/util/enum.dart';
 import 'package:eaudit/util/error_handling_util.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
-import 'view.dart';
+import 'main.dart' as main;
 
 class Presenter extends StatefulWidget {
   final VoidCallback? onLoginSuccess;
@@ -18,7 +18,7 @@ class Presenter extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return View();
+    return main.View();
   }
 }
 

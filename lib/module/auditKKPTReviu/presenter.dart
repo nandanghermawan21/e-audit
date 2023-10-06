@@ -3,8 +3,7 @@ import 'package:eaudit/model/audit_kkpt_reviu_model.dart';
 import 'package:eaudit/util/type.dart';
 import 'package:flutter/material.dart';
 import 'view_model.dart';
-
-import 'view.dart';
+import 'main.dart' as main;
 
 class Presenter extends StatefulWidget {
   final State<Presenter>? view;
@@ -19,7 +18,7 @@ class Presenter extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // ignore: no_logic_in_create_state
-    return view ?? View();
+    return view ?? main.View();
   }
 }
 
