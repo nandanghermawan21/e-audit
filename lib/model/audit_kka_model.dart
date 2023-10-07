@@ -36,25 +36,31 @@ class AuditKKAModel {
 
   static AuditKKAModel fromJson(Map<String, dynamic> json) {
     return AuditKKAModel(
-      id: json["id"],
-      noKka: json["no_kka"],
-      judulKka: json["judul_kka"],
-      tanggal: DateTime.parse(json["tanggal"]),
-      status: json["status"],
+      id: json["kertas_kerja_id"],
+      noKka: json["kertas_kerja_no"],
+      judulKka: json["kertas_kerja_judul"],
+      tanggal: DateTime.parse(json["kertas_kerja_date"]),
+      status: json["kertas_kerja_status"],
       temuan: json["temuan"],
-      actions: json["action"] != null
-          ? List<ActionModel>.from(
-              json["action"].map((x) => ActionModel.fromJson(x)),
-            )
-          : null,
+      actions: ActionModel.dummy(),
+      // actions: json["action"] != null
+      //     ? List<ActionModel>.from(
+      //         json["action"].map((x) => ActionModel.fromJson(x)),
+      //       )
+      //     : null,
       dokumenYangDiperiksa: json["dokumen_yang_diperiksa"],
-      uraian: json["uraian"],
-      kesimpulan: json["kesimpulan"],
+      uraian: json["kertas_kerja_uraian"],
+      kesimpulan: json["kertas_kerja_kesimpulan"],
       fileKertasKerja: json["file_kertas_kerja"],
-      urlFileKertasKerja: json["url_file_kertas_kerja"],
+      urlFileKertasKerja: json["kertas_kerja_file_url"],
       komentar: json["komentar"] != null
           ? List<KomentarModel>.from(
-              json["komentar"].map((x) => KomentarModel.fromJson(x)),
+              json["komentar"].map((x) => KomentarModel.fromJson(
+                    x,
+                    tanggalKey: "kertas_kerja_comment_date",
+                    nameKey: "auditor_name",
+                    komentarKey: "kertas_kerja_comment_desc",
+                  )),
             )
           : null,
     );

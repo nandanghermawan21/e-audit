@@ -4,6 +4,7 @@ import 'package:eaudit/model/audit_kkpt_reviu_model.dart';
 import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:eaudit/component/decoration_component.dart';
@@ -87,7 +88,7 @@ class View extends PresenterState {
               ),
               komentar(widget.kkpt?.listKKPT?.first?.komentar),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               (widget.kkpt?.listKKPT?.first?.actions?.length ?? 0) <= 1
                   ? const SizedBox.shrink()
@@ -161,13 +162,9 @@ class View extends PresenterState {
           value: data?.kriteria ?? "",
         ),
         DecorationComponent.item(
-          title: "Sebab",
-          value: data?.sebab ?? "",
-        ),
+            title: "Sebab", valueWidget: Html(data: data?.sebab)),
         DecorationComponent.item(
-          title: "Akibat",
-          value: data?.akibat ?? "",
-        ),
+            title: "Akibat", valueWidget: Html(data: data?.akibat)),
         DecorationComponent.item(
           title: "Lampiran",
           value: data?.namaLampiran ?? "",
@@ -183,11 +180,14 @@ class View extends PresenterState {
 
   Widget komentar(List<KomentarModel?>? data) {
     return SizedBox(
-      child: Column(
-        children: List.generate(data?.length ?? 0, (index) {
-          return DecorationComponent.itemKomentar((data![index]!));
-        }),
-      ),
+      child: (data?.length ?? 0) > 0
+          ? Column(
+              children: List.generate(data?.length ?? 0, (index) {
+                return DecorationComponent.itemKomentar((data![index]!));
+              }),
+            )
+          : Text("Tidak ada komentar",
+              style: System.data.textStyles!.basicLabel),
     );
   }
 

@@ -109,8 +109,10 @@ class DecorationComponent {
               ),
               Text(
                 komentar.tanggal == null
-                    ? "-"
-                    : DateFormat("dd MMMM yyyy (hh:mm:ss)",System.data.strings!.locale).format(
+                    ? "-------"
+                    : DateFormat("dd MMMM yyyy (hh:mm:ss)",
+                            System.data.strings!.locale)
+                        .format(
                         (komentar.tanggal!),
                       ),
                 style: System.data.textStyles!.basicLabel,
@@ -122,7 +124,9 @@ class DecorationComponent {
             height: 3,
           ),
           Text(
-            komentar.komentar ?? "",
+            (komentar.komentar == null || komentar.komentar == "")
+                ? "-------"
+                : komentar.komentar ?? "",
             style: System.data.textStyles!.basicLabel,
           ),
         ],
@@ -162,15 +166,15 @@ class DecorationComponent {
               const SizedBox(
                 width: 5,
               ),
-              valueWidget ??
-                  Expanded(
-                    child: Text(
+              Expanded(
+                child: valueWidget ??
+                    Text(
                       value ?? "",
                       style: System.data.textStyles!.basicLabel.copyWith(
                         color: valueColor,
                       ),
                     ),
-                  ),
+              ),
             ],
           ),
           const SizedBox(

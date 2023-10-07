@@ -44,7 +44,12 @@ class ProgramAuditModel {
       totalTemuan: int.parse(json["total_temuan"]),
       totalRekomendasi: int.parse(json["total_rekomendasi"]),
       komentar: (json["komentar"] as List)
-          .map((e) => KomentarModel.fromJson(e))
+          .map((e) => KomentarModel.fromJson(
+                e,
+                tanggalKey: "program_comment_date",
+                nameKey: "auditor_name",
+                komentarKey: "program_comment_desc",
+              ))
           .toList(),
     );
   }

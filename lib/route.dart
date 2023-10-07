@@ -234,15 +234,15 @@ Map<String, WidgetBuilder> route = {
             break;
 
           case "KKA":
-            Navigator.of(context).pushNamed(
-              RouteName.auditKKA,
-            );
+            Navigator.of(context).pushNamed(RouteName.auditKKA, arguments: {
+              ParamName.persiapanAudit: data,
+            });
             break;
 
           case "KKPT":
-            Navigator.of(context).pushNamed(
-              RouteName.auditKKPT,
-            );
+            Navigator.of(context).pushNamed(RouteName.auditKKPT, arguments: {
+              ParamName.persiapanAudit: data,
+            });
             break;
 
           default:
@@ -281,7 +281,11 @@ Map<String, WidgetBuilder> route = {
     );
   },
   RouteName.auditKKA: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
     return audit_kka.Presenter(
+      auditPA: arg[ParamName.persiapanAudit],
       onSelectAction: (kka) {
         Navigator.of(context).pushNamed(
           RouteName.reviuKKAReviu,
@@ -311,7 +315,11 @@ Map<String, WidgetBuilder> route = {
     );
   },
   RouteName.auditKKPT: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
     return audit_kkpt.Presenter(
+      auditPA: arg[ParamName.persiapanAudit],
       onSelectAction: (kkpt) {
         Navigator.of(context).pushNamed(
           RouteName.auditKKPTReviu,

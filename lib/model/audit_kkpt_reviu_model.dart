@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:eaudit/model/audit_kkpt_model.dart';
+import 'package:eaudit/util/basic_response.dart';
+import 'package:eaudit/util/network.dart';
+import 'package:eaudit/util/system.dart';
 
 class AuditKKPTReviuModel {
   String? id;
@@ -6,6 +11,7 @@ class AuditKKPTReviuModel {
   String? auditee;
   String? tipeAudit;
   DateTime? tanggalAudit;
+  DateTime? tanggalAuditEnd;
   String? noKKa;
   String? bidangSubtansi;
   List<AuditKKPTModel?>? listKKPT;
@@ -16,6 +22,7 @@ class AuditKKPTReviuModel {
     this.auditee,
     this.tipeAudit,
     this.tanggalAudit,
+    this.tanggalAuditEnd,
     this.noKKa,
     this.bidangSubtansi,
     this.listKKPT,
@@ -23,14 +30,15 @@ class AuditKKPTReviuModel {
 
   static AuditKKPTReviuModel fromJson(Map<String, dynamic> json) {
     return AuditKKPTReviuModel(
-      id: json["id"],
-      namakegiatan: json["nama_kegiatan"],
-      auditee: json["auditee"],
-      tipeAudit: json["tipe_audit"],
-      tanggalAudit: DateTime.parse(json["tanggal_audit"]),
+      id: json["assign_id"],
+      namakegiatan: json["assign_kegiatan"],
+      auditee: json["auditee_name"],
+      tipeAudit: json["audit_type_name"],
+      tanggalAudit: DateTime.parse(json["assign_start_date"]),
+      tanggalAuditEnd: DateTime.parse(json["assign_end_date"]),
       noKKa: json["no_kka"],
       bidangSubtansi: json["bidang_subbidang"],
-      listKKPT: (json["list_kkpt"] as List)
+      listKKPT: (json["kkpt"] as List)
           .map((e) => AuditKKPTModel.fromJson(e))
           .toList(),
     );
@@ -42,11 +50,40 @@ class AuditKKPTReviuModel {
       "nama_kegiatan": namakegiatan,
       "auditee": auditee,
       "tipe_audit": tipeAudit,
-      "tanggal_audit": tanggalAudit?.toIso8601String(),
+      "tanggal_mulai": tanggalAudit,
       "no_kka": noKKa,
       "bidang_subbidang": bidangSubtansi,
       "list_kkpt": listKKPT?.map((e) => e?.toJson()).toList(),
     };
+  }
+
+  static Future<AuditKKPTReviuModel> get({
+    required String? token,
+    required String? assignId,
+  }) {
+    return Network.get(
+      url: Uri.parse(System.data.apiEndPoint.url),
+      rawResult: true,
+      querys: {
+        "method": "data_kkpt",
+        "assign_id": "$assignId",
+        "token": "$token",
+      },
+      headers: {
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+    ).then((value) {
+      value = json.decode(value);
+      if ((value)["message"] == "" || (value)["message"] == null) {
+        return AuditKKPTReviuModel.fromJson(value);
+      }
+      throw BasicResponse(message: (value)["message"]);
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
   }
 
   //create list dummy

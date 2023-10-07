@@ -4,6 +4,7 @@ import 'package:eaudit/model/audit_kka_reviu_model.dart';
 import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:eaudit/component/decoration_component.dart';
 
@@ -86,6 +87,9 @@ class View extends PresenterState {
               height: 10,
             ),
             komentar(widget.kka?.listKka?.first?.komentar),
+            const SizedBox(
+              height: 20,
+            ),
             catatan(),
           ],
         ),
@@ -97,32 +101,35 @@ class View extends PresenterState {
     return Column(
       children: [
         DecorationComponent.item(
-          title: "Obyek Audit",
-          value: data?.objectAudit ?? "",
+          title: "Kegiatan",
+          value: data?.kegiatan ?? "",
         ),
         DecorationComponent.item(
-          title: "Auditor",
-          value: data?.auditor ?? "",
+          title: "Auditee",
+          value: data?.auditee ?? "",
         ),
         DecorationComponent.item(
-          title: "Judul Program",
-          value: data?.judulProgram ?? "",
+          title: "Tipe Audit",
+          value: data?.tipeAudit ?? "",
         ),
         DecorationComponent.item(
-          title: "Prosedur Audit",
-          value: data?.proseduAudit ?? "",
-        ),
+            title: "Tanggal",
+            value:
+                "${data?.startDate == null ? "-" : DateFormat("dd MMMM yyyy", "id_ID").format(data!.startDate!)} s/d ${data?.endDate == null ? "-" : DateFormat("dd MMMM yyyy", "id_ID").format(data!.endDate!)}"),
       ],
     );
   }
 
   Widget komentar(List<KomentarModel?>? data) {
     return SizedBox(
-      child: Column(
-        children: List.generate(data?.length ?? 0, (index) {
-          return DecorationComponent.itemKomentar((data![index]!));
-        }),
-      ),
+      child: (data?.length ?? 0) > 0
+          ? Column(
+              children: List.generate(data?.length ?? 0, (index) {
+                return DecorationComponent.itemKomentar((data![index]!));
+              }),
+            )
+          : Text("Tidak ada komentar",
+              style: System.data.textStyles!.basicLabel),
     );
   }
 
@@ -169,19 +176,18 @@ class View extends PresenterState {
               : DateFormat("dd MMMM yyyy").format(data!.tanggal!),
         ),
         DecorationComponent.item(
-          title: "Uraian",
-          value: data?.uraian ?? "",
-        ),
+            title: "Uraian",
+            valueWidget: Center(child: Html(data: data?.uraian))),
         DecorationComponent.item(
-          title: "Kesimpulan",
-          value: data?.uraian ?? "",
-        ),
+            title: "Kesimpulan",
+            valueWidget: Center(child: Html(data: data?.kesimpulan))),
         DecorationComponent.item(
           title: "File Kertas Kerja",
           // value: data?.fileKertasKerja ?? "",
           valueWidget: GestureDetector(
             onTap: () {
-              widget.onTapDocument?.call(data?.fileKertasKerja ?? "", data?.urlFileKertasKerja ?? "");
+              widget.onTapDocument?.call(
+                  data?.fileKertasKerja ?? "", data?.urlFileKertasKerja ?? "");
             },
             child: Text(
               data?.fileKertasKerja ?? "",

@@ -36,27 +36,33 @@ class AuditKKPTModel {
 
   static AuditKKPTModel fromJson(Map<String, dynamic> json) {
     return AuditKKPTModel(
-      id: json["id"],
-      noTemuan: json["no_temuan"],
-      judulTemuan: json["judul_temuan"],
-      tanggalTemuan: DateTime.parse(json["tanggal_temuan"]),
-      kriteria: json["kriteria"],
-      sebab: json["sebab"],
-      akibat: json["akibat"],
-      lampiranUrl: json["lampiran_url"],
-      namaLampiran: json["lampiran_nama"],
-      rekomendasi: json["rekomendasi"],
+      id: json["finding_id"],
+      noTemuan: json["finding_no"],
+      judulTemuan: json["finding_judul"],
+      tanggalTemuan: DateTime.parse(json["finding_date"]),
+      kriteria: json["finding_kriteria"],
+      sebab: json["finding_sebab"],
+      akibat: json["finding_akibat"],
+      lampiranUrl: json["finding_lampiran_url"],
+      namaLampiran: json["finding_lampiran"],
+      rekomendasi: int.parse(json["rekomendasi"]),
       komentar: json["komentar"] != null
           ? List<KomentarModel>.from(
-              json["komentar"].map((x) => KomentarModel.fromJson(x)),
+              json["komentar"].map((x) => KomentarModel.fromJson(
+                    x,
+                    tanggalKey: "find_comment_date",
+                    nameKey: "auditor_name",
+                    komentarKey: "find_comment_desc",
+                  )),
             )
           : null,
-      status: json["status"],
-      actions: json["actions"] != null
-          ? List<ActionModel>.from(
-              json["actions"].map((x) => ActionModel.fromJson(x)),
-            )
-          : null,
+      status: json["finding_status"],
+      actions: ActionModel.dummy(),
+      // actions: json["actions"] != null
+      //     ? List<ActionModel>.from(
+      //         json["actions"].map((x) => ActionModel.fromJson(x)),
+      //       )
+      //     : null,
     );
   }
 

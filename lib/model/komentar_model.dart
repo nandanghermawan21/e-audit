@@ -9,19 +9,22 @@ class KomentarModel {
     this.komentar,
   });
 
-  static KomentarModel fromJson(Map<String, dynamic> json) {
+  static KomentarModel fromJson(Map<String, dynamic> json,
+      {String? tanggalKey, String? nameKey, String? komentarKey}) {
     return KomentarModel(
-      tanggal: DateTime.parse(json["program_comment_date"]),
-      name: json["auditor_name"],
-      komentar: json["program_comment_desc"],
+      tanggal: json[tanggalKey ?? "comment_date"] == null
+          ? null
+          : DateTime.parse(json[tanggalKey ?? "comment_date"]),
+      name: json[nameKey ?? "auditor_name"],
+      komentar: json[komentarKey ?? "comment_desc"],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "program_comment_date": tanggal?.toIso8601String(),
+      "comment_date": tanggal?.toIso8601String(),
       "auditor_name": name,
-      "program_comment_desc": komentar,
+      "comment_desc": komentar,
     };
   }
 

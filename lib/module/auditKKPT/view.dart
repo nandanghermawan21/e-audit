@@ -5,6 +5,7 @@ import 'package:eaudit/model/audit_kkpt_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 import 'presenter.dart';
 import 'package:eaudit/component/decoration_component.dart';
 
@@ -46,12 +47,20 @@ class View extends PresenterState {
         enableDrag: false,
         autoSearch: false,
         dataSource: (skip, key) {
-          return Future.value().then(
-            (value) {
-              return [AuditKKPTReviuModel.dummy()];
-            },
-          );
+          return AuditKKPTReviuModel.get(
+                  token: System.data.global.token, assignId: widget.auditPA?.id)
+              .then((value) {
+            return [value];
+          });
         },
+        loaderWidget: SkeletonAnimation(
+          shimmerColor: Colors.grey.shade300,
+          child: Container(
+            color: Colors.white,
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+          ),
+        ),
         itemBuilder: (data, index) {
           return Container(
             color: Colors.transparent,
@@ -103,14 +112,14 @@ class View extends PresenterState {
                   (data!.tanggalAudit!),
                 ),
         ),
-        DecorationComponent.item(
-          title: "No KKA",
-          value: data?.noKKa ?? "",
-        ),
-        DecorationComponent.item(
-          title: "Bidang Subtansi",
-          value: data?.bidangSubtansi ?? "",
-        ),
+        // DecorationComponent.item(
+        //   title: "No KKA",
+        //   value: data?.noKKa ?? "",
+        // ),
+        // DecorationComponent.item(
+        //   title: "Bidang Subtansi",
+        //   value: data?.bidangSubtansi ?? "",
+        // ),
       ],
     );
   }
@@ -149,9 +158,11 @@ class View extends PresenterState {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  kkpt?.judulTemuan ?? "",
-                  style: System.data.textStyles!.boldTitleLabel,
+                Expanded(
+                  child: Text(
+                    kkpt?.judulTemuan ?? "",
+                    style: System.data.textStyles!.boldTitleLabel,
+                  ),
                 ),
               ],
             ),

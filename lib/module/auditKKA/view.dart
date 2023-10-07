@@ -5,6 +5,7 @@ import 'package:eaudit/model/audit_kka_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 import 'presenter.dart';
 
 class View extends PresenterState {
@@ -45,12 +46,20 @@ class View extends PresenterState {
         enableDrag: false,
         autoSearch: false,
         dataSource: (skip, key) {
-          return Future.value().then(
-            (value) {
-              return [AuditkaReviuModel.dummy()];
-            },
-          );
+          return AuditkaReviuModel.get(
+                  token: System.data.global.token, assignId: widget.auditPA?.id)
+              .then((value) {
+            return [value];
+          });
         },
+        loaderWidget: SkeletonAnimation(
+          shimmerColor: Colors.grey.shade300,
+          child: Container(
+            color: Colors.white,
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+          ),
+        ),
         itemBuilder: (data, index) {
           return Container(
             color: Colors.transparent,
@@ -89,7 +98,7 @@ class View extends PresenterState {
               color: Colors.transparent,
               width: 100,
               child: Text(
-                "Obyek Audit",
+                "Kegiatan",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -98,7 +107,7 @@ class View extends PresenterState {
             ),
             Expanded(
               child: Text(
-                data?.objectAudit ?? "",
+                data?.kegiatan ?? "",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -114,7 +123,7 @@ class View extends PresenterState {
               color: Colors.transparent,
               width: 100,
               child: Text(
-                "Auditor",
+                "Auditee",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -122,7 +131,7 @@ class View extends PresenterState {
               width: 10,
             ),
             Text(
-              data?.auditor ?? "",
+              data?.auditee ?? "",
               style: System.data.textStyles!.basicLabel,
             ),
           ],
@@ -137,7 +146,7 @@ class View extends PresenterState {
               color: Colors.transparent,
               width: 100,
               child: Text(
-                "Judul Program",
+                "Tipe Audit",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -145,7 +154,7 @@ class View extends PresenterState {
               width: 10,
             ),
             Text(
-              data?.judulProgram ?? "",
+              data?.tipeAudit ?? "",
               style: System.data.textStyles!.basicLabel,
             ),
           ],
@@ -160,7 +169,7 @@ class View extends PresenterState {
               color: Colors.transparent,
               width: 100,
               child: Text(
-                "Prosedur Audit",
+                "Tanggal",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -169,7 +178,7 @@ class View extends PresenterState {
             ),
             Expanded(
               child: Text(
-                data?.proseduAudit ?? "",
+                "${data?.startDate == null ? "-" : DateFormat("dd MMMM yyyy", "id_ID").format(data!.startDate!)} s/d ${data?.endDate == null ? "-" : DateFormat("dd MMMM yyyy", "id_ID").format(data!.endDate!)}",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -184,10 +193,10 @@ class View extends PresenterState {
       onTap: () {
         widget.onSelectAction!(
           AuditkaReviuModel(
-            objectAudit: data?.objectAudit,
-            judulProgram: data?.judulProgram,
-            auditor: data?.auditor,
-            proseduAudit: data?.proseduAudit,
+            tipeAudit: data?.tipeAudit,
+            kegiatan: data?.kegiatan,
+            auditee: data?.auditee,
+            startDate: data?.startDate,
             listKka: [kka],
           ),
         );

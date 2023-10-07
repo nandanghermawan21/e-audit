@@ -1,6 +1,8 @@
 import 'package:eaudit/component/circular_loader_component.dart';
+import 'package:eaudit/component/decoration_component.dart';
 import 'package:eaudit/component/list_data_component.dart';
 import 'package:eaudit/model/audit_pka_model.dart';
+import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/model/program_audit_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +130,18 @@ class View extends PresenterState {
                   style: System.data.textStyles!.basicLabel,
                 ),
                 const SizedBox(
+                  height: 20,
+                ),
+                Text("Komentar",
+                    style: System.data.textStyles!.boldTitleLabel.copyWith(
+                      fontSize: 16,
+                    )),
+                const SizedBox(
                   height: 10,
+                ),
+                komentar(data?.komentar),
+                const SizedBox(
+                  height: 20,
                 ),
                 Row(
                   children: [
@@ -168,8 +181,9 @@ class View extends PresenterState {
                     )
                   ],
                 ),
+
                 const SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 Text(
                   "Catatan",
@@ -201,6 +215,16 @@ class View extends PresenterState {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget komentar(List<KomentarModel?>? data) {
+    return SizedBox(
+      child: Column(
+        children: List.generate(data?.length ?? 0, (index) {
+          return DecorationComponent.itemKomentar((data![index]!));
+        }),
       ),
     );
   }
