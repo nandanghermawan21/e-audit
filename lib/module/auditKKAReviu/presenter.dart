@@ -1,5 +1,8 @@
 import 'package:eaudit/component/circular_loader_component.dart';
+import 'package:eaudit/model/audit_kka_model.dart';
 import 'package:eaudit/model/audit_kka_reviu_model.dart';
+import 'package:eaudit/util/error_handling_util.dart';
+import 'package:eaudit/util/system.dart';
 import 'package:eaudit/util/type.dart';
 import 'package:flutter/material.dart';
 import 'main.dart' as main;
@@ -10,7 +13,8 @@ class Presenter extends StatefulWidget {
   final VoidCallback? onSubmitSuccess;
   final ValueChanged2Param<String, String>? onTapDocument;
 
-  const Presenter({Key? key, this.view, this.kka, this.onSubmitSuccess, this.onTapDocument})
+  const Presenter(
+      {Key? key, this.view, this.kka, this.onSubmitSuccess, this.onTapDocument})
       : super(key: key);
 
   @override
@@ -22,6 +26,7 @@ class Presenter extends StatefulWidget {
 
 abstract class PresenterState extends State<Presenter> {
   CircularLoaderController loadingController = CircularLoaderController();
+  TextEditingController noteController = TextEditingController();
 
   //buat function untuk mengitung selisih waktu denga saat ini untuk menunjukan kapan komentar di posting
   String timeAgo(DateTime date) {
@@ -41,5 +46,29 @@ abstract class PresenterState extends State<Presenter> {
     } else {
       return 'baru saja';
     }
+  }
+
+  void postReviu(String? status) {
+    loadingController.startLoading();
+    AuditKKAModel.postReviu(
+      token: System.data.global.token,
+      kkaId: widget.kka?.listKka?.first?.id ?? "",
+      note: noteController.text,
+      status: status,
+    ).then((value) {
+      loadingController.stopLoading(
+        message: "Data Berhasil Tersimpan",
+        isError: false,
+        duration: const Duration(seconds: 3),
+        onCloseCallBack: () {
+          widget.onSubmitSuccess?.call();
+        },
+      );
+    }).catchError((onError) {
+      loadingController.stopLoading(
+        isError: true,
+        message: ErrorHandlingUtil.handleApiError(onError),
+      );
+    });
   }
 }

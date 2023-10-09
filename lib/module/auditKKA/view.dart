@@ -192,14 +192,14 @@ class View extends PresenterState {
     return GestureDetector(
       onTap: () {
         widget.onSelectAction!(
-          AuditkaReviuModel(
-            tipeAudit: data?.tipeAudit,
-            kegiatan: data?.kegiatan,
-            auditee: data?.auditee,
-            startDate: data?.startDate,
-            listKka: [kka],
-          ),
-        );
+            AuditkaReviuModel(
+              tipeAudit: data?.tipeAudit,
+              kegiatan: data?.kegiatan,
+              auditee: data?.auditee,
+              startDate: data?.startDate,
+              listKka: [kka],
+            ),
+            listController);
       },
       child: Container(
         margin: const EdgeInsets.all(5),

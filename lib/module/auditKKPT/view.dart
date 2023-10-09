@@ -137,6 +137,7 @@ class View extends PresenterState {
               tipeAudit: data?.tipeAudit,
               tanggalAudit: data?.tanggalAudit,
               listKKPT: [kkpt]),
+          listController,
         );
       },
       child: Container(

@@ -55,8 +55,14 @@ abstract class PresenterState extends State<Presenter> {
       assignedId: widget.auditPA!.id,
       paModel: listController.value.data,
     ).then((value) {
-      loadingController.stopLoading();
-      widget.onSubmitSuccess?.call();
+      loadingController.stopLoading(
+        message: "Data Berhasil Tersimpan",
+        isError: false,
+        duration: const Duration(seconds: 3),
+        onCloseCallBack: () {
+          widget.onSubmitSuccess?.call();
+        },
+      );
     }).catchError((onError) {
       loadingController.stopLoading(
         isError: true,

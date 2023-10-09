@@ -1,8 +1,10 @@
 import 'package:eaudit/component/circular_loader_component.dart';
+import 'package:eaudit/model/audit_kkpt_model.dart';
 import 'package:eaudit/model/audit_kkpt_reviu_model.dart';
+import 'package:eaudit/util/error_handling_util.dart';
+import 'package:eaudit/util/system.dart';
 import 'package:eaudit/util/type.dart';
 import 'package:flutter/material.dart';
-import 'view_model.dart';
 import 'main.dart' as main;
 
 class Presenter extends StatefulWidget {
@@ -23,12 +25,36 @@ class Presenter extends StatefulWidget {
 }
 
 abstract class PresenterState extends State<Presenter> {
-  ViewMOdel model = ViewMOdel();
+  TextEditingController catatanController = TextEditingController();
   CircularLoaderController loadingController = CircularLoaderController();
+  double width = 0;
 
   @override
   void initState() {
-    model.kkpt = widget.kkpt;
     super.initState();
+  }
+
+  void postReviu(String? status) {
+    loadingController.startLoading();
+    AuditKKPTModel.postReviu(
+      token: System.data.global.token,
+      findingId: widget.kkpt?.listKKPT?.first?.id ?? "",
+      note: catatanController.text,
+      status: status,
+    ).then((value) {
+      loadingController.stopLoading(
+        message: "Data Berhasil Tersimpan",
+        isError: false,
+        duration: const Duration(seconds: 3),
+        onCloseCallBack: () {
+          widget.onSubmitSuccess?.call();
+        },
+      );
+    }).catchError((onError) {
+      loadingController.stopLoading(
+        isError: true,
+        message: ErrorHandlingUtil.handleApiError(onError),
+      );
+    });
   }
 }

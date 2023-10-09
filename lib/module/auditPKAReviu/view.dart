@@ -112,16 +112,42 @@ class View extends PresenterState {
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  "Waktu (Hari)",
-                  style: System.data.textStyles!.boldTitleLabel,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "${data?.jumlahHari.toString() ?? ""} Hari",
-                  style: System.data.textStyles!.basicLabel,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Waktu (Hari)",
+                          style: System.data.textStyles!.boldTitleLabel,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "${data?.jumlahHari.toString() ?? ""} Hari",
+                          style: System.data.textStyles!.basicLabel,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Status",
+                          style: System.data.textStyles!.boldTitleLabel,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          data?.status ?? "",
+                          style: System.data.textStyles!.basicLabel,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 20,
@@ -141,7 +167,7 @@ class View extends PresenterState {
                   children: [
                     Expanded(
                       child: Text(
-                        "Status",
+                        "Aksi",
                         style: System.data.textStyles!.boldTitleLabel,
                       ),
                     ),

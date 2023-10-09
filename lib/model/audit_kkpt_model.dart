@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:eaudit/model/action_model.dart';
 import 'package:eaudit/model/komentar_model.dart';
+import 'package:eaudit/util/basic_response.dart';
+import 'package:eaudit/util/network.dart';
+import 'package:eaudit/util/system.dart';
 
 class AuditKKPTModel {
   String? id;
@@ -43,8 +48,8 @@ class AuditKKPTModel {
       kriteria: json["finding_kriteria"],
       sebab: json["finding_sebab"],
       akibat: json["finding_akibat"],
-      lampiranUrl: json["finding_lampiran_url"],
-      namaLampiran: json["finding_lampiran"],
+      lampiranUrl: json["file_url"],
+      namaLampiran: json["file_name"],
       rekomendasi: int.parse(json["rekomendasi"]),
       komentar: json["komentar"] != null
           ? List<KomentarModel>.from(
@@ -57,12 +62,58 @@ class AuditKKPTModel {
             )
           : null,
       status: json["finding_status"],
-      actions: ActionModel.dummy(),
-      // actions: json["actions"] != null
-      //     ? List<ActionModel>.from(
-      //         json["actions"].map((x) => ActionModel.fromJson(x)),
-      //       )
-      //     : null,
+      actions: json["action"] != null
+          ? List<ActionModel>.from(
+              json["action"].map((x) => ActionModel.fromJson(x)),
+            )
+          : null,
+    );
+  }
+
+  static Future<void> postReviu({
+    required String? token,
+    required String? findingId,
+    required String? status,
+    required String? note,
+  }) {
+    return Network.post(
+      url: Uri.parse(System.data.apiEndPoint.url),
+      rawResult: true,
+      querys: {
+        "method": "post_reviu_kkpt",
+        "token": "$token",
+      },
+      body: {
+        "finding_id": "$findingId",
+        "status": "$status",
+        "note": "$note",
+      },
+      headers: {
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+    ).then((value) {
+      try {
+        value = json.decode(value);
+        if ((value)["message"] == "" || (value)["message"] == null) {
+          if (value == "success") {
+            return;
+          } else {
+            throw value;
+          }
+        }
+        throw BasicResponse(message: (value)["message"]);
+      } catch (e) {
+        if (value == "success") {
+          return;
+        } else {
+          throw value;
+        }
+      }
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
     );
   }
 

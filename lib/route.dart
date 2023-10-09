@@ -68,7 +68,9 @@ enum ParamName {
   kkpt,
   tL,
   year,
-  persiapanAudit, tlType,
+  persiapanAudit,
+  tlType,
+  controller,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -262,12 +264,9 @@ Map<String, WidgetBuilder> route = {
         });
       },
       onTapKKA: (data) {
-         Navigator.of(context).pushNamed(
-          RouteName.auditKKA,
-          arguments: {
-            ParamName.persiapanAudit: data,
-          }
-        );
+        Navigator.of(context).pushNamed(RouteName.auditKKA, arguments: {
+          ParamName.persiapanAudit: data,
+        });
         // Navigator.of(context).pushNamed(
         //   RouteName.reviuKKAReviu,
         //   arguments: {
@@ -295,11 +294,13 @@ Map<String, WidgetBuilder> route = {
             {};
     return audit_kka.Presenter(
       auditPA: arg[ParamName.persiapanAudit],
-      onSelectAction: (kka) {
+      onSelectAction: (kka, controller) {
         Navigator.of(context).pushNamed(
           RouteName.reviuKKAReviu,
           arguments: {
+            ParamName.persiapanAudit: arg[ParamName.persiapanAudit],
             ParamName.kka: kka,
+            ParamName.controller: controller,
           },
         );
       },
@@ -312,8 +313,12 @@ Map<String, WidgetBuilder> route = {
     return audit_kka_reviu.Presenter(
       kka: arg[ParamName.kka],
       onSubmitSuccess: () {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            RouteName.auditKKA, (r) => r.settings.name == RouteName.reviu);
+        Navigator.of(context).pop();
+        try {
+          arg[ParamName.controller].refresh();
+        } catch (e) {
+          //
+        }
       },
       onTapDocument: (title, url) {
         Navigator.of(context).pushNamed(RouteName.pdfViewwer, arguments: {
@@ -329,11 +334,12 @@ Map<String, WidgetBuilder> route = {
             {};
     return audit_kkpt.Presenter(
       auditPA: arg[ParamName.persiapanAudit],
-      onSelectAction: (kkpt) {
+      onSelectAction: (kkpt, controller) {
         Navigator.of(context).pushNamed(
           RouteName.auditKKPTReviu,
           arguments: {
             ParamName.kkpt: kkpt,
+            ParamName.controller: controller,
           },
         );
       },
@@ -352,8 +358,14 @@ Map<String, WidgetBuilder> route = {
         });
       },
       onSubmitSuccess: () {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            RouteName.auditKKPT, (r) => r.settings.name == RouteName.reviu);
+        Navigator.of(context).pop();
+        try {
+          arg[ParamName.controller].refresh();
+        } catch (e) {
+          //
+        }
+        // Navigator.of(context).pushNamedAndRemoveUntil(
+        //     RouteName.auditKKPT, (r) => r.settings.name == RouteName.reviu);
       },
     );
   },

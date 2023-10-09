@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:eaudit/model/action_model.dart';
+import 'package:eaudit/model/audit_file_model.dart';
 import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/basic_response.dart';
 import 'package:eaudit/util/network.dart';
@@ -17,10 +18,11 @@ class AuditKKAModel {
   String? dokumenYangDiperiksa;
   String? uraian;
   String? kesimpulan;
-  String? fileKertasKerja;
-  String? urlFileKertasKerja;
   List<KomentarModel>? komentar;
   List<ActionModel>? actions;
+  List<AuditFileModel?>? lampiran;
+  bool? proposeKka;
+  bool? approveKka;
   String? action;
 
   AuditKKAModel({
@@ -36,9 +38,10 @@ class AuditKKAModel {
     this.dokumenYangDiperiksa,
     this.uraian,
     this.kesimpulan,
-    this.fileKertasKerja,
     this.komentar,
-    this.urlFileKertasKerja,
+    this.lampiran,
+    this.proposeKka,
+    this.approveKka,
   });
 
   static AuditKKAModel fromJson(Map<String, dynamic> json) {
@@ -50,17 +53,14 @@ class AuditKKAModel {
       tanggal: DateTime.parse(json["kertas_kerja_date"]),
       status: json["kertas_kerja_status"],
       temuan: json["jumlah_temuan"],
-      actions: ActionModel.dummy(),
-      // actions: json["action"] != null
-      //     ? List<ActionModel>.from(
-      //         json["action"].map((x) => ActionModel.fromJson(x)),
-      //       )
-      //     : null,
+      actions: json["action"] != null
+          ? List<ActionModel>.from(
+              json["action"].map((x) => ActionModel.fromJson(x)),
+            )
+          : null,
       dokumenYangDiperiksa: json["kertas_kerja_dokumen"],
       uraian: json["kertas_kerja_uraian"],
       kesimpulan: json["kertas_kerja_kesimpulan"],
-      fileKertasKerja: json["kertas_kerja_file"],
-      urlFileKertasKerja: json["kertas_kerja_file_url"],
       komentar: json["komentar"] != null
           ? List<KomentarModel>.from(
               json["komentar"].map((x) => KomentarModel.fromJson(
@@ -71,25 +71,35 @@ class AuditKKAModel {
                   )),
             )
           : null,
+      lampiran: json["lampiran"] != null
+          ? List<AuditFileModel>.from(
+              json["lampiran"].map((x) => AuditFileModel.fromJson(x)),
+            )
+          : null,
+      proposeKka: json["propose_kka"] as bool?,
+      approveKka: json["approve_kka"] as bool?,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "judul_kka": judulKka,
-      "tanggal": tanggal?.toIso8601String(),
-      "status": status,
-      "temuan": temuan,
-      "dokumen_yang_diperiksa": dokumenYangDiperiksa,
-      "uraian": uraian,
-      "kesimpulan": kesimpulan,
-      "file_kertas_kerja": fileKertasKerja,
-      "komentar": komentar?.map((e) => e.toJson()).toList(),
+      "kertas_kerja_id": id,
+      "kertas_kerja_no": noKka,
+      "judul_program": judulProgram,
+      "kertas_kerja_judul": judulKka,
+      "kertas_kerja_date": tanggal,
+      "kertas_kerja_status": status,
+      "jumlah_temuan": temuan,
       "action": actions?.map((e) => e.toJson()).toList(),
+      "kertas_kerja_dokumen": dokumenYangDiperiksa,
+      "kertas_kerja_uraian": uraian,
+      "kertas_kerja_kesimpulan": kesimpulan,
+      "komentar": komentar?.map((e) => e.toJson()).toList(),
+      "lampiran": lampiran?.map((e) => e?.toJson()).toList(),
     };
   }
 
-   static Future<AuditKKAModel> get({
+  static Future<AuditKKAModel> get({
     required String? token,
     required String? kkaId,
   }) {
@@ -118,6 +128,53 @@ class AuditKKAModel {
     );
   }
 
+  static Future<void> postReviu({
+    required String? token,
+    required String? kkaId,
+    required String? status,
+    required String? note,
+  }) {
+    return Network.post(
+      url: Uri.parse(System.data.apiEndPoint.url),
+      rawResult: true,
+      querys: {
+        "method": "post_reviu_kka",
+        "token": "$token",
+      },
+      body: {
+        "kertas_kerja_id": "$kkaId",
+        "status": "$status",
+        "note": "$note",
+      },
+      headers: {
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+    ).then((value) {
+      try {
+        value = json.decode(value);
+        if ((value)["message"] == "" || (value)["message"] == null) {
+          if (value == "success") {
+            return;
+          } else {
+            throw value;
+          }
+        }
+        throw BasicResponse(message: (value)["message"]);
+      } catch (e) {
+        if (value == "success") {
+          return;
+        } else {
+          throw value;
+        }
+      }
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
+  }
+
   //create list dummy
   static List<AuditKKAModel> dummys() {
     return [
@@ -133,8 +190,6 @@ class AuditKKAModel {
         dokumenYangDiperiksa: "test",
         uraian: "test",
         kesimpulan: "test",
-        fileKertasKerja: "file.pdf",
-        urlFileKertasKerja: "test",
         komentar: KomentarModel.dummy(),
       ),
       AuditKKAModel(
@@ -149,8 +204,6 @@ class AuditKKAModel {
         dokumenYangDiperiksa: "test",
         uraian: "test",
         kesimpulan: "test",
-        fileKertasKerja: "file.pdf",
-        urlFileKertasKerja: "test",
         komentar: KomentarModel.dummy(),
       ),
     ];

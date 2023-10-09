@@ -105,12 +105,23 @@ class AuditPKAModel {
         "groupName": System.data.global.user?.groupName ?? "",
       },
     ).then((value) {
-      return true;
-      // value = json.decode(value);
-      // if ((value)["message"] == "" || (value)["message"] == null) {
-      //   return AuditPKAModel.fromJson(value);
-      // }
-      // throw BasicResponse(message: (value)["message"]);
+      try {
+        value = json.decode(value);
+        if ((value)["message"] == "" || (value)["message"] == null) {
+          if (value == "success") {
+            return;
+          } else {
+            throw value;
+          }
+        }
+        throw BasicResponse(message: (value)["message"]);
+      } catch (e) {
+        if (value == "success") {
+          return;
+        } else {
+          throw value;
+        }
+      }
     }).catchError(
       (onError) {
         throw onError;

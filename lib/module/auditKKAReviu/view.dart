@@ -45,8 +45,20 @@ class View extends PresenterState {
                   loadingController: loadingController,
                   action: widget.kka?.listKka?.first?.actions?[index],
                   data: widget.kka,
+                  beforeAction: () {
+                    if (noteController.text == "") {
+                      loadingController.stopLoading(
+                        message: "Catatan tidak boleh kosong",
+                        isError: true,
+                      );
+                      return false;
+                    } else {
+                      return true;
+                    }
+                  },
                   onCofirmAction: (data) {
-                    widget.onSubmitSuccess?.call();
+                    postReviu(
+                        widget.kka?.listKka?.first?.actions?[index].value);
                   },
                 ),
               );
@@ -141,6 +153,7 @@ class View extends PresenterState {
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
+        controller: noteController,
         onChanged: (val) {
           // data?.catatan = val;
           // listController.commit();
@@ -196,15 +209,29 @@ class View extends PresenterState {
         DecorationComponent.item(
           title: "File Kertas Kerja",
           // value: data?.fileKertasKerja ?? "",
-          valueWidget: GestureDetector(
-            onTap: () {
-              widget.onTapDocument?.call(
-                  data?.fileKertasKerja ?? "", data?.urlFileKertasKerja ?? "");
-            },
-            child: Text(
-              data?.fileKertasKerja ?? "",
-              style: System.data.textStyles!.basicLabel.copyWith(
-                color: System.data.color!.link,
+          valueWidget: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
+                data?.lampiran?.length ?? 0,
+                (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      widget.onTapDocument?.call(
+                          data?.lampiran?[index]?.name ?? "",
+                          data?.lampiran?[index]?.url ?? "");
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: Text(
+                        data?.lampiran?[index]?.name ?? "",
+                        style: System.data.textStyles!.basicLabel.copyWith(
+                          color: System.data.color!.primaryColor,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),

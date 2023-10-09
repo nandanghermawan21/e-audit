@@ -2,13 +2,15 @@ import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/component/list_data_component.dart';
 import 'package:eaudit/model/audit_kka_reviu_model.dart';
 import 'package:eaudit/model/audit_pa_model.dart';
+import 'package:eaudit/util/type.dart';
 import 'package:flutter/material.dart';
 import 'main.dart' as main;
 
 class Presenter extends StatefulWidget {
   final State<Presenter>? view;
   final AuditPaModel? auditPA;
-  final ValueChanged<AuditkaReviuModel?>? onSelectAction;
+  final ValueChanged2Param<AuditkaReviuModel?,
+      ListDataComponentController<AuditkaReviuModel>>? onSelectAction;
 
   const Presenter({
     Key? key,

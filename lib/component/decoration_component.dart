@@ -2,6 +2,7 @@ import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/action_model.dart';
 import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
+import 'package:eaudit/util/type.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -11,10 +12,16 @@ class DecorationComponent {
     required CircularLoaderController loadingController,
     required ActionModel? action,
     required T? data,
+    BoolBuilder? beforeAction,
     ValueChanged<T?>? onCofirmAction,
   }) {
     return GestureDetector(
       onTap: () {
+        if (beforeAction != null) {
+          if (beforeAction.call() == false) {
+            return;
+          }
+        }
         loadingController.stopLoading(
           icon: const Icon(
             FontAwesomeIcons.questionCircle,
@@ -25,7 +32,7 @@ class DecorationComponent {
             child: Column(
               children: [
                 Text(
-                  "Anda Yakin Untuk ${action?.description}?",
+                  "Anda Yakin Untuk ${action?.description ?? action?.label}?",
                   style: System.data.textStyles!.basicLabel,
                 ),
                 const SizedBox(

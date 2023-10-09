@@ -6,7 +6,6 @@ import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:eaudit/component/decoration_component.dart';
 import 'presenter.dart';
 
@@ -37,21 +36,32 @@ class View extends PresenterState {
           height: 50,
           margin: const EdgeInsets.all(20),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: List.generate(
-              widget.kkpt?.listKKPT?.first?.actions?.length ?? 0,
-              (index) {
-                return Expanded(
-                  child: DecorationComponent.buttonAction(
-                    loadingController: loadingController,
-                    action: widget.kkpt?.listKKPT?.first?.actions?[index],
-                    data: widget.kkpt?.listKKPT?.first,
-                    onCofirmAction: (data) {
-                      widget.onSubmitSuccess?.call();
-                    },
-                  ),
-                );
-              },
-            ),
+                widget.kkpt?.listKKPT?.first?.actions?.length ?? 0, (index) {
+              return Expanded(
+                child: DecorationComponent.buttonAction(
+                  loadingController: loadingController,
+                  action: widget.kkpt?.listKKPT?.first?.actions?[index],
+                  data: widget.kkpt,
+                  beforeAction: () {
+                    if (catatanController.text == "") {
+                      loadingController.stopLoading(
+                        message: "Catatan tidak boleh kosong",
+                        isError: true,
+                      );
+                      return false;
+                    } else {
+                      return true;
+                    }
+                  },
+                  onCofirmAction: (data) {
+                    postReviu(
+                        widget.kkpt?.listKKPT?.first?.actions?[index].value);
+                  },
+                ),
+              );
+            }),
           ),
         ),
       ),
@@ -59,42 +69,39 @@ class View extends PresenterState {
   }
 
   Widget body() {
-    return ChangeNotifierProvider.value(
-      value: model,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              description(widget.kkpt),
-              const SizedBox(
-                height: 20,
-              ),
-              Text("Reviu Temuan",
-                  style: System.data.textStyles!.boldTitleLabel.copyWith(
-                    fontSize: 16,
-                  )),
-              detailKKPT(widget.kkpt?.listKKPT?.first),
-              const SizedBox(
-                height: 20,
-              ),
-              Text("Komentar",
-                  style: System.data.textStyles!.boldTitleLabel.copyWith(
-                    fontSize: 16,
-                  )),
-              const SizedBox(
-                height: 10,
-              ),
-              komentar(widget.kkpt?.listKKPT?.first?.komentar),
-              const SizedBox(
-                height: 20,
-              ),
-              (widget.kkpt?.listKKPT?.first?.actions?.length ?? 0) <= 1
-                  ? const SizedBox.shrink()
-                  : catatan(),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            description(widget.kkpt),
+            const SizedBox(
+              height: 20,
+            ),
+            Text("Reviu Temuan",
+                style: System.data.textStyles!.boldTitleLabel.copyWith(
+                  fontSize: 16,
+                )),
+            detailKKPT(widget.kkpt?.listKKPT?.first),
+            const SizedBox(
+              height: 20,
+            ),
+            Text("Komentar",
+                style: System.data.textStyles!.boldTitleLabel.copyWith(
+                  fontSize: 16,
+                )),
+            const SizedBox(
+              height: 10,
+            ),
+            komentar(widget.kkpt?.listKKPT?.first?.komentar),
+            const SizedBox(
+              height: 20,
+            ),
+            (widget.kkpt?.listKKPT?.first?.actions?.length ?? 0) < 1
+                ? const SizedBox()
+                : catatan(),
+          ],
         ),
       ),
     );
@@ -159,7 +166,14 @@ class View extends PresenterState {
         ),
         DecorationComponent.item(
           title: "Kriteria",
-          value: data?.kriteria ?? "",
+          valueWidget: Expanded(
+            child: SizedBox(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Html(data: data?.kriteria ?? ""),
+              ),
+            ),
+          ),
         ),
         DecorationComponent.item(
             title: "Sebab", valueWidget: Html(data: data?.sebab)),
@@ -199,6 +213,7 @@ class View extends PresenterState {
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
+        controller: catatanController,
         onChanged: (val) {
           // data?.catatan = val;
           // listController.commit();

@@ -26,7 +26,7 @@ class AuditkaReviuModel {
 
   static AuditkaReviuModel fromJson(Map<String, dynamic> json) {
     return AuditkaReviuModel(
-      id: json["assign_id"],
+      id: json["kertas_kerja_id"],
       kegiatan: json["assign_kegiatan"],
       auditee: json["auditee_name"],
       tipeAudit: json["audit_type_name"],
@@ -34,7 +34,8 @@ class AuditkaReviuModel {
       endDate: DateTime.parse(json["assign_end_date"]),
       listKka: json["kertas_kerja"] != null
           ? List<AuditKKAModel>.from(
-              json["kertas_kerja"].map((x) => AuditKKAModel.fromJson(x)))
+              json["kertas_kerja"].map((x) => AuditKKAModel.fromJson(x)),
+            )
           : null,
     );
   }
@@ -42,7 +43,7 @@ class AuditkaReviuModel {
   Map<String, dynamic> toJson() {
     return {
       "id": id,
-      "nama_kegiatan": kegiatan,
+      "kegiatan": kegiatan,
       "auditee": auditee,
       "tipe_audit": tipeAudit,
       "tanggal_mulai": startDate,
@@ -60,7 +61,7 @@ class AuditkaReviuModel {
       rawResult: true,
       querys: {
         "method": "data_kertas_kerja",
-        "assign_id": "$assignId",
+        "assign_id": "0924c0e7f4990df837a7527445cef77bf9a09f9f", // "$assignId",
         "token": "$token",
       },
       headers: {

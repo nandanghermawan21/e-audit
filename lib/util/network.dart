@@ -17,6 +17,8 @@ class Network {
     Map<String, String>? headers,
     ValueChanged<BasicResponse>? otpRequired,
     ValueChanged<BasicResponse>? unAuthorized,
+    bool rawResult = true,
+    bool printResolt = true,
   }) {
     DateTime timeStamp = DateTime.now();
 
@@ -65,15 +67,21 @@ class Network {
     )
         .then(
       (http.Response response) {
-        try {
-          debugPrint("POST ${uri.toString()}");
-          debugPrint("body ${json.encode(body)}");
+        debugPrint("POST ${uri.toString()}");
+        debugPrint("body ${json.encode(bodies ?? body)}");
+        if (printResolt == true) {
           debugPrint("response ${response.body}");
-          return handleResponse(
-            response,
-            otpRequired: otpRequired,
-            unAuthorized: unAuthorized,
-          );
+        }
+        try {
+          if (rawResult == false) {
+            return handleResponse(
+              response,
+              otpRequired: otpRequired,
+              unAuthorized: unAuthorized,
+            );
+          } else {
+            return response.body;
+          }
         } catch (e) {
           if (e is SocketException) {
             throw SocketException(System.data.strings!.internetConnestionError);
@@ -121,7 +129,6 @@ class Network {
       "messagingToken": "${System.data.global.messagingToken}",
       "User-Agent": "PostmanRuntime/7.33.0",
       "Accept": "*/*",
-      "Accept-Encoding": "gzip, deflate, br",
       "Connection": "keep-alive",
     });
 

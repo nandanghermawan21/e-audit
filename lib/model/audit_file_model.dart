@@ -11,17 +11,17 @@ class AuditFileModel {
 
   factory AuditFileModel.fromJson(Map<String, dynamic> json) {
     return AuditFileModel(
-      id: json['id'],
-      name: json['name'],
-      url: json['url'],
+      id: json['file_id'],
+      name: json['file_name'],
+      url: json['file_url'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'name': name,
-      'url': url,
+      'file_id': id,
+      'file_name': name,
+      'file_url': url,
     };
   }
 

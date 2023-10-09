@@ -20,3 +20,4 @@ typedef ObjectBuilderWithParam<T, T1> = T Function(T1);
 typedef ObjectBuilderWith2Param<T, T1, T2> = T Function(T1, T2);
 typedef ListWidgetBuilder = List<Widget> Function();
 typedef StringBuilder<T1> = String Function(T1);
+typedef BoolBuilder = bool Function();

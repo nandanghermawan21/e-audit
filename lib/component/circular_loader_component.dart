@@ -267,9 +267,9 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
     if (duration != null) {
       Timer.periodic(duration, (timer) {
         timer.cancel();
-        if (onCloseCallback != null) {
-          onCloseCallback!();
-        }
+        // if (onCloseCallback != null) {
+        //   onCloseCallback!();
+        // }
         close();
       });
     }
