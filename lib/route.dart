@@ -68,7 +68,7 @@ enum ParamName {
   kkpt,
   tL,
   year,
-  persiapanAudit,
+  persiapanAudit, tlType,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -262,9 +262,18 @@ Map<String, WidgetBuilder> route = {
         });
       },
       onTapKKA: (data) {
-        Navigator.of(context).pushNamed(
+         Navigator.of(context).pushNamed(
           RouteName.auditKKA,
+          arguments: {
+            ParamName.persiapanAudit: data,
+          }
         );
+        // Navigator.of(context).pushNamed(
+        //   RouteName.reviuKKAReviu,
+        //   arguments: {
+        //     ParamName.kka: data,
+        //   }
+        // );
       },
     );
   },
@@ -350,11 +359,12 @@ Map<String, WidgetBuilder> route = {
   },
   RouteName.auditTl: (BuildContext context) {
     return audit_tl.Presenter(
-      onSelectItem: (item) {
+      onSelectItem: (item, type) {
         Navigator.of(context).pushNamed(
           RouteName.auditTlRekomendasi,
           arguments: {
             ParamName.tL: item,
+            ParamName.tlType: type,
           },
         );
       },
@@ -365,6 +375,7 @@ Map<String, WidgetBuilder> route = {
         ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
             {};
     return audit_tl_rekomendasi.Presenter(
+      type: arg[ParamName.tlType],
       onSelectAction: (val) {
         Navigator.of(context).pushNamed(RouteName.auditTlDetail, arguments: {
           ParamName.tL: val,

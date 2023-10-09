@@ -1,3 +1,4 @@
+import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/component/list_data_component.dart';
 import 'package:eaudit/model/audit_pka_model.dart';
 import 'package:eaudit/util/system.dart';
@@ -10,23 +11,26 @@ import 'presenter.dart';
 class View extends PresenterState {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: System.data.color!.primaryColor,
-        centerTitle: true,
-        title: Text(
-          "Program Kerja Audit",
-          style: System.data.textStyles!.boldTitleLightLabel,
+    return CircularLoaderComponent(
+      controller: loaderController,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: System.data.color!.primaryColor,
+          centerTitle: true,
+          title: Text(
+            "Program Kerja Audit",
+            style: System.data.textStyles!.boldTitleLightLabel,
+          ),
+          actions: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              height: 50,
+              color: Colors.transparent,
+            )
+          ],
         ),
-        actions: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            height: 50,
-            color: Colors.transparent,
-          )
-        ],
+        body: body(),
       ),
-      body: body(),
     );
   }
 
@@ -76,18 +80,20 @@ class View extends PresenterState {
                       const SizedBox(
                         width: 10,
                       ),
-                      SizedBox(
-                        height: 25,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            widget.onTapReviu!(widget.auditPA);
-                          },
-                          child: Text(
-                            "Reviu PKA",
-                            style: System.data.textStyles!.boldTitleLabel,
-                          ),
-                        ),
-                      ),
+                      data?.approvePKA == true
+                          ? SizedBox(
+                              height: 25,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  widget.onTapReviu!(widget.auditPA);
+                                },
+                                child: Text(
+                                  "Reviu PKA",
+                                  style: System.data.textStyles!.boldTitleLabel,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                   const SizedBox(
@@ -376,9 +382,7 @@ class View extends PresenterState {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                widget.onTapKKA?.call(
-                                  widget.auditPA,
-                                );
+                                widget.onTapKKA?.call(widget.auditPA);
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(8),

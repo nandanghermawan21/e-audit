@@ -5,6 +5,7 @@ import 'package:eaudit/model/audit_tl_reviu_model.dart';
 import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'view_model.dart';
@@ -57,10 +58,10 @@ class View extends PresenterState {
               value: widget.auditTLReviu?.listAuditTL?.first?.judulTemuan,
             ),
             DecorationComponent.item(
-              title: "Rekomendasi",
-              value: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
-                  ?.first?.deskripsi,
-            ),
+                title: "Rekomendasi",
+                valueWidget: Html(
+                    data: widget.auditTLReviu?.listAuditTL?.first
+                        ?.listRekomendasi?.first?.deskripsi)),
             DecorationComponent.item(
               title: "Status Rekomendasi",
               value: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
@@ -156,10 +157,20 @@ class View extends PresenterState {
                                       ?.sisaHariTindakLanjut,
                                   // status: widget.auditTLReviu?.listAuditTL
                                   //     ?.first?.listRekomendasi?.first?.status,
-                                  statusRekomendasi: widget.auditTLReviu?.listAuditTL
-                                      ?.first?.listRekomendasi?.first?.statusRekomendasi,
-                                  statusRekomendasiColor: widget.auditTLReviu?.listAuditTL?.first
-                                      ?.listRekomendasi?.first?.statusRekomendasiColor,
+                                  statusRekomendasi: widget
+                                      .auditTLReviu
+                                      ?.listAuditTL
+                                      ?.first
+                                      ?.listRekomendasi
+                                      ?.first
+                                      ?.statusRekomendasi,
+                                  statusRekomendasiColor: widget
+                                      .auditTLReviu
+                                      ?.listAuditTL
+                                      ?.first
+                                      ?.listRekomendasi
+                                      ?.first
+                                      ?.statusRekomendasiColor,
                                   listItem: [
                                     widget
                                         .auditTLReviu
@@ -190,6 +201,7 @@ class View extends PresenterState {
                     child: Column(
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
                               child: Column(
@@ -202,18 +214,6 @@ class View extends PresenterState {
                                   ),
                                   const SizedBox(
                                     height: 5,
-                                  ),
-                                  Text(
-                                    widget
-                                            .auditTLReviu
-                                            ?.listAuditTL
-                                            ?.first
-                                            ?.listRekomendasi
-                                            ?.first
-                                            ?.listItem?[index]
-                                            ?.tindakLanjut ??
-                                        "",
-                                    style: System.data.textStyles!.basicLabel,
                                   ),
                                 ],
                               ),
@@ -257,6 +257,16 @@ class View extends PresenterState {
                             )
                           ],
                         ),
+                        Html(
+                            data: widget
+                                    .auditTLReviu
+                                    ?.listAuditTL
+                                    ?.first
+                                    ?.listRekomendasi
+                                    ?.first
+                                    ?.listItem?[index]
+                                    ?.tindakLanjut ??
+                                ""),
                         const SizedBox(
                           height: 10,
                         ),
@@ -276,17 +286,22 @@ class View extends PresenterState {
                                   ),
                                   Text(
                                     // 'disini',
-                                    widget.auditTLReviu?.listAuditTL?.first
-                                        ?.listRekomendasi?.first?.statusTindakLanjut ?? "",
-                                    // widget
-                                    //         .auditTLReviu
-                                    //         ?.listAuditTL
-                                    //         ?.first
-                                    //         ?.listRekomendasi
-                                    //         ?.first
-                                    //         ?.listItem?[index]
-                                    //         ?.status ??
-                                    //     "",
+                                    widget
+                                            .auditTLReviu
+                                            ?.listAuditTL
+                                            ?.first
+                                            ?.listRekomendasi
+                                            ?.first
+                                            ?.listItem?[index]
+                                            ?.status ??
+                                        widget
+                                            .auditTLReviu
+                                            ?.listAuditTL
+                                            ?.first
+                                            ?.listRekomendasi
+                                            ?.first
+                                            ?.statusTindakLanjut ??
+                                        "",
                                     style: System.data.textStyles!.basicLabel,
                                   ),
                                 ],

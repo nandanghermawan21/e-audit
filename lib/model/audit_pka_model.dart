@@ -13,6 +13,7 @@ class AuditPKAModel {
   String? tipeAudit;
   DateTime? tanggalAudit;
   DateTime? tanggalAuditEnd;
+  bool? approvePKA;
   List<AnggotaModel>? anggota;
   List<ProgramAuditModel>? programAudit;
 
@@ -23,6 +24,7 @@ class AuditPKAModel {
     this.tipeAudit,
     this.tanggalAudit,
     this.tanggalAuditEnd,
+    this.approvePKA,
     this.anggota,
     this.programAudit,
   });
@@ -35,6 +37,7 @@ class AuditPKAModel {
       tipeAudit: json["audit_type_name"],
       tanggalAudit: DateTime.parse(json["assign_start_date"]),
       tanggalAuditEnd: DateTime.parse(json["assign_end_date"]),
+      approvePKA: json["approve_pka"] as bool?,
       anggota: (json["anggota"] as List)
           .map((e) => AnggotaModel.fromJson(e))
           .toList(),

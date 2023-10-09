@@ -39,7 +39,7 @@ class ProgramAuditModel {
       langkahKerja: json["langkah_kerja"],
       pelaksana: json["pelaksana"],
       jumlahHari: json["jumlah_hari"],
-      status: json["status"],
+      status: json["program_status"],
       totalKKA: int.parse(json["total_kka"]),
       totalTemuan: int.parse(json["total_temuan"]),
       totalRekomendasi: int.parse(json["total_rekomendasi"]),

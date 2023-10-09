@@ -123,14 +123,14 @@ class View extends PresenterState {
                   (data!.tanggalAudit!),
                 ),
         ),
-        DecorationComponent.item(
-          title: "No KKA",
-          value: data?.noKKa ?? "",
-        ),
-        DecorationComponent.item(
-          title: "Bidang Subtansi",
-          value: data?.bidangSubtansi ?? "",
-        ),
+        // DecorationComponent.item(
+        //   title: "No KKA",
+        //   value: data?.noKKa ?? "",
+        // ),
+        // DecorationComponent.item(
+        //   title: "Bidang Subtansi",
+        //   value: data?.bidangSubtansi ?? "",
+        // ),
       ],
     );
   }

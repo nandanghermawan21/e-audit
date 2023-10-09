@@ -216,6 +216,7 @@ class View extends PresenterState {
           ],
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,6 +236,22 @@ class View extends PresenterState {
             Divider(
               height: 10,
               color: Colors.grey.shade400,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Program", style: System.data.textStyles!.boldTitleLabel),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  kka?.judulProgram ?? "",
+                  style: System.data.textStyles!.basicLabel,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

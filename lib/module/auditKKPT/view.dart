@@ -171,20 +171,23 @@ class View extends PresenterState {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Status",
-                        style: System.data.textStyles!.boldTitleLabel),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      kkpt?.status ?? "",
-                      style: System.data.textStyles!.basicLabel,
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Status",
+                          style: System.data.textStyles!.boldTitleLabel),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        kkpt?.status ?? "",
+                        style: System.data.textStyles!.basicLabel,
+                      ),
+                    ],
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,

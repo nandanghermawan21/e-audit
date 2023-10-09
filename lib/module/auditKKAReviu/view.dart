@@ -162,6 +162,10 @@ class View extends PresenterState {
           value: data?.noKka ?? "",
         ),
         DecorationComponent.item(
+          title: "Judul Program",
+          value: data?.judulProgram ?? "",
+        ),
+        DecorationComponent.item(
           title: "Judul KKA",
           value: data?.judulKka ?? "",
         ),
@@ -176,8 +180,16 @@ class View extends PresenterState {
               : DateFormat("dd MMMM yyyy").format(data!.tanggal!),
         ),
         DecorationComponent.item(
-            title: "Uraian",
-            valueWidget: Center(child: Html(data: data?.uraian))),
+          title: "Uraian",
+          valueWidget: Center(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Html(
+                data: data?.uraian,
+              ),
+            ),
+          ),
+        ),
         DecorationComponent.item(
             title: "Kesimpulan",
             valueWidget: Center(child: Html(data: data?.kesimpulan))),

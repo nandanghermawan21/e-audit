@@ -6,6 +6,7 @@ import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/model/program_audit_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'presenter.dart';
 
@@ -111,9 +112,8 @@ class View extends PresenterState {
                 const SizedBox(
                   height: 5,
                 ),
-                Text(
-                  data?.langkahKerja ?? "",
-                  style: System.data.textStyles!.basicLabel,
+                Html(
+                  data: data?.langkahKerja ?? "",
                 ),
                 const SizedBox(
                   height: 10,

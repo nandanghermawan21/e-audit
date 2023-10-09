@@ -1,5 +1,6 @@
 import 'package:eaudit/component/list_data_component.dart';
 import 'package:eaudit/model/audit_tl_reviu_model.dart';
+import 'package:eaudit/model/year_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 
@@ -48,49 +49,31 @@ class View extends PresenterState {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 100,
-                height: double.infinity,
-                color: Colors.transparent,
-                child: DropdownButton<int>(
-                  isExpanded: true,
-                  hint: Text(
-                    System.data.strings!.year,
-                    style: System.data.textStyles!.basicLabel.copyWith(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  items: List.generate(
-                    5,
-                    (index) {
-                      return DropdownMenuItem<int>(
-                        value: index,
-                        child: Text("${2023 - index}}",
-                            style: System.data.textStyles!.basicLabel),
-                      );
-                    },
-                  ),
-                  onChanged: (val) {},
-                ),
-              ),
+              YearModel.yearSelector2(
+                  selectedYear: model.selectedYear,
+                  onChange: (v) {
+                    model.selectedYear = v ?? 0;
+                    model.commit();
+                    listDataComponentController.refresh();
+                  }),
               const SizedBox(
                 width: 15,
               ),
               Expanded(
                 child: Container(
-                  height: 32,
+                  height: 31,
                   color: Colors.transparent,
                   child: TextField(
-                    controller: TextEditingController(),
+                    controller: model.searchController,
                     decoration: const InputDecoration(
                       hintText: "Cari",
                       contentPadding: EdgeInsets.only(
-                        left: 1,
-                        right: 1,
-                        top: 5,
-                      ),
+                          left: 1, right: 1, top: 5, bottom: 12),
                       suffixIcon: Icon(Icons.search),
                     ),
+                    onChanged: (val) {
+                      listDataComponentController.refresh();
+                    },
                   ),
                 ),
               )
@@ -105,8 +88,12 @@ class View extends PresenterState {
               enableDrag: false,
               enableGetMore: false,
               dataSource: (skip, key) {
-                return Future.value().then((value) {
-                  return AuditTLReviuModel.dummys();
+                return AuditTLReviuModel.get(
+                  token: System.data.global.token,
+                  tahun: model.selectedYear,
+                  searchKey: model.searchController.text,
+                ).then((value) {
+                  return value;
                 });
               },
               itemBuilder: (item, index) {
@@ -150,6 +137,7 @@ class View extends PresenterState {
                                 label: "TL",
                                 icon: "assets/icons/temuan.png",
                                 data: item,
+                                type: "data_tl_internal",
                               ),
                             ),
                             const SizedBox(
@@ -160,6 +148,7 @@ class View extends PresenterState {
                                 label: "Tindak Lanjut",
                                 icon: "assets/icons/rekomendasi.png",
                                 data: item,
+                                type: "data_tl_eksternal",
                               ),
                             ),
                             const SizedBox(
@@ -170,6 +159,7 @@ class View extends PresenterState {
                                 label: "TL ML",
                                 icon: "assets/icons/tindak_lanjut.png",
                                 data: item,
+                                type: "data_tl_management_letter"
                               ),
                             ),
                           ],
@@ -190,10 +180,11 @@ class View extends PresenterState {
     String? label,
     String? icon,
     AuditTLReviuModel? data,
+    String? type,
   }) {
     return GestureDetector(
       onTap: () {
-        widget.onSelectItem!(data);
+        widget.onSelectItem!(data, type);
       },
       child: Container(
         padding: const EdgeInsets.all(10),

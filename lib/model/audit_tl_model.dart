@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:eaudit/model/audit_rekomendasi_model.dart';
+import 'package:eaudit/util/basic_response.dart';
+import 'package:eaudit/util/network.dart';
+import 'package:eaudit/util/system.dart';
 
 class AuditTLModel {
+  String? id;
   String? noTemuan;
   String? uraianTemuan;
   String? rekomendasi;
@@ -8,6 +14,7 @@ class AuditTLModel {
   String? judulTemuan;
 
   AuditTLModel({
+    this.id,
     this.noTemuan,
     this.judulTemuan,
     this.uraianTemuan,
@@ -21,22 +28,61 @@ class AuditTLModel {
       "judul_temuan": judulTemuan,
       "uraian_temuan": uraianTemuan,
       "rekomendasi": rekomendasi,
-      "list_rekomendasi": listRekomendasi?.map((e) => e?.toJson()).toList(),
+      "rekomendasi_list": listRekomendasi?.map((e) => e?.toJson()).toList(),
     };
   }
 
   static AuditTLModel fromJson(Map<String, dynamic> json) {
     return AuditTLModel(
-      noTemuan: json["no_temuan"],
-      judulTemuan: json["judul_temuan"],
-      uraianTemuan: json["uraian_temuan"],
-      rekomendasi: json["rekomendasi"],
-      listRekomendasi: json["list_rekomendasi"] != null
+      id: json["finding_id"],
+      noTemuan: json["finding_no"],
+      judulTemuan: json["finding_judul"],
+      uraianTemuan: json["finding_uraian"],
+      rekomendasi: (json["rekomendasi"]),
+      listRekomendasi: json["rekomendasi_list"] != null
           ? List<AuditRekomendasiModel>.from(
-              json["list_rekomendasi"]
+              (json["rekomendasi_list"] as List)
                   .map((x) => AuditRekomendasiModel.fromJson(x)),
             )
           : null,
+    );
+  }
+
+  static Future<List<AuditTLModel>> get({
+    required String? token,
+    required String? assignId,
+    required String? searchKey,
+    required String? status,
+    required String? type,
+  }) {
+    return Network.get(
+      url: Uri.parse(System.data.apiEndPoint.url),
+      rawResult: true,
+      querys: {
+        "method": "$type",
+        "assign_id": "$assignId",
+        "search_key": "$searchKey",
+        "status": status ?? "",
+        "token": "$token",
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+      headers: {
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+    ).then((value) {
+      value = json.decode(value);
+      if ((value)["message"] != "" && (value)["message"] != null) {
+        throw BasicResponse(message: (value)["message"]);
+      }
+      return (value["finding"] as List)
+          .map((e) => AuditTLModel.fromJson(e))
+          .toList();
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
     );
   }
 

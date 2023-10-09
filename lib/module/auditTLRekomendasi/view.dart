@@ -1,9 +1,11 @@
 import 'package:eaudit/component/circular_loader_component.dart';
+import 'package:eaudit/component/list_data_component.dart';
 import 'package:eaudit/model/audit_rekomendasi_status_model.dart';
 import 'package:eaudit/model/audit_tl_model.dart';
 import 'package:eaudit/model/audit_tl_reviu_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'presenter.dart';
 
 class View extends PresenterState {
@@ -40,222 +42,224 @@ class View extends PresenterState {
           children: [
             searchBox(),
             lagend(),
-            ...List.generate(
-              widget.auditTLReviu?.listAuditTL?.length ?? 0,
-              (index) {
-                return Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade300,
-                        blurRadius: 5,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Uraian Temuan",
-                        style: System.data.textStyles!.boldTitleLabel,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Penerbitan Sertifikat Penjaminan Kontra Bank Garansi Melebihi Batas Service Level Agreement (SLA) yang Ditentukan pada Perjanjian Kerjasama",
-                        style: System.data.textStyles!.basicLabel,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Rekomendasi",
-                        style: System.data.textStyles!.boldTitleLabel,
-                      ),
-                      ...List.generate(
-                        widget.auditTLReviu?.listAuditTL?[index]
-                                ?.listRekomendasi?.length ??
-                            0,
-                        (index2) {
-                          return Container(
-                            padding: const EdgeInsets.only(bottom: 10, top: 40),
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: Colors.grey,
-                                  style: BorderStyle.solid,
-                                ),
-                              ),
+            ListDataComponent<AuditTLModel>(
+              controller: super.listDataComponentController,
+              enableDrag: false,
+              enableGetMore: false,
+              autoSearch: false,
+              dataSource: (skip, key) {
+                return AuditTLModel.get(
+                  assignId: widget.auditTLReviu?.id,
+                  token: System.data.global.token,
+                  status: selectedStatus,
+                  searchKey: seacchController.text,
+                  type: widget.type,
+                );
+              },
+              listViewMode: ListDataComponentMode.column,
+              itemBuilder: (data, index) {
+                return rekomendasiItem(data);
+              },
+            )
+            // ...List.generate(
+            //   widget.auditTLReviu?.listAuditTL?.length ?? 0,
+            //   (index) {
+            //     return rekomendasiItem(
+            //         widget.auditTLReviu?.listAuditTL![index]);
+            //   },
+            // )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget rekomendasiItem(AuditTLModel? data) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Judul Temuan",
+            style: System.data.textStyles!.boldTitleLabel,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Container(
+            color: Colors.transparent,
+            width: double.infinity,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Html(
+                data: data?.judulTemuan ?? "",
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Rekomendasi",
+            style: System.data.textStyles!.boldTitleLabel,
+          ),
+          (data?.listRekomendasi?.length ?? 0) == 0
+              ? Text("Tidak ada rekomendasi",
+                  style: System.data.textStyles!.basicLabel)
+              : Column(
+                  children: List.generate(
+                    data?.listRekomendasi?.length ?? 0,
+                    (index2) {
+                      return Container(
+                        padding: const EdgeInsets.only(bottom: 10, top: 40),
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey,
+                              style: BorderStyle.solid,
                             ),
-                            child: Column(
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 12,
-                                      backgroundColor:
-                                          System.data.color!.primaryColor,
-                                      child: Text(
-                                        "${index2 + 1}",
-                                        style: System.data.textStyles!
-                                            .boldTitleLightLabel,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Column(
+                                CircleAvatar(
+                                  radius: 12,
+                                  backgroundColor:
+                                      System.data.color!.primaryColor,
+                                  child: Text(
+                                    "${index2 + 1}",
+                                    style: System
+                                        .data.textStyles!.boldTitleLightLabel,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                    color: widget
-                                                            .auditTLReviu
-                                                            ?.listAuditTL?[
-                                                                index]
-                                                            ?.listRekomendasi?[
-                                                                index2]
-                                                            ?.statusRekomendasiColor ??
-                                                        Colors.green,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                            Radius.circular(
-                                                                5))),
-                                                child: Text(
-                                                  widget
-                                                          .auditTLReviu
-                                                          ?.listAuditTL?[index]
-                                                          ?.listRekomendasi?[
-                                                              index2]
-                                                          ?.statusRekomendasi ??
-                                                      "",
-                                                  style: System.data.textStyles!
-                                                      .boldTitleLightLabel,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(5),
-                                                    ),
-                                                    border: Border.all(
-                                                        color: Colors.grey)),
-                                                child: Text(
-                                                  "Sisa ${widget.auditTLReviu?.listAuditTL?[index]?.listRekomendasi?[index2]?.sisaHariTindakLanjut ?? ""} Hari",
-                                                  style: System.data.textStyles!
-                                                      .boldTitleLabel,
-                                                ),
-                                              ),
-                                            ],
+                                          Container(
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                                color: data
+                                                        ?.listRekomendasi?[
+                                                            index2]
+                                                        ?.statusRekomendasiColor ??
+                                                    Colors.green,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(5))),
+                                            child: Text(
+                                              data?.listRekomendasi?[index2]
+                                                      ?.statusRekomendasi ??
+                                                  "",
+                                              style: System.data.textStyles!
+                                                  .boldTitleLightLabel,
+                                            ),
                                           ),
                                           const SizedBox(
-                                            height: 5,
+                                            width: 10,
                                           ),
-                                          Text(
-                                            widget
-                                                    .auditTLReviu
-                                                    ?.listAuditTL?[index]
-                                                    ?.listRekomendasi?[index2]
-                                                    ?.deskripsi ??
-                                                "",
-                                            style: System
-                                                .data.textStyles?.basicLabel,
+                                          Container(
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(5),
+                                                ),
+                                                border: Border.all(
+                                                    color: Colors.grey)),
+                                            child: Text(
+                                              "Sisa ${data?.listRekomendasi?[index2]?.sisaHariTindakLanjut ?? ""} Hari",
+                                              style: System.data.textStyles!
+                                                  .boldTitleLabel,
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        widget.onSelectAction(
-                                          AuditTLReviuModel(
-                                            obyekAudit:
-                                                widget.auditTLReviu?.obyekAudit,
-                                            nomorLha:
-                                                widget.auditTLReviu?.nomorLha,
-                                            listAuditTL: [
-                                              AuditTLModel(
-                                                  uraianTemuan: widget
-                                                      .auditTLReviu
-                                                      ?.listAuditTL?[index]
-                                                      ?.uraianTemuan,
-                                                  rekomendasi: widget
-                                                      .auditTLReviu
-                                                      ?.listAuditTL?[index]
-                                                      ?.rekomendasi,
-                                                  listRekomendasi: [
-                                                    widget
-                                                            .auditTLReviu
-                                                            ?.listAuditTL?[index]
-                                                            ?.listRekomendasi?[
-                                                        index2],
-                                                  ])
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        margin: const EdgeInsets.only(left: 5),
-                                        padding: const EdgeInsets.all(8),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: widget
-                                              .auditTLReviu
-                                              ?.listAuditTL?[index]
-                                              ?.listRekomendasi?[index2]
-                                              ?.statusTindakLanjutColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Text(
-                                          'Tindak Lanjut',
-                                          // "${widget.auditTLReviu?.listAuditTL?[index]?.listRekomendasi?[index2]?.statusTindakLanjut ?? ""}}",
-                                          style: System.data.textStyles!
-                                              .boldTitleLightLabel,
-                                        ),
+                                      const SizedBox(
+                                        height: 5,
                                       ),
-                                    )
-                                  ],
+                                      Html(
+                                          data: data?.listRekomendasi?[index2]
+                                              ?.deskripsi),
+                                    ],
+                                  ),
                                 )
                               ],
                             ),
-                          );
-                        },
-                      )
-                    ],
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    widget.onSelectAction(
+                                      AuditTLReviuModel(
+                                        obyekAudit:
+                                            widget.auditTLReviu?.obyekAudit,
+                                        nomorLha: widget.auditTLReviu?.nomorLha,
+                                        listAuditTL: [
+                                          AuditTLModel(
+                                              uraianTemuan: data?.uraianTemuan,
+                                              rekomendasi: data?.rekomendasi,
+                                              listRekomendasi: [
+                                                data?.listRekomendasi?[index2],
+                                              ])
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    margin: const EdgeInsets.only(left: 5),
+                                    padding: const EdgeInsets.all(8),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: data?.listRekomendasi?[index2]
+                                          ?.statusTindakLanjutColor,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      'Tindak Lanjut',
+                                      // "${data.listRekomendasi?[index2]?.statusTindakLanjut ?? ""}}",
+                                      style: System
+                                          .data.textStyles!.boldTitleLightLabel,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            )
-          ],
-        ),
+                )
+        ],
       ),
     );
   }
@@ -281,26 +285,52 @@ class View extends PresenterState {
             child: Container(
               height: double.infinity,
               color: Colors.transparent,
-              child: DropdownButton<int>(
-                isExpanded: true,
-                hint: Text(
-                  "status",
-                  style: System.data.textStyles!.basicLabel.copyWith(
-                    color: Colors.grey,
-                  ),
+              child: FutureBuilder<List<AuditRekomendasiStatusModel>>(
+                future: AuditRekomendasiStatusModel.get(
+                  token: System.data.global.token,
                 ),
-                items: List.generate(
-                  AuditRekomendasiStatusModel.dummys().length,
-                  (index) {
-                    return DropdownMenuItem<int>(
-                      value: AuditRekomendasiStatusModel.dummys()[index].id,
-                      child: Text(
-                          AuditRekomendasiStatusModel.dummys()[index].name!,
-                          style: System.data.textStyles!.basicLabel),
+                builder: (c, s) {
+                  if (s.connectionState != ConnectionState.done) {
+                    return const SizedBox(
+                      width: 100,
+                      child: Icon(
+                        Icons.refresh,
+                        color: Colors.black,
+                      ),
                     );
-                  },
-                ),
-                onChanged: (val) {},
+                  }
+                  return StreamBuilder<String?>(
+                    initialData: selectedStatus,
+                    stream: statusController.stream,
+                    builder: (sccs, ss) {
+                      return DropdownButton<String>(
+                        isExpanded: true,
+                        value: selectedStatus,
+                        hint: Text(
+                          "status",
+                          style: System.data.textStyles!.basicLabel.copyWith(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        items: List.generate(
+                          (s.data ?? []).length,
+                          (index) {
+                            return DropdownMenuItem<String>(
+                              value: s.data![index].id,
+                              child: Text(s.data![index].name!,
+                                  style: System.data.textStyles!.basicLabel),
+                            );
+                          },
+                        ),
+                        onChanged: (val) {
+                          selectedStatus = val ?? "";
+                          statusController.add(val);
+                          listDataComponentController.refresh();
+                        },
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ),
@@ -312,7 +342,7 @@ class View extends PresenterState {
               height: 32,
               color: Colors.transparent,
               child: TextField(
-                controller: TextEditingController(),
+                controller: seacchController,
                 decoration: const InputDecoration(
                   hintText: "Cari",
                   contentPadding: EdgeInsets.only(
@@ -322,6 +352,9 @@ class View extends PresenterState {
                   ),
                   suffixIcon: Icon(Icons.search),
                 ),
+                onChanged: (val) {
+                  listDataComponentController.refresh();
+                },
               ),
             ),
           )
@@ -336,31 +369,51 @@ class View extends PresenterState {
         padding: const EdgeInsets.all(10),
         color: Colors.grey.shade200,
         width: double.infinity,
-        child: Wrap(
-          children: List.generate(AuditRekomendasiStatusModel.dummys().length,
-              (index) {
-            return IntrinsicWidth(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 15,
-                      width: 15,
-                      color: AuditRekomendasiStatusModel.dummys()[index].color,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      AuditRekomendasiStatusModel.dummys()[index].name!,
-                      style: System.data.textStyles!.basicLabel,
-                    ),
-                  ],
+        child: FutureBuilder<List<AuditRekomendasiStatusModel>>(
+          future: AuditRekomendasiStatusModel.get(
+            token: System.data.global.token,
+          ),
+          builder: (c, s) {
+            if (s.connectionState != ConnectionState.done) {
+              return const SizedBox(
+                width: double.infinity,
+                child: Center(
+                  child: Icon(
+                    Icons.refresh,
+                    color: Colors.black,
+                  ),
                 ),
+              );
+            }
+            return Wrap(
+              children: List.generate(
+                (s.data ?? []).length,
+                (index) {
+                  return IntrinsicWidth(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 15,
+                            width: 15,
+                            color: s.data![index].color,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            s.data![index].name!,
+                            style: System.data.textStyles!.basicLabel,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
             );
-          }),
+          },
         ),
       ),
     );

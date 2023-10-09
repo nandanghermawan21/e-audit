@@ -97,6 +97,7 @@ class View extends PresenterState {
                   token: System.data.global.token,
                   tahun: model.selectedYear,
                   searchKey: model.searchController.text,
+                  type: widget.type,
                 ).then((value) {
                   return value;
                 });

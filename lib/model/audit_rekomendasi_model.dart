@@ -3,6 +3,7 @@ import 'package:eaudit/model/komentar_model.dart';
 import 'package:flutter/material.dart';
 
 class AuditRekomendasiModel {
+  String? id;
   String? deskripsi;
   String? statusRekomendasi;
   String? statusTindakLanjut;
@@ -13,6 +14,7 @@ class AuditRekomendasiModel {
   List<KomentarModel?>? komentar;
 
   AuditRekomendasiModel({
+    this.id,
     this.deskripsi,
     this.statusRekomendasi,
     this.statusTindakLanjut,
@@ -25,24 +27,32 @@ class AuditRekomendasiModel {
 
   static AuditRekomendasiModel fromJson(Map<String, dynamic> json) {
     return AuditRekomendasiModel(
-      deskripsi: json["deskripsi"],
-      statusRekomendasi: json["status_rekomendasi"],
-      statusTindakLanjut: json["status_tindak_lanjut"],
-      statusTindakLanjutColor: json["status_tindak_lanjut_color"] != null
-          ? Color(json["status_tindak_lanjut_color"])
-          : null,
-      sisaHariTindakLanjut: json["sisa_hari_tindak_lanjut"],
-      statusRekomendasiColor: json["status_rekomendasi_color"] != null
-          ? Color(json["color"])
-          : null,
-      listItem: json["list_item"] != null
-          ? (json["list_item"] as List)
+      id: json["rekomendasi_id"],
+      deskripsi: json["rekomendasi_desc"],
+      statusRekomendasi: json["rekomendasi_status"],
+      statusTindakLanjut: json["tindaklanjut_status"],
+      statusTindakLanjutColor: json["tindaklanjut_status_color"] != null
+          ? Color(int.parse((json["tindaklanjut_status_color"] as String)
+              .replaceAll("#", "0xFF")))
+          : Colors.green,
+      sisaHariTindakLanjut: json["sisa_hari_tl"],
+      statusRekomendasiColor: json["rekomendasi_status_color"] != null
+          ? Color(int.parse((json["rekomendasi_status_color"] as String)
+              .replaceAll("#", "0xFF")))
+          : Colors.green,
+      listItem: json["tindak_lanjut"] != null
+          ? (json["tindak_lanjut"] as List)
               .map((e) => AuditTLItemModel.fromJson(e))
               .toList()
           : null,
-      komentar: json["komentar"] != null
-          ? (json["komentar"] as List)
-              .map((e) => KomentarModel.fromJson(e))
+      komentar: json["rekomendasi_komentar"] != null
+          ? (json["rekomendasi_komentar"] as List)
+              .map((e) => KomentarModel.fromJson(
+                    e,
+                    tanggalKey: "comment_date",
+                    nameKey: "auditor_name",
+                    komentarKey: "comment_desc",
+                  ))
               .toList()
           : null,
     );
