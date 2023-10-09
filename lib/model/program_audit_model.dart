@@ -54,6 +54,14 @@ class ProgramAuditModel {
     );
   }
 
+  Map<String, dynamic> toPostReviu() {
+    return {
+      "program_id": id,
+      "status": approve,
+      "note": catatan,
+    };
+  }
+
   //create list dummy
   static List<ProgramAuditModel> dummys() {
     return [

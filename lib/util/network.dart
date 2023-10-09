@@ -12,6 +12,7 @@ class Network {
     Map<String, String>? querys,
     String? relativeUrl = "",
     Map<String, dynamic>? body,
+    List? bodies,
     Encoding? encoding,
     Map<String, String>? headers,
     ValueChanged<BasicResponse>? otpRequired,
@@ -58,7 +59,7 @@ class Network {
     return http
         .post(
       uri,
-      body: json.encode(body),
+      body: json.encode(bodies ?? body),
       // encoding: encoding ?? Encoding.getByName("apliaction/json"),
       headers: newHeaders,
     )

@@ -38,14 +38,7 @@ class View extends PresenterState {
           margin: const EdgeInsets.all(20),
           child: ElevatedButton(
             onPressed: () {
-              loadingController.stopLoading(
-                message: "Data Berhasil Tersimpan",
-                isError: false,
-                duration: const Duration(seconds: 3),
-                onCloseCallBack: () {
-                  widget.onSubmitSuccess!();
-                },
-              );
+              submitReviu();
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
@@ -69,6 +62,7 @@ class View extends PresenterState {
         controller: listController,
         enableDrag: false,
         enableGetMore: false,
+        canRefresh: false,
         dataSource: (skip, key) {
           return AuditPKAModel.get(
                   token: System.data.global.token, assignId: widget.auditPA?.id)
@@ -154,7 +148,7 @@ class View extends PresenterState {
                     Row(
                       children: [
                         Radio(
-                          value: "approve",
+                          value: "2",
                           groupValue: data?.approve,
                           onChanged: (val) {
                             data?.approve = val.toString();
@@ -166,7 +160,7 @@ class View extends PresenterState {
                           style: System.data.textStyles!.basicLabel,
                         ),
                         Radio(
-                          value: "Tolak",
+                          value: "3",
                           groupValue: data?.approve,
                           onChanged: (val) {
                             data?.approve = val.toString();

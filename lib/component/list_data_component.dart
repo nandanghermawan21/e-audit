@@ -28,6 +28,7 @@ class ListDataComponent<T> extends StatefulWidget {
   final Widget? loaderWidget;
   final int? loaderCount;
   final bool autoSearch;
+  final bool canRefresh;
 
   const ListDataComponent({
     Key? key,
@@ -50,6 +51,7 @@ class ListDataComponent<T> extends StatefulWidget {
     this.loaderWidget,
     this.loaderCount = 5,
     this.autoSearch = true,
+    this.canRefresh = true,
   }) : super(
           key: key,
         );
@@ -64,6 +66,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
     widget.controller?.value.dataSource = widget.dataSource;
     widget.controller?.value.onDataReceived = widget.onDataReceived;
     widget.controller?.value.onSelected = widget.onSelected;
+    widget.controller?.value.canRefresh = widget.canRefresh;
     super.initState();
     widget.controller?.refresh();
   }
@@ -277,7 +280,9 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
                         .userScrollDirection ==
                     ScrollDirection.forward &&
                 ((current ?? 0) <= (min ?? 0))) {
-              widget.controller?.refresh();
+              if (widget.controller?.value.canRefresh == true) {
+                widget.controller?.refresh();
+              }
             } else if (widget.controller?.value.scrollController.position
                         .userScrollDirection ==
                     ScrollDirection.reverse &&
@@ -345,7 +350,9 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
                       .userScrollDirection ==
                   ScrollDirection.forward &&
               ((current ?? 0) <= (min ?? 0))) {
-            widget.controller?.refresh();
+            if (widget.controller?.value.canRefresh == true) {
+              widget.controller?.refresh();
+            }
           } else if (widget.controller?.value.scrollController.position
                       .userScrollDirection ==
                   ScrollDirection.reverse &&
@@ -736,6 +743,7 @@ class ListDataComponentValue<T> {
   ValueChanged<T?>? onSelected;
   String? errorMessage;
   int refreshDelayed = 0;
+  bool canRefresh = true;
 }
 
 enum ListDataComponentState {

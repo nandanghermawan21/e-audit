@@ -67,7 +67,7 @@ class AuditPKAModel {
       rawResult: true,
       querys: {
         "method": "data_program_audit",
-        "assign_id": "9f9a19ec03bbc5df329798027a8ad2ae3281061c", // "$assignId",
+        "assign_id": "$assignId",
         "token": "$token",
       },
       headers: {
@@ -80,6 +80,37 @@ class AuditPKAModel {
         return AuditPKAModel.fromJson(value);
       }
       throw BasicResponse(message: (value)["message"]);
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
+  }
+
+  static Future<void> postReviu({
+    required String? token,
+    required String? assignedId,
+    required List<ProgramAuditModel> paModel,
+  }) {
+    return Network.post(
+      url: Uri.parse(System.data.apiEndPoint.url),
+      querys: {
+        "method": "post_reviu_pka",
+        "assign_id": "$assignedId",
+        "token": "$token",
+      },
+      bodies: paModel.map((e) => e.toPostReviu()).toList(),
+      headers: {
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+    ).then((value) {
+      return true;
+      // value = json.decode(value);
+      // if ((value)["message"] == "" || (value)["message"] == null) {
+      //   return AuditPKAModel.fromJson(value);
+      // }
+      // throw BasicResponse(message: (value)["message"]);
     }).catchError(
       (onError) {
         throw onError;
