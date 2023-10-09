@@ -67,7 +67,7 @@ class AuditPKAModel {
       rawResult: true,
       querys: {
         "method": "data_program_audit",
-        "assign_id": "$assignId",
+        "assign_id": "9f9a19ec03bbc5df329798027a8ad2ae3281061c", // "$assignId",
         "token": "$token",
       },
       headers: {
