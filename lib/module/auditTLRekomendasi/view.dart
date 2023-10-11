@@ -27,6 +27,15 @@ class View extends PresenterState {
               padding: const EdgeInsets.all(10),
               height: 50,
               color: Colors.transparent,
+              child: GestureDetector(
+                onTap: () {
+                  listDataComponentController.refresh();
+                },
+                child: const Icon(
+                  Icons.refresh,
+                  color: Colors.white,
+                ),
+              ),
             )
           ],
         ),
@@ -106,6 +115,13 @@ class View extends PresenterState {
               scrollDirection: Axis.horizontal,
               child: Html(
                 data: data?.judulTemuan ?? "",
+                shrinkWrap: true,
+                style: {
+                  "body": Style(
+                    fontSize: const FontSize(17),
+                    fontFamily: System.data.font!.primary,
+                  ),
+                },
               ),
             ),
           ),
@@ -202,8 +218,17 @@ class View extends PresenterState {
                                         height: 5,
                                       ),
                                       Html(
-                                          data: data?.listRekomendasi?[index2]
-                                              ?.deskripsi),
+                                        data: data?.listRekomendasi?[index2]
+                                            ?.deskripsi,
+                                        shrinkWrap: true,
+                                        style: {
+                                          "body": Style(
+                                            fontSize: const FontSize(17),
+                                            fontFamily:
+                                                System.data.font!.primary,
+                                          ),
+                                        },
+                                      ),
                                     ],
                                   ),
                                 )
@@ -243,11 +268,22 @@ class View extends PresenterState {
                                           ?.statusTindakLanjutColor,
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: Text(
-                                      'Tindak Lanjut',
-                                      // "${data.listRekomendasi?[index2]?.statusTindakLanjut ?? ""}}",
-                                      style: System
-                                          .data.textStyles!.boldTitleLightLabel,
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.search,
+                                          color: Colors.white,
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          'Tindak Lanjut',
+                                          // "${data.listRekomendasi?[index2]?.statusTindakLanjut ?? ""}}",
+                                          style: System.data.textStyles!
+                                              .boldTitleLightLabel,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 )

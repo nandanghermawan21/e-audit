@@ -38,7 +38,7 @@ class View extends PresenterState {
           margin: const EdgeInsets.all(20),
           child: ElevatedButton(
             onPressed: () {
-              submitReviu();
+              submit();
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
@@ -108,6 +108,13 @@ class View extends PresenterState {
                 ),
                 Html(
                   data: data?.langkahKerja ?? "",
+                  shrinkWrap: true,
+                  style: {
+                    "body": Style(
+                      fontSize: const FontSize(17),
+                      fontFamily: System.data.font!.primary,
+                    ),
+                  },
                 ),
                 const SizedBox(
                   height: 10,
@@ -160,77 +167,123 @@ class View extends PresenterState {
                   height: 10,
                 ),
                 komentar(data?.komentar),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: data?.isFinishedReviu == false ? 20 : 10,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Aksi",
-                        style: System.data.textStyles!.boldTitleLabel,
+                data?.isFinishedReviu == false
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Aksi",
+                              style: System.data.textStyles!.boldTitleLabel,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                value: "2",
+                                groupValue: data?.approve,
+                                onChanged: (val) {
+                                  data?.approve = val.toString();
+                                  listController.commit();
+                                },
+                              ),
+                              Text(
+                                "Approve",
+                                style: System.data.textStyles!.basicLabel,
+                              ),
+                              Radio(
+                                value: "3",
+                                groupValue: data?.approve,
+                                onChanged: (val) {
+                                  data?.approve = val.toString();
+                                  listController.commit();
+                                },
+                              ),
+                              Text(
+                                "Tolak",
+                                style: System.data.textStyles!.basicLabel,
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Status",
+                            style: System.data.textStyles!.boldTitleLabel,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            data?.approve == "2"
+                                ? "Approved"
+                                : data?.approve == "3"
+                                    ? "Rejected"
+                                    : "",
+                            style: System.data.textStyles!.boldTitleLabel,
+                          ),
+                        ],
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: "2",
-                          groupValue: data?.approve,
-                          onChanged: (val) {
-                            data?.approve = val.toString();
-                            listController.commit();
-                          },
-                        ),
-                        Text(
-                          "Approve",
-                          style: System.data.textStyles!.basicLabel,
-                        ),
-                        Radio(
-                          value: "3",
-                          groupValue: data?.approve,
-                          onChanged: (val) {
-                            data?.approve = val.toString();
-                            listController.commit();
-                          },
-                        ),
-                        Text(
-                          "Tolak",
-                          style: System.data.textStyles!.basicLabel,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  "Catatan",
-                  style: System.data.textStyles!.boldTitleLabel,
-                ),
+                data?.isFinishedReviu == false
+                    ? Text(
+                        "Catatan",
+                        style: System.data.textStyles!.boldTitleLabel,
+                      )
+                    : const SizedBox(),
                 const SizedBox(
                   height: 10,
                 ),
                 //buat textbox dengan border
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: TextField(
-                    onChanged: (val) {
-                      data?.catatan = val;
-                      listController.commit();
-                    },
-                    maxLines: 5,
-                    decoration: InputDecoration.collapsed(
-                      hintText: "Catatan",
-                      hintStyle: System.data.textStyles!.basicLabel,
-                    ),
-                  ),
+                data?.isFinishedReviu == false
+                    ? Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextField(
+                          onChanged: (val) {
+                            data?.catatan = val;
+                            listController.commit();
+                          },
+                          maxLines: 5,
+                          decoration: InputDecoration.collapsed(
+                            hintText: "Catatan",
+                            hintStyle: System.data.textStyles!.basicLabel,
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+                const SizedBox(
+                  height: 10,
                 ),
+                data?.isFinishedReviu == false
+                    ? SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            submitSingle(data!);
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              System.data.color!.primaryColor,
+                            ),
+                          ),
+                          child: Text(
+                            "Simpan",
+                            style: System.data.textStyles!.boldTitleLightLabel,
+                          ),
+                        ),
+                      )
+                    : const SizedBox()
               ],
             ),
           );

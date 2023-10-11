@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:eaudit/model/audit_tl_item_model.dart';
 import 'package:eaudit/model/komentar_model.dart';
+import 'package:eaudit/util/basic_response.dart';
+import 'package:eaudit/util/network.dart';
+import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 
 class AuditRekomendasiModel {
@@ -8,6 +13,7 @@ class AuditRekomendasiModel {
   String? statusRekomendasi;
   String? statusTindakLanjut;
   Color? statusRekomendasiColor;
+  String? rekomendasiStatusNumber;
   Color? statusTindakLanjutColor;
   String? sisaHariTindakLanjut;
   List<AuditTLItemModel?>? listItem;
@@ -21,6 +27,7 @@ class AuditRekomendasiModel {
     this.statusTindakLanjutColor,
     this.sisaHariTindakLanjut,
     this.statusRekomendasiColor,
+    this.rekomendasiStatusNumber,
     this.listItem,
     this.komentar,
   });
@@ -40,6 +47,7 @@ class AuditRekomendasiModel {
           ? Color(int.parse((json["rekomendasi_status_color"] as String)
               .replaceAll("#", "0xFF")))
           : Colors.green,
+      rekomendasiStatusNumber: json["rekomendasi_status_number"],
       listItem: json["tindak_lanjut"] != null
           ? (json["tindak_lanjut"] as List)
               .map((e) => AuditTLItemModel.fromJson(e))
@@ -66,9 +74,58 @@ class AuditRekomendasiModel {
       "status_tindak_lanjut_color": statusTindakLanjutColor?.value,
       "sisa_hari_tindak_lanjut": sisaHariTindakLanjut,
       "status_rekomeendasi_color": statusRekomendasiColor?.value,
+      "rekomendasi_status_number": rekomendasiStatusNumber,
       "komentar": komentar?.map((e) => e?.toJson()).toList(),
       "list_item": listItem?.map((e) => e?.toJson()).toList(),
     };
+  }
+
+  static Future<void> postReviu({
+    required String? token,
+    required String? rekomendasiId,
+    required String? status,
+    required String? note,
+    required String? type,
+  }) {
+    return Network.post(
+      url: Uri.parse(System.data.apiEndPoint.url),
+      rawResult: true,
+      querys: {
+        "method": "$type",
+        "token": "$token",
+      },
+      body: {
+        "rekomendasi_id": "$rekomendasiId",
+        "status": "$status",
+        "note": "$note"
+      },
+      headers: {
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+    ).then((value) {
+      try {
+        value = json.decode(value);
+        if ((value)["message"] == "" || (value)["message"] == null) {
+          if (value == "success") {
+            return;
+          } else {
+            throw value;
+          }
+        }
+        throw BasicResponse(message: (value)["message"]);
+      } catch (e) {
+        if (value == "success") {
+          return;
+        } else {
+          throw value;
+        }
+      }
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
   }
 
   //dummy

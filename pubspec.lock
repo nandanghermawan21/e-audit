@@ -125,10 +125,10 @@ packages:
     dependency: "direct main"
     description:
       name: d_chart
-      sha256: d16a77af7dbc022373e6fa47a9264658ac2382d9fe0e77d91cf038e61cd4b621
+      sha256: "25383f0d0b71a3f540511573ac0603286b2d736ead55073d595b7f48764919e4"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.6.2"
   device_info_plus:
     dependency: "direct main"
     description:
@@ -673,18 +673,18 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: d6e217340e98f2412fb0d3ce0309ba9c9b2186ff5f530ef5274eb9fc7b06a184
+      sha256: "3979f0b1c5a97422cadae52d476c21fa3e0fb671ef51de6cae1d646d8b99fe1f"
       url: "https://pub.dev"
     source: hosted
-    version: "20.4.41"
+    version: "20.4.54"
   syncfusion_flutter_gauges:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_gauges
-      sha256: "2c88a367d78129e8cc0b1f98cbe46c1e64ed3655bdca647d6ade705be815adc6"
+      sha256: "6b7a901a33345511080d74770dfcdc37d30a15667c73819932786b95b3ec2dfb"
       url: "https://pub.dev"
     source: hosted
-    version: "20.4.41"
+    version: "20.4.54"
   syncfusion_flutter_pdf:
     dependency: transitive
     description:

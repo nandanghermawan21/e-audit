@@ -104,6 +104,9 @@ class View extends PresenterState {
             ),
             const SizedBox(
               width: 10,
+              child: Text(
+                ":",
+              ),
             ),
             Expanded(
               child: Text(
@@ -129,6 +132,9 @@ class View extends PresenterState {
             ),
             const SizedBox(
               width: 10,
+              child: Text(
+                ":",
+              ),
             ),
             Text(
               data?.auditee ?? "",
@@ -152,6 +158,9 @@ class View extends PresenterState {
             ),
             const SizedBox(
               width: 10,
+              child: Text(
+                ":",
+              ),
             ),
             Text(
               data?.tipeAudit ?? "",
@@ -175,10 +184,13 @@ class View extends PresenterState {
             ),
             const SizedBox(
               width: 10,
+              child: Text(
+                ":",
+              ),
             ),
             Expanded(
               child: Text(
-                "${data?.startDate == null ? "-" : DateFormat("dd MMMM yyyy", "id_ID").format(data!.startDate!)} s/d ${data?.endDate == null ? "-" : DateFormat("dd MMMM yyyy", "id_ID").format(data!.endDate!)}",
+                "${data?.startDate == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(data!.startDate!)} s/d ${data?.endDate == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(data!.endDate!)}",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -228,7 +240,8 @@ class View extends PresenterState {
                 Text(
                   kka?.tanggal == null
                       ? ""
-                      : DateFormat("dd MMMM yyyy").format(kka!.tanggal!),
+                      : DateFormat("dd MMMM yyyy", System.data.strings!.locale)
+                          .format(kka!.tanggal!),
                   style: System.data.textStyles!.boldTitleLabel,
                 ),
               ],

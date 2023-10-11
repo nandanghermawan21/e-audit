@@ -76,7 +76,7 @@ class View extends PresenterState {
                           left: 1, right: 1, top: 5, bottom: 12),
                       suffixIcon: Icon(Icons.search),
                     ),
-                    onChanged: (val){
+                    onChanged: (val) {
                       listController.refresh();
                     },
                   ),
@@ -124,27 +124,23 @@ class View extends PresenterState {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    (data?.divisi ?? ""),
-                    style: System.data.textStyles!.boldTitleLabel,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    "${data?.tanggalMulai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
-                        (data!.tanggalMulai!),
-                      )}\ns/d ${data?.tanggalSelesai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
-                        (data!.tanggalSelesai!),
-                      )}",
-                    style: System.data.textStyles!.boldTitleLabel,
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-              ],
+            Text(
+              (data?.divisi ?? ""),
+              style: System.data.textStyles!.boldTitleLabel.copyWith(
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              "${data?.tanggalMulai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+                  (data!.tanggalMulai!),
+                )} s/d ${data?.tanggalSelesai == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+                  (data!.tanggalSelesai!),
+                )}",
+              style: System.data.textStyles!.boldTitleLabel,
+              textAlign: TextAlign.start,
             ),
             const Divider(
               color: Colors.black,

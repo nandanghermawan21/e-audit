@@ -60,43 +60,101 @@ class View extends PresenterState {
             DecorationComponent.item(
                 title: "Rekomendasi",
                 valueWidget: Html(
-                    data: widget.auditTLReviu?.listAuditTL?.first
-                        ?.listRekomendasi?.first?.deskripsi)),
+                  data: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
+                      ?.first?.deskripsi,
+                  shrinkWrap: true,
+                  style: {
+                    "body": Style(
+                      fontSize: const FontSize(17),
+                      fontFamily: System.data.font!.primary,
+                    ),
+                  },
+                )),
             DecorationComponent.item(
               title: "Status Rekomendasi",
               value: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
                   ?.first?.statusRekomendasi,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                const SizedBox(
-                  width: 100,
-                ),
-                Consumer<ViewModel>(builder: (c, d, w) {
-                  return Expanded(
-                    child: Row(
-                      children: [
-                        buttonSetStatusRecomendation(
+              valueWidget: Consumer<ViewModel>(builder: (c, d, w) {
+                return Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
+                                  ?.first?.rekomendasiStatusNumber ==
+                              "0"
+                          ? Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: Text(widget
+                                      .auditTLReviu
+                                      ?.listAuditTL
+                                      ?.first
+                                      ?.listRekomendasi
+                                      ?.first
+                                      ?.statusRekomendasi ??
+                                  ""),
+                            )
+                          : const SizedBox(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          buttonSetStatusRecomendation(
                             data: model.auditTLReviuModel?.listAuditTL?.first
                                 ?.listRekomendasi?.first,
-                            status: "Selesai"),
-                        buttonSetStatusRecomendation(
+                            status: "Selesai",
+                            statusNumber: "1",
+                          ),
+                          buttonSetStatusRecomendation(
                             data: model.auditTLReviuModel?.listAuditTL?.first
                                 ?.listRekomendasi?.first,
-                            status: "Dalam Proses"),
-                        buttonSetStatusRecomendation(
+                            status: "Dalam Proses",
+                            statusNumber: "2",
+                          ),
+                          buttonSetStatusRecomendation(
                             data: model.auditTLReviuModel?.listAuditTL?.first
                                 ?.listRekomendasi?.first,
-                            status: "TDTL"),
-                      ],
-                    ),
-                  );
-                })
-              ],
+                            status: "TDTL",
+                            statusNumber: "3",
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ),
+            // Row(
+            //   children: [
+            //     const SizedBox(
+            //       width: 100,
+            //     ),
+            //     Consumer<ViewModel>(builder: (c, d, w) {
+            //       return Expanded(
+            //         child: Row(
+            //           children: [
+            //             buttonSetStatusRecomendation(
+            //               data: model.auditTLReviuModel?.listAuditTL?.first
+            //                   ?.listRekomendasi?.first,
+            //               status: "Selesai",
+            //               statusNumber: "1",
+            //             ),
+            //             buttonSetStatusRecomendation(
+            //               data: model.auditTLReviuModel?.listAuditTL?.first
+            //                   ?.listRekomendasi?.first,
+            //               status: "Dalam Proses",
+            //               statusNumber: "2",
+            //             ),
+            //             buttonSetStatusRecomendation(
+            //               data: model.auditTLReviuModel?.listAuditTL?.first
+            //                   ?.listRekomendasi?.first,
+            //               status: "TDTL",
+            //               statusNumber: "3",
+            //             ),
+            //           ],
+            //         ),
+            //       );
+            //     })
+            //   ],
+            // ),
             const SizedBox(
               height: 20,
             ),
@@ -240,8 +298,9 @@ class View extends PresenterState {
                                                 ?.listItem?[index]
                                                 ?.tanggal !=
                                             null
-                                        ? DateFormat("dd MMMM yyyy").format(
-                                            widget
+                                        ? DateFormat("dd MMMM yyyy",
+                                                System.data.strings!.locale)
+                                            .format(widget
                                                 .auditTLReviu!
                                                 .listAuditTL!
                                                 .first!
@@ -258,15 +317,23 @@ class View extends PresenterState {
                           ],
                         ),
                         Html(
-                            data: widget
-                                    .auditTLReviu
-                                    ?.listAuditTL
-                                    ?.first
-                                    ?.listRekomendasi
-                                    ?.first
-                                    ?.listItem?[index]
-                                    ?.tindakLanjut ??
-                                ""),
+                          data: widget
+                                  .auditTLReviu
+                                  ?.listAuditTL
+                                  ?.first
+                                  ?.listRekomendasi
+                                  ?.first
+                                  ?.listItem?[index]
+                                  ?.tindakLanjut ??
+                              "",
+                          shrinkWrap: true,
+                          style: {
+                            "body": Style(
+                              fontSize: const FontSize(17),
+                              fontFamily: System.data.font!.primary,
+                            ),
+                          },
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -334,6 +401,7 @@ class View extends PresenterState {
   Widget buttonSetStatusRecomendation({
     AuditRekomendasiModel? data,
     String? status,
+    required String? statusNumber,
   }) {
     return GestureDetector(
       onTap: () {
@@ -359,10 +427,7 @@ class View extends PresenterState {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: TextField(
-                    onChanged: (val) {
-                      // data?.catatan = val;
-                      // listController.commit();
-                    },
+                    controller: catatanController,
                     maxLines: 5,
                     decoration: InputDecoration.collapsed(
                       hintText: "Catatan",
@@ -380,9 +445,10 @@ class View extends PresenterState {
                       height: 30,
                       child: ElevatedButton(
                         onPressed: () {
-                          loadingController.forceStop();
-                          data?.statusTindakLanjut = status;
-                          model.commit();
+                          if (catatanController.text.isEmpty) {
+                            return;
+                          }
+                          postReviu(statusNumber, status);
                         },
                         child: Text(
                           "Ya",
@@ -421,10 +487,10 @@ class View extends PresenterState {
         );
       },
       child: Container(
-        margin: const EdgeInsets.only(left: 10),
+        margin: const EdgeInsets.only(right: 10),
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: data?.statusTindakLanjut == status
+          color: data?.rekomendasiStatusNumber == statusNumber
               ? System.data.color!.primaryColor
               : Colors.transparent,
           borderRadius: const BorderRadius.all(
@@ -435,7 +501,7 @@ class View extends PresenterState {
         child: Text(
           status ?? "",
           style: System.data.textStyles!.basicLabel.copyWith(
-            color: data?.statusTindakLanjut == status
+            color: data?.rekomendasiStatusNumber == statusNumber
                 ? Colors.white
                 : Colors.grey.shade500,
           ),

@@ -998,20 +998,20 @@ class View extends PresenterState {
                       endWidth: 10),
                   GaugeRange(
                       startValue: 75,
-                      endValue: 150,
+                      endValue: 100,
                       color: Colors.green,
                       startWidth: 10,
                       endWidth: 10)
                 ],
-                pointers: const <GaugePointer>[NeedlePointer(value: 90)],
+                pointers: <GaugePointer>[NeedlePointer(value: angle ?? 0)],
                 annotations: <GaugeAnnotation>[
                   GaugeAnnotation(
                     widget: const SizedBox(),
                     angle: angle,
                     positionFactor: 0.5,
-                  ),
+                    axisValue: angle, 
+                  )
                 ],
-                showLastLabel: true,
               )
             ],
           ),
@@ -1020,8 +1020,9 @@ class View extends PresenterState {
           color: Colors.transparent,
           alignment: Alignment.bottomCenter,
           child: Container(
-            width: (MediaQuery.of(context).size.width / 3) - 50,
-            color: Colors.white,
+            width: (MediaQuery.of(context).size.width / 3) - 45,
+            padding: const EdgeInsets.only(bottom: 5),
+            color: Colors.transparent,
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(

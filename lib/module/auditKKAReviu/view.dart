@@ -127,7 +127,7 @@ class View extends PresenterState {
         DecorationComponent.item(
             title: "Tanggal",
             value:
-                "${data?.startDate == null ? "-" : DateFormat("dd MMMM yyyy", "id_ID").format(data!.startDate!)} s/d ${data?.endDate == null ? "-" : DateFormat("dd MMMM yyyy", "id_ID").format(data!.endDate!)}"),
+                "${data?.startDate == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(data!.startDate!)} s/d ${data?.endDate == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(data!.endDate!)}"),
       ],
     );
   }
@@ -190,7 +190,8 @@ class View extends PresenterState {
           title: "Tanggal KKA",
           value: data?.tanggal == null
               ? "-"
-              : DateFormat("dd MMMM yyyy").format(data!.tanggal!),
+              : DateFormat("dd MMMM yyyy", System.data.strings!.locale)
+                  .format(data!.tanggal!),
         ),
         DecorationComponent.item(
           title: "Uraian",
@@ -199,13 +200,30 @@ class View extends PresenterState {
               scrollDirection: Axis.horizontal,
               child: Html(
                 data: data?.uraian,
+                shrinkWrap: true,
+                style: {
+                  "body": Style(
+                    fontSize: const FontSize(17),
+                    fontFamily: System.data.font!.primary,
+                  ),
+                },
               ),
             ),
           ),
         ),
         DecorationComponent.item(
             title: "Kesimpulan",
-            valueWidget: Center(child: Html(data: data?.kesimpulan))),
+            valueWidget: Center(
+                child: Html(
+              data: data?.kesimpulan,
+              shrinkWrap: true,
+              style: {
+                "body": Style(
+                  fontSize: const FontSize(17),
+                  fontFamily: System.data.font!.primary,
+                ),
+              },
+            ))),
         DecorationComponent.item(
           title: "File Kertas Kerja",
           // value: data?.fileKertasKerja ?? "",

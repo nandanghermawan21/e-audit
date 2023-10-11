@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:eaudit/model/action_model.dart';
 import 'package:eaudit/model/audit_file_model.dart';
 import 'package:eaudit/model/komentar_model.dart';
+import 'package:eaudit/util/basic_response.dart';
+import 'package:eaudit/util/network.dart';
+import 'package:eaudit/util/system.dart';
 
 class AuditTLItemModel {
   String? id;
@@ -24,10 +29,8 @@ class AuditTLItemModel {
   factory AuditTLItemModel.fromJson(Map<String, dynamic> json) {
     return AuditTLItemModel(
       id: json['tl_id'],
-      tindakLanjut: json['tl_desc'], 
-      tanggal: json['tl_date'] != null
-          ? DateTime.parse(json['tl_date'])
-          : null,
+      tindakLanjut: json['tl_desc'],
+      tanggal: json['tl_date'] != null ? DateTime.parse(json['tl_date']) : null,
       status: json['tl_status'],
       lampiran: json['lampiran'] != null
           ? (json['lampiran'] as List?)
@@ -62,6 +65,54 @@ class AuditTLItemModel {
       "komentar": komentar?.map((e) => e?.toJson()).toList(),
       "action": action?.map((e) => e?.toJson()).toList(),
     };
+  }
+
+  static Future<void> postReviu({
+    required String? token,
+    required String? tlId,
+    required String? status,
+    required String? note,
+    required String? type,
+  }) {
+    return Network.post(
+      url: Uri.parse(System.data.apiEndPoint.url),
+      rawResult: true,
+      querys: {
+        "method": "$type",
+        "token": "$token",
+      },
+      body: {
+        "tl_id": "$tlId",
+        "status": "$status",
+        "note": "$note"
+      },
+      headers: {
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+    ).then((value) {
+      try {
+        value = json.decode(value);
+        if ((value)["message"] == "" || (value)["message"] == null) {
+          if (value == "success") {
+            return;
+          } else {
+            throw value;
+          }
+        }
+        throw BasicResponse(message: (value)["message"]);
+      } catch (e) {
+        if (value == "success") {
+          return;
+        } else {
+          throw value;
+        }
+      }
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
   }
 
   //dummy

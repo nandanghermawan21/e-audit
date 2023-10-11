@@ -37,13 +37,13 @@ class ActionModel {
     return [
       ActionModel(
         label: "Setujui",
-        value: "Disetujui",
+        value: "2",
         description: "Menyetujui",
         color: Colors.green,
       ),
       ActionModel(
         label: "Tolak",
-        value: "Ditolak",
+        value: "3",
         description: "Menolak",
         color: Colors.red,
       ),

@@ -133,6 +133,7 @@ class View extends PresenterState {
             ),
             const SizedBox(
               width: 10,
+              child: Text(":"),
             ),
             Expanded(
               child: Text(
@@ -158,6 +159,7 @@ class View extends PresenterState {
             ),
             const SizedBox(
               width: 10,
+              child: Text(":"),
             ),
             Text(
               data?.auditee ?? "",
@@ -181,6 +183,7 @@ class View extends PresenterState {
             ),
             const SizedBox(
               width: 10,
+              child: Text(":"),
             ),
             Text(
               data?.tipeAudit ?? "",
@@ -204,13 +207,14 @@ class View extends PresenterState {
             ),
             const SizedBox(
               width: 10,
+              child: Text(":"),
             ),
             Text(
-              data?.tanggalAudit == null
-                  ? "-"
-                  : DateFormat("dd MMMM yyyy").format(
-                      (data!.tanggalAudit!),
-                    ),
+              "${data?.tanggalAudit == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+                  (data!.tanggalAudit!),
+                )} s/d ${data?.tanggalAudit == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+                  (data!.tanggalAuditEnd!),
+                )}",
               style: System.data.textStyles!.basicLabel,
             ),
           ],
@@ -223,9 +227,8 @@ class View extends PresenterState {
     return Table(
       columnWidths: const {
         0: FlexColumnWidth(1),
-        1: FlexColumnWidth(4),
-        2: FlexColumnWidth(3),
-        3: FlexColumnWidth(3),
+        1: FlexColumnWidth(6),
+        2: FlexColumnWidth(4),
       },
       children: [
         TableRow(
@@ -243,14 +246,6 @@ class View extends PresenterState {
               color: Colors.grey.shade200,
               child: Text(
                 "Nama Auditor",
-                style: System.data.textStyles!.basicLabel,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(5),
-              color: Colors.grey.shade200,
-              child: Text(
-                "Nama Auditee",
                 style: System.data.textStyles!.basicLabel,
               ),
             ),
@@ -280,13 +275,6 @@ class View extends PresenterState {
                   padding: const EdgeInsets.all(5),
                   child: Text(
                     "${data?.anggota?[index].namaAuditor}",
-                    style: System.data.textStyles!.basicLabel,
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  child: Text(
-                    "${data?.anggota?[index].namaAuditee}",
                     style: System.data.textStyles!.basicLabel,
                   ),
                 ),
@@ -352,7 +340,24 @@ class View extends PresenterState {
                               ),
                             ),
                             const SizedBox(
-                              height: 15,
+                              height: 5,
+                            ),
+                            Text(
+                              "Auditor",
+                              style: System.data.textStyles!.basicLabel,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              data?.programAudit?[index].pelaksana ?? "",
+                              style:
+                                  System.data.textStyles!.basicLabel.copyWith(
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
                             ),
                             Text(
                               "Status",
@@ -368,119 +373,233 @@ class View extends PresenterState {
                                 fontWeight: FontWeight.w300,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    IntrinsicWidth(
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                widget.onTapKKA?.call(widget.auditPA);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: System.data.color!.primaryColor
-                                      .withOpacity(0.5),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(8),
-                                  ),
-                                ),
-                                child: SizedBox(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "KKA",
-                                        style:
-                                            System.data.textStyles!.basicLabel,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "2",
-                                        style:
-                                            System.data.textStyles!.basicLabel,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
                             const SizedBox(
-                              height: 5,
+                              height: 15,
                             ),
                             Container(
-                              padding: const EdgeInsets.all(8),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
+                              color: Colors.transparent,
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "Temuan",
-                                    style: System.data.textStyles!.basicLabel,
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        widget.onTapKKA?.call(widget.auditPA);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: System.data.color!.primaryColor
+                                              .withOpacity(0.5),
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(8),
+                                          ),
+                                        ),
+                                        child: SizedBox(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "KKA",
+                                                style: System.data.textStyles!
+                                                    .basicLabel,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                "2",
+                                                style: System.data.textStyles!
+                                                    .basicLabel,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
-                                    "0",
-                                    style: System.data.textStyles!.basicLabel,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Rekomendasi",
-                                    style: System.data.textStyles!.basicLabel,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Temuan",
+                                            style: System
+                                                .data.textStyles!.basicLabel,
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            "0",
+                                            style: System
+                                                .data.textStyles!.basicLabel,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  Text(
-                                    "0",
-                                    style: System.data.textStyles!.basicLabel,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Rekomendasi",
+                                            style: System
+                                                .data.textStyles!.basicLabel,
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            "0",
+                                            style: System
+                                                .data.textStyles!.basicLabel,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
+                            )
                           ],
                         ),
                       ),
                     ),
+                    // const SizedBox(
+                    //   width: 10,
+                    // ),
+                    // IntrinsicWidth(
+                    //   child: Container(
+                    //     color: Colors.transparent,
+                    //     child: Column(
+                    //       children: [
+                    //         GestureDetector(
+                    //           onTap: () {
+                    //             widget.onTapKKA?.call(widget.auditPA);
+                    //           },
+                    //           child: Container(
+                    //             padding: const EdgeInsets.all(8),
+                    //             width: double.infinity,
+                    //             decoration: BoxDecoration(
+                    //               color: System.data.color!.primaryColor
+                    //                   .withOpacity(0.5),
+                    //               borderRadius: const BorderRadius.all(
+                    //                 Radius.circular(8),
+                    //               ),
+                    //             ),
+                    //             child: SizedBox(
+                    //               child: Row(
+                    //                 mainAxisAlignment:
+                    //                     MainAxisAlignment.spaceBetween,
+                    //                 children: [
+                    //                   Text(
+                    //                     "KKA",
+                    //                     style:
+                    //                         System.data.textStyles!.basicLabel,
+                    //                   ),
+                    //                   const SizedBox(
+                    //                     width: 5,
+                    //                   ),
+                    //                   Text(
+                    //                     "2",
+                    //                     style:
+                    //                         System.data.textStyles!.basicLabel,
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         const SizedBox(
+                    //           height: 5,
+                    //         ),
+                    //         Container(
+                    //           padding: const EdgeInsets.all(8),
+                    //           width: double.infinity,
+                    //           decoration: BoxDecoration(
+                    //             color: Colors.grey.shade200,
+                    //             borderRadius: const BorderRadius.all(
+                    //               Radius.circular(8),
+                    //             ),
+                    //           ),
+                    //           child: Row(
+                    //             mainAxisAlignment:
+                    //                 MainAxisAlignment.spaceBetween,
+                    //             children: [
+                    //               Text(
+                    //                 "Temuan",
+                    //                 style: System.data.textStyles!.basicLabel,
+                    //               ),
+                    //               const SizedBox(
+                    //                 width: 5,
+                    //               ),
+                    //               Text(
+                    //                 "0",
+                    //                 style: System.data.textStyles!.basicLabel,
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         const SizedBox(
+                    //           height: 5,
+                    //         ),
+                    //         Container(
+                    //           padding: const EdgeInsets.all(8),
+                    //           width: double.infinity,
+                    //           decoration: BoxDecoration(
+                    //             color: Colors.grey.shade200,
+                    //             borderRadius: const BorderRadius.all(
+                    //               Radius.circular(8),
+                    //             ),
+                    //           ),
+                    //           child: Row(
+                    //             mainAxisAlignment:
+                    //                 MainAxisAlignment.spaceBetween,
+                    //             children: [
+                    //               Text(
+                    //                 "Rekomendasi",
+                    //                 style: System.data.textStyles!.basicLabel,
+                    //               ),
+                    //               const SizedBox(
+                    //                 width: 5,
+                    //               ),
+                    //               Text(
+                    //                 "0",
+                    //                 style: System.data.textStyles!.basicLabel,
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 )
               ],

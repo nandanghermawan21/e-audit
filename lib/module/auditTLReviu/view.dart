@@ -4,6 +4,7 @@ import 'package:eaudit/model/komentar_model.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:eaudit/component/decoration_component.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'presenter.dart';
 
@@ -45,8 +46,28 @@ class View extends PresenterState {
                           ?.first
                           ?.action?[index],
                       data: widget.auditTLReviu,
+                      beforeAction: () {
+                        if (catatanController.text == "") {
+                          loadingController.stopLoading(
+                            message: "Catatan tidak boleh kosong",
+                            isError: true,
+                          );
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      },
                       onCofirmAction: (data) {
-                        widget.onSubmitSuccess?.call();
+                        postReviu(widget
+                            .auditTLReviu
+                            ?.listAuditTL
+                            ?.first
+                            ?.listRekomendasi
+                            ?.first
+                            ?.listItem
+                            ?.first
+                            ?.action?[index]
+                            ?.value);
                       }),
                 );
               },
@@ -65,6 +86,42 @@ class View extends PresenterState {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              "Rekomendasi Tindak Lanjut",
+              style: System.data.textStyles!.boldTitleLabel,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            DecorationComponent.item(
+              title: "No Temuan",
+              value: widget.auditTLReviu?.listAuditTL?.first?.noTemuan,
+            ),
+            DecorationComponent.item(
+              title: "Judul Temuan",
+              value: widget.auditTLReviu?.listAuditTL?.first?.judulTemuan,
+            ),
+            DecorationComponent.item(
+                title: "Rekomendasi",
+                valueWidget: Html(
+                  data: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
+                      ?.first?.deskripsi,
+                  shrinkWrap: true,
+                  style: {
+                    "body": Style(
+                      fontSize: const FontSize(17),
+                      fontFamily: System.data.font!.primary,
+                    ),
+                  },
+                )),
+            DecorationComponent.item(
+              title: "Status Rekomendasi",
+              value: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
+                  ?.first?.statusRekomendasi,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Text(
               "Reviu Tindak Lanjut",
               style: System.data.textStyles!.boldTitleLabel,
@@ -163,10 +220,7 @@ class View extends PresenterState {
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
-        onChanged: (val) {
-          // data?.catatan = val;
-          // listController.commit();
-        },
+        controller: catatanController,
         maxLines: 5,
         decoration: InputDecoration.collapsed(
           hintText: "Catatan",

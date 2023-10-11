@@ -391,6 +391,7 @@ Map<String, WidgetBuilder> route = {
       onSelectAction: (val) {
         Navigator.of(context).pushNamed(RouteName.auditTlDetail, arguments: {
           ParamName.tL: val,
+          ParamName.tlType: arg[ParamName.tlType],
         });
       },
       auditTLReviu: arg[ParamName.tL],
@@ -401,6 +402,7 @@ Map<String, WidgetBuilder> route = {
         ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
             {};
     return audit_tl_detail.Presenter(
+      type: arg[ParamName.tlType],
       auditTLReviu: arg[ParamName.tL],
       onTapFile: (title, url) {
         Navigator.of(context).pushNamed(RouteName.pdfViewwer, arguments: {
@@ -411,6 +413,7 @@ Map<String, WidgetBuilder> route = {
       onSelectAction: (val) {
         Navigator.of(context).pushNamed(RouteName.auditTlReviu, arguments: {
           ParamName.tL: val,
+          ParamName.tlType: arg[ParamName.tlType],
         });
       },
     );
@@ -420,6 +423,7 @@ Map<String, WidgetBuilder> route = {
         ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
             {};
     return audit_tl_reviu.Presenter(
+      type: arg[ParamName.tlType],
       auditTLReviu: arg[ParamName.tL],
       onTapFile: (title, url) {
         Navigator.of(context).pushNamed(RouteName.pdfViewwer, arguments: {
@@ -428,8 +432,9 @@ Map<String, WidgetBuilder> route = {
         });
       },
       onSubmitSuccess: () {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            RouteName.auditTl, (r) => r.settings.name == RouteName.reviu);
+        Navigator.of(context).pop();
+        // Navigator.of(context).pushNamedAndRemoveUntil(
+        //     RouteName.auditTl, (r) => r.settings.name == RouteName.reviu);
       },
     );
   },

@@ -15,6 +15,9 @@ class ProgramAuditModel {
   String? catatan;
   String? approve;
 
+  ///for view only
+  bool? isFinishedReviu = false;
+
   //constructor
   ProgramAuditModel({
     this.id,

@@ -126,7 +126,7 @@ class View extends PresenterState {
           title: "Tanggal Audit",
           value: data?.tanggalAudit == null
               ? "-"
-              : DateFormat("dd MMMM yyyy").format(
+              : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
                   (data!.tanggalAudit!),
                 ),
         ),
@@ -160,7 +160,7 @@ class View extends PresenterState {
           title: "Tanggal Temuan",
           value: data?.tanggalTemuan == null
               ? "-"
-              : DateFormat("dd MMMM yyyy").format(
+              : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
                   (data!.tanggalTemuan!),
                 ),
         ),
@@ -170,15 +170,44 @@ class View extends PresenterState {
             child: SizedBox(
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Html(data: data?.kriteria ?? ""),
+                child: Html(
+                  data: data?.kriteria ?? "",
+                  shrinkWrap: true,
+                  style: {
+                    "body": Style(
+                      fontSize: const FontSize(17),
+                      fontFamily: System.data.font!.primary,
+                    ),
+                  },
+                ),
               ),
             ),
           ),
         ),
         DecorationComponent.item(
-            title: "Sebab", valueWidget: Html(data: data?.sebab)),
+            title: "Sebab",
+            valueWidget: Html(
+              data: data?.sebab,
+              shrinkWrap: true,
+              style: {
+                "body": Style(
+                  fontSize: const FontSize(17),
+                  fontFamily: System.data.font!.primary,
+                ),
+              },
+            )),
         DecorationComponent.item(
-            title: "Akibat", valueWidget: Html(data: data?.akibat)),
+            title: "Akibat",
+            valueWidget: Html(
+              data: data?.akibat,
+              shrinkWrap: true,
+              style: {
+                "body": Style(
+                  fontSize: const FontSize(17),
+                  fontFamily: System.data.font!.primary,
+                ),
+              },
+            )),
         DecorationComponent.item(
           title: "Lampiran",
           value: data?.namaLampiran ?? "",

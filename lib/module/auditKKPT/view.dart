@@ -108,7 +108,7 @@ class View extends PresenterState {
           title: "Tanggal Audit",
           value: data?.tanggalAudit == null
               ? "-"
-              : DateFormat("dd MMMM yyyy").format(
+              : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
                   (data!.tanggalAudit!),
                 ),
         ),
