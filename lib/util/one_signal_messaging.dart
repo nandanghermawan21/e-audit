@@ -77,4 +77,8 @@ class OneSignalMessaging {
     final String? osUserId = status?.userId;
     return osUserId;
   }
+
+  Future<void> setExternalUserId(String userId) async {
+    await OneSignal.shared.setExternalUserId(userId);
+  }
 }

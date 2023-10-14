@@ -42,6 +42,7 @@ class Data extends ChangeNotifier {
   Font? font;
   TextStyles? textStyles = TextStyles();
   OneSignalMessaging? oneSignalMessaging;
+  VoidCallback? onOnesignalCreated = () {};
   List<Permission> permission = [];
   ValueChanged<Uri?>? deepLinkingHandler;
   SharedPreferences? session;

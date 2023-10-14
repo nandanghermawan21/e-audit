@@ -68,6 +68,10 @@ class View extends PresenterState {
                       fontSize: const FontSize(17),
                       fontFamily: System.data.font!.primary,
                     ),
+                    "*": Style(
+                      fontSize: const FontSize(17),
+                      fontFamily: System.data.font!.primary,
+                    ),
                   },
                 )),
             DecorationComponent.item(
@@ -329,6 +333,10 @@ class View extends PresenterState {
                           shrinkWrap: true,
                           style: {
                             "body": Style(
+                              fontSize: const FontSize(17),
+                              fontFamily: System.data.font!.primary,
+                            ),
+                            "*": Style(
                               fontSize: const FontSize(17),
                               fontFamily: System.data.font!.primary,
                             ),

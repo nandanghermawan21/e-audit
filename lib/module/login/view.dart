@@ -54,85 +54,160 @@ class View extends PresenterState {
                             Radius.circular(5),
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              color: Colors.transparent,
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Login E-Audit",
-                                style: System.data.textStyles!.boldTitleLabel,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            StreamBuilder<bool>(
-                              stream: userNameErrorState.stream,
-                              initialData: false,
-                              builder: (c, s) {
-                                return TextField(
-                                  controller: usernameController,
-                                  decoration: InputDecoration(
-                                    hintText: "Username",
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        width: 0.5,
-                                        color: s.data == true
-                                            ? Colors.red
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            StreamBuilder(
-                              initialData: false,
-                              stream: passwordErrorState.stream,
-                              builder: (c, s) {
-                                return TextField(
-                                  controller: passwordController,
-                                  decoration: InputDecoration(
-                                    hintText: "Password",
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        width: 0.5,
-                                        color: s.data == true
-                                            ? Colors.red
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  obscureText: true,
-                                );
-                              },
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              color: Colors.transparent,
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  login();
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        System.data.color!.primaryColorLight)),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                color: Colors.transparent,
+                                alignment: Alignment.center,
                                 child: Text(
-                                  "Login",
-                                  style:
-                                      System.data.textStyles!.basicLightLabel,
+                                  "Login E-Audit",
+                                  style: System.data.textStyles!.boldTitleLabel,
                                 ),
                               ),
-                            )
-                          ],
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              StreamBuilder<bool>(
+                                stream: userNameErrorState.stream,
+                                initialData: false,
+                                builder: (c, s) {
+                                  return TextField(
+                                    controller: usernameController,
+                                    decoration: InputDecoration(
+                                      hintText: "Username",
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          width: 0.5,
+                                          color: s.data == true
+                                              ? Colors.red
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              StreamBuilder(
+                                initialData: false,
+                                stream: passwordErrorState.stream,
+                                builder: (c, s) {
+                                  return TextField(
+                                    controller: passwordController,
+                                    decoration: InputDecoration(
+                                      hintText: "Password",
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          width: 0.5,
+                                          color: s.data == true
+                                              ? Colors.red
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    obscureText: true,
+                                  );
+                                },
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 150,
+                                    height: 40,
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 5, 64, 182),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      capcha ?? "",
+                                      style: System
+                                          .data.textStyles!.boldTitleLabel
+                                          .copyWith(
+                                              color: const Color.fromARGB(
+                                                  255, 142, 146, 246),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 40,
+                                      child: StreamBuilder(
+                                        initialData: false,
+                                        stream: capchaErrorState.stream,
+                                        builder: (c, s) {
+                                          return TextField(
+                                            controller: capchaController,
+                                            textAlign: TextAlign.center,
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                              hintText: "chapcha",
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  width: 0.5,
+                                                  color: s.data == true
+                                                      ? Colors.red
+                                                      : Colors.black,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  width: 0.5,
+                                                  color: s.data == true
+                                                      ? Colors.red
+                                                      : Colors.black,
+                                                ),
+                                              ),
+                                              contentPadding:
+                                                  const EdgeInsets.only(
+                                                      left: 5,
+                                                      right: 5,
+                                                      top: 5,
+                                                      bottom: 5),
+                                            ),
+                                            obscureText: true,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                color: Colors.transparent,
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    login();
+                                  },
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(System
+                                              .data.color!.primaryColorLight)),
+                                  child: Text(
+                                    "Login",
+                                    style:
+                                        System.data.textStyles!.basicLightLabel,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       )
                     ],

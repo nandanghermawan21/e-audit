@@ -91,6 +91,8 @@ Map<String, WidgetBuilder> route = {
   RouteName.login: (BuildContext context) {
     return login.Presenter(
       onLoginSuccess: () {
+        System.data.oneSignalMessaging
+            ?.setExternalUserId(System.data.global.user!.userId!);
         Navigator.of(context).pushReplacementNamed(RouteName.home);
       },
     );

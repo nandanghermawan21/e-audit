@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:eaudit/component/circular_loader_component.dart';
 import 'package:eaudit/model/user_model.dart';
@@ -26,16 +27,27 @@ abstract class PresenterState extends State<Presenter> {
   CircularLoaderController loadingController = CircularLoaderController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController capchaController = TextEditingController();
 
   final userNameErrorState = StreamController<bool>();
   final passwordErrorState = StreamController<bool>();
+  final capchaErrorState = StreamController<bool>();
+
+  String? capcha = "";
 
 // controller.sink.add("Data!");
+
+  @override
+  void initState() {
+    super.initState();
+    capcha = Random().nextInt(max(100000, 999999)).toString();
+  }
 
   bool validate() {
     bool isValid = true;
     isValid = validateUsername() ?? isValid;
     isValid = validatePassword() ?? isValid;
+    isValid = validateCapcha() ?? isValid;
     return isValid;
   }
 
@@ -55,6 +67,16 @@ abstract class PresenterState extends State<Presenter> {
       return null;
     } else {
       passwordErrorState.add(true);
+      return false;
+    }
+  }
+
+  bool? validateCapcha() {
+    if (capchaController.text != "" && capchaController.text == capcha) {
+      capchaErrorState.add(false);
+      return null;
+    } else {
+      capchaErrorState.add(true);
       return false;
     }
   }

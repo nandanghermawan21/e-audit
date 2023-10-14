@@ -15,7 +15,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:eaudit/route.dart' as route;
 
 void setting() {
-  System.data.versionName = "2.0.9";
+  System.data.versionName = "2.0.12";
   System.data.global.token = "MjAyMi0wNC0yMCAxMDowNjozMd6DKZ6cWXLIY-DODMQD37A";
   System.data.route = route.route;
   System.data.apiEndPoint = ApiEndPoint();
@@ -49,7 +49,7 @@ void setting() {
   if (kIsWeb == false) {
     System.data.oneSignalMessaging = OneSignalMessaging(
       appId:
-          "e6286e77-62fe-45f1-add6-5dbe06d5db3b", //e6286e77-62fe-45f1-add6-5dbe06d5db3b
+          "d94c96d3-2b89-47e6-9fd0-3a4530a935a2", //e6286e77-62fe-45f1-add6-5dbe06d5db3b
       notificationHandler: (notification) {
         ModeUtil.debugPrint("notification notificationHandler fire");
       },
@@ -84,6 +84,12 @@ void setting() {
         });
       });
       ModeUtil.debugPrint("update is uptodate");
+    }
+  };
+  System.data.onOnesignalCreated = () {
+    if (System.data.global.user?.userId != null) {
+      System.data.oneSignalMessaging
+          ?.setExternalUserId(System.data.global.user!.userId!);
     }
   };
   System.data.directories = {

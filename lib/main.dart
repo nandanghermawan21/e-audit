@@ -40,9 +40,9 @@ Future<void> getPermission() async {
 }
 
 void initOnesignal() {
-  // System.data.oneSignalMessaging?.initOneSignal().then((onValue) async {
-  //   getDeviceId();
-  // });
+  System.data.oneSignalMessaging?.initOneSignal().then((onValue) async {
+    getDeviceId();
+  });
 }
 
 void getDeviceId({int trial = 0}) {
@@ -55,6 +55,8 @@ void getDeviceId({int trial = 0}) {
         getDeviceId(
           trial: trial + 1,
         );
+      }else{
+        System.data.onOnesignalCreated?.call();
       }
     },
   );

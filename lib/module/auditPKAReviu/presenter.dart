@@ -94,7 +94,9 @@ abstract class PresenterState extends State<Presenter> {
     AuditPKAModel.postReviu(
       token: System.data.global.token,
       assignedId: widget.auditPA!.id,
-      paModel: listController.value.data,
+      paModel: [
+        data,
+      ],
     ).then((value) {
       loadingController.stopLoading(
         message: "Data Berhasil Tersimpan",
