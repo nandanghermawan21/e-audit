@@ -40,7 +40,7 @@ abstract class PresenterState extends State<Presenter> {
   @override
   void initState() {
     super.initState();
-    capcha = Random().nextInt(max(100000, 999999)).toString();
+    capcha = Random().nextInt(max(1000, 9999)).toString();
   }
 
   bool validate() {

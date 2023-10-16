@@ -326,8 +326,9 @@ class View extends PresenterState {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Judul Program Nama Audit",
-                              style: System.data.textStyles!.basicLabel,
+                              "Judul Program",
+                              style: System.data.textStyles!.basicLabel
+                                  .copyWith(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 5,
@@ -344,7 +345,8 @@ class View extends PresenterState {
                             ),
                             Text(
                               "Auditor",
-                              style: System.data.textStyles!.basicLabel,
+                              style: System.data.textStyles!.basicLabel
+                                  .copyWith(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 5,
@@ -361,7 +363,8 @@ class View extends PresenterState {
                             ),
                             Text(
                               "Status",
-                              style: System.data.textStyles!.basicLabel,
+                              style: System.data.textStyles!.basicLabel
+                                  .copyWith(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 5,
@@ -383,7 +386,7 @@ class View extends PresenterState {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
-                                        widget.onTapKKA?.call(widget.auditPA);
+                                        // widget.onTapKKA?.call(widget.auditPA);
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(8),

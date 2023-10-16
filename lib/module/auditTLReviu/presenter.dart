@@ -38,7 +38,7 @@ abstract class PresenterState extends State<Presenter> {
     AuditTLItemModel.postReviu(
       token: System.data.global.token,
       tlId:
-          widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi?.first?.id ??
+          widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi?.first?.listItem?.first?.id ??
               "",
       note: catatanController.text,
       status: status,

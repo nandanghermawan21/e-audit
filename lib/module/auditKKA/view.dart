@@ -209,6 +209,7 @@ class View extends PresenterState {
               kegiatan: data?.kegiatan,
               auditee: data?.auditee,
               startDate: data?.startDate,
+              endDate: data?.endDate,
               listKka: [kka],
             ),
             listController);

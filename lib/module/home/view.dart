@@ -181,56 +181,56 @@ class View extends PresenterState {
                     const SizedBox(
                       width: 10,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        widget.onTapNotification.call();
-                      },
-                      child: Stack(
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 40,
-                            color: Colors.transparent,
-                            child: Stack(
-                              children: [
-                                const Center(
-                                  child: Icon(
-                                    FontAwesomeIcons.solidBell,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: IntrinsicWidth(
-                                    child: IntrinsicHeight(
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding: const EdgeInsets.only(
-                                            left: 5,
-                                            right: 5,
-                                            top: 3,
-                                            bottom: 2),
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                        ),
-                                        child: Text(
-                                          "5",
-                                          style: System
-                                              .data.textStyles!.basicLightLabel,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     widget.onTapNotification.call();
+                    //   },
+                    //   child: Stack(
+                    //     children: [
+                    //       Container(
+                    //         height: 40,
+                    //         width: 40,
+                    //         color: Colors.transparent,
+                    //         child: Stack(
+                    //           children: [
+                    //             const Center(
+                    //               child: Icon(
+                    //                 FontAwesomeIcons.solidBell,
+                    //                 color: Colors.white,
+                    //                 size: 20,
+                    //               ),
+                    //             ),
+                    //             Align(
+                    //               alignment: Alignment.topRight,
+                    //               child: IntrinsicWidth(
+                    //                 child: IntrinsicHeight(
+                    //                   child: Container(
+                    //                     alignment: Alignment.center,
+                    //                     padding: const EdgeInsets.only(
+                    //                         left: 5,
+                    //                         right: 5,
+                    //                         top: 3,
+                    //                         bottom: 2),
+                    //                     decoration: BoxDecoration(
+                    //                       color: Colors.red,
+                    //                       borderRadius:
+                    //                           BorderRadius.circular(50),
+                    //                     ),
+                    //                     child: Text(
+                    //                       "5",
+                    //                       style: System
+                    //                           .data.textStyles!.basicLightLabel,
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             )
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

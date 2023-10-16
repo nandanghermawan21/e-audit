@@ -27,15 +27,16 @@ class View extends PresenterState {
         enableGetMore: false,
         enableDrag: false,
         dataSource: (p0, p1) {
-          return Future.value().then(
-            (value) {
-              return NotificationModel.dummy();
-            },
-          );
+          return NotificationModel.getFromDb(
+            db: System.data.database!.db!,
+            userId: System.data.global.user?.userId,
+          ).then((value) {
+            return value ?? [];
+          });
         },
         itemBuilder: (data, index) {
           return GestureDetector(
-            onTap: (){
+            onTap: () {
               widget.onTapNotification!.call(data);
             },
             child: Container(

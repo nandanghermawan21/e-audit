@@ -15,7 +15,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:eaudit/route.dart' as route;
 
 void setting() {
-  System.data.versionName = "2.0.15";
+  System.data.versionName = "2.0.16";
   System.data.global.token = "MjAyMi0wNC0yMCAxMDowNjozMd6DKZ6cWXLIY-DODMQD37A";
   System.data.route = route.route;
   System.data.apiEndPoint = ApiEndPoint();
@@ -62,7 +62,7 @@ void setting() {
     );
   }
   //subscribe chanel
-  System.data.oneSignalMessaging!.sendTag("specialUser", true);
+  // System.data.oneSignalMessaging!.sendTag("specialUser", true);
   System.data.deepLinkingHandler = (uri) {
     ModeUtil.debugPrint(uri?.path ?? "");
     if (ModalRoute.of(System.data.context)?.settings.name == initialRouteName) {
@@ -74,7 +74,7 @@ void setting() {
     }
   };
   System.data.onCreateDb = (db, version) {
-    int last = 0;
+    int last = 2;
     for (int i = version; i < last; i++) {
       rootBundle.loadString("dbmigration/dbv${i + 1}.sql").then((sql) {
         db?.execute(sql).then((v) {

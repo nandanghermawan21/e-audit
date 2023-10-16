@@ -1,0 +1,1 @@
+SELECT * FROM notification where user_id = '%';

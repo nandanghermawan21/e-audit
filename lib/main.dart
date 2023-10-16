@@ -215,6 +215,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         if (data.sendToBackGround == false) {
           data.sendToBackGround = true;
         } else {
+          debugPrint("app state paused move to background");
           MoveToBackground.moveTaskToBack();
         }
         break;

@@ -258,6 +258,9 @@ class View extends PresenterState {
                                         nomorLha: widget.auditTLReviu?.nomorLha,
                                         listAuditTL: [
                                           AuditTLModel(
+                                              id: data?.id,
+                                              noTemuan: data?.noTemuan,
+                                              judulTemuan: data?.judulTemuan,
                                               uraianTemuan: data?.uraianTemuan,
                                               rekomendasi: data?.rekomendasi,
                                               listRekomendasi: [

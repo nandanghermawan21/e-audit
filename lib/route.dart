@@ -446,36 +446,36 @@ Map<String, WidgetBuilder> route = {
     return notification.Presenter(
       onTapNotification: (data) {
         if (data != null) {
-          switch (data.tyoe) {
-            case "PKA":
-              Navigator.of(context).pushNamed(
-                RouteName.auditPKAReviu,
-              );
-              break;
-            case "KKA":
-              Navigator.of(context).pushNamed(
-                RouteName.reviuKKAReviu,
-                arguments: {
-                  ParamName.kka: AuditkaReviuModel.fromJson(data.data ?? {}),
-                },
-              );
-              break;
-            case "KKPT":
-              Navigator.of(context).pushNamed(
-                RouteName.auditKKPTReviu,
-                arguments: {
-                  ParamName.kkpt: AuditKKPTReviuModel.fromJson(data.data ?? {}),
-                },
-              );
-              break;
-            case "TL":
-              Navigator.of(context).pushNamed(
-                RouteName.auditTlReviu,
-                arguments: {
-                  ParamName.tL: AuditTLReviuModel.fromJson(data.data ?? {}),
-                },
-              );
-              break;
+          switch (data.dataType) {
+            // case "PKA":
+            //   Navigator.of(context).pushNamed(
+            //     RouteName.auditPKAReviu,
+            //   );
+            //   break;
+            // case "KKA":
+            //   Navigator.of(context).pushNamed(
+            //     RouteName.reviuKKAReviu,
+            //     arguments: {
+            //       ParamName.kka: AuditkaReviuModel.fromJson(data.data ?? {}),
+            //     },
+            //   );
+            //   break;
+            // case "KKPT":
+            //   Navigator.of(context).pushNamed(
+            //     RouteName.auditKKPTReviu,
+            //     arguments: {
+            //       ParamName.kkpt: AuditKKPTReviuModel.fromJson(data.data ?? {}),
+            //     },
+            //   );
+            //   break;
+            // case "TL":
+            //   Navigator.of(context).pushNamed(
+            //     RouteName.auditTlReviu,
+            //     arguments: {
+            //       ParamName.tL: AuditTLReviuModel.fromJson(data.data ?? {}),
+            //     },
+            //   );
+            //   break;
             default:
           }
         }

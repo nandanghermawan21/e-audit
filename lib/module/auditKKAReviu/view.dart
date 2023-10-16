@@ -34,35 +34,36 @@ class View extends PresenterState {
         ),
         body: body(),
         bottomNavigationBar: Container(
-          height: 50,
           margin: const EdgeInsets.all(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: List.generate(
-                widget.kka?.listKka?.first?.actions?.length ?? 0, (index) {
-              return Expanded(
-                child: DecorationComponent.buttonAction(
-                  loadingController: loadingController,
-                  action: widget.kka?.listKka?.first?.actions?[index],
-                  data: widget.kka,
-                  beforeAction: () {
-                    if (noteController.text == "") {
-                      loadingController.stopLoading(
-                        message: "Catatan tidak boleh kosong",
-                        isError: true,
-                      );
-                      return false;
-                    } else {
-                      return true;
-                    }
-                  },
-                  onCofirmAction: (data) {
-                    postReviu(
-                        widget.kka?.listKka?.first?.actions?[index].value);
-                  },
-                ),
-              );
-            }),
+          child: IntrinsicHeight(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: List.generate(
+                  widget.kka?.listKka?.first?.actions?.length ?? 0, (index) {
+                return Expanded(
+                  child: DecorationComponent.buttonAction(
+                    loadingController: loadingController,
+                    action: widget.kka?.listKka?.first?.actions?[index],
+                    data: widget.kka,
+                    beforeAction: () {
+                      if (noteController.text == "") {
+                        loadingController.stopLoading(
+                          message: "Catatan tidak boleh kosong",
+                          isError: true,
+                        );
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    },
+                    onCofirmAction: (data) {
+                      postReviu(
+                          widget.kka?.listKka?.first?.actions?[index].value);
+                    },
+                  ),
+                );
+              }),
+            ),
           ),
         ),
       ),
@@ -102,7 +103,9 @@ class View extends PresenterState {
             const SizedBox(
               height: 20,
             ),
-            catatan(),
+            (widget.kka?.listKka?.first?.actions?.length ?? 0) == 0
+                ? const SizedBox()
+                : catatan(),
           ],
         ),
       ),
