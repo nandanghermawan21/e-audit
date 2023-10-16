@@ -21,6 +21,7 @@ class AuditKKPTModel {
   bool? masukLha;
   List<KomentarModel>? komentar;
   List<ActionModel>? actions;
+  List<ActionModel>? actionsLHA;
 
   AuditKKPTModel({
     this.id,
@@ -37,6 +38,7 @@ class AuditKKPTModel {
     this.komentar,
     this.masukLha,
     this.actions = const [],
+    this.actionsLHA = const [],
   });
 
   static AuditKKPTModel fromJson(Map<String, dynamic> json) {
@@ -67,6 +69,11 @@ class AuditKKPTModel {
               json["action"].map((x) => ActionModel.fromJson(x)),
             )
           : null,
+      actionsLHA: json["action_lha"] != null
+          ? List<ActionModel>.from(
+              json["action_lha"].map((x) => ActionModel.fromJson(x)),
+            )
+          : null,
     );
   }
 
@@ -87,6 +94,51 @@ class AuditKKPTModel {
         "finding_id": "$findingId",
         "status": "$status",
         "note": "$note",
+      },
+      headers: {
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+    ).then((value) {
+      try {
+        value = json.decode(value);
+        if ((value)["message"] == "" || (value)["message"] == null) {
+          if (value == "success") {
+            return;
+          } else {
+            throw value;
+          }
+        }
+        throw BasicResponse(message: (value)["message"]);
+      } catch (e) {
+        if (value == "success") {
+          return;
+        } else {
+          throw value;
+        }
+      }
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
+  }
+
+  static Future<void> postReviuLha({
+    required String? token,
+    required String? findingId,
+    required String? status,
+  }) {
+    return Network.post(
+      url: Uri.parse(System.data.apiEndPoint.url),
+      rawResult: true,
+      querys: {
+        "method": "post_reviu_kkpt_lha",
+        "token": "$token",
+      },
+      body: {
+        "finding_id": "$findingId",
+        "status": "$status",
       },
       headers: {
         "UserId": System.data.global.user?.userId ?? "",

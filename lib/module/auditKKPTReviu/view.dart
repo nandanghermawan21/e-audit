@@ -33,35 +33,57 @@ class View extends PresenterState {
         ),
         body: body(),
         bottomNavigationBar: Container(
-          height: 50,
           margin: const EdgeInsets.all(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: List.generate(
-                widget.kkpt?.listKKPT?.first?.actions?.length ?? 0, (index) {
-              return Expanded(
-                child: DecorationComponent.buttonAction(
-                  loadingController: loadingController,
-                  action: widget.kkpt?.listKKPT?.first?.actions?[index],
-                  data: widget.kkpt,
-                  beforeAction: () {
-                    if (catatanController.text == "") {
-                      loadingController.stopLoading(
-                        message: "Catatan tidak boleh kosong",
-                        isError: true,
-                      );
-                      return false;
-                    } else {
-                      return true;
-                    }
-                  },
-                  onCofirmAction: (data) {
-                    postReviu(
-                        widget.kkpt?.listKKPT?.first?.actions?[index].value);
-                  },
+          child: IntrinsicHeight(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: List.generate(
+                      widget.kkpt?.listKKPT?.first?.actions?.length ?? 0, (index) {
+                    return Expanded(
+                      child: DecorationComponent.buttonAction(
+                        loadingController: loadingController,
+                        action: widget.kkpt?.listKKPT?.first?.actions?[index],
+                        data: widget.kkpt,
+                        beforeAction: () {
+                          if (catatanController.text == "") {
+                            loadingController.stopLoading(
+                              message: "Catatan tidak boleh kosong",
+                              isError: true,
+                            );
+                            return false;
+                          } else {
+                            return true;
+                          }
+                        },
+                        onCofirmAction: (data) {
+                          postReviu(
+                              widget.kkpt?.listKKPT?.first?.actions?[index].value);
+                        },
+                      ),
+                    );
+                  }),
                 ),
-              );
-            }),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: List.generate(
+                      widget.kkpt?.listKKPT?.first?.actionsLHA?.length ?? 0, (index) {
+                    return Expanded(
+                      child: DecorationComponent.buttonAction(
+                        loadingController: loadingController,
+                        action: widget.kkpt?.listKKPT?.first?.actionsLHA?[index],
+                        data: widget.kkpt,
+                        onCofirmAction: (data) {
+                          postReviuLha(
+                              widget.kkpt?.listKKPT?.first?.actionsLHA?[index].value);
+                        },
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            ),
           ),
         ),
       ),

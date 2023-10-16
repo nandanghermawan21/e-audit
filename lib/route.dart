@@ -83,6 +83,8 @@ Map<String, WidgetBuilder> route = {
         if (System.data.global.user == null) {
           Navigator.of(context).pushReplacementNamed(RouteName.login);
         } else {
+          System.data.oneSignalMessaging
+              ?.setExternalUserId(System.data.global.user!.userId!);
           Navigator.of(context).pushReplacementNamed(RouteName.home);
         }
       },

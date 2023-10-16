@@ -57,4 +57,27 @@ abstract class PresenterState extends State<Presenter> {
       );
     });
   }
+
+  void postReviuLha(String? status) {
+    loadingController.startLoading();
+    AuditKKPTModel.postReviuLha(
+      token: System.data.global.token,
+      findingId: widget.kkpt?.listKKPT?.first?.id ?? "",
+      status: status,
+    ).then((value) {
+      loadingController.stopLoading(
+        message: "Data Berhasil Tersimpan",
+        isError: false,
+        duration: const Duration(seconds: 3),
+        onCloseCallBack: () {
+          widget.onSubmitSuccess?.call();
+        },
+      );
+    }).catchError((onError) {
+      loadingController.stopLoading(
+        isError: true,
+        message: ErrorHandlingUtil.handleApiError(onError),
+      );
+    });
+  }
 }

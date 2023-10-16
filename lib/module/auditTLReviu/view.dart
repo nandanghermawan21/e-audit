@@ -25,40 +25,18 @@ class View extends PresenterState {
         ),
         body: body(),
         bottomNavigationBar: Container(
-          height: 50,
           margin: const EdgeInsets.all(20),
-          child: Row(
-            children: List.generate(
-              widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi?.first
-                      ?.listItem?.first?.action?.length ??
-                  0,
-              (index) {
-                return Expanded(
-                  child: DecorationComponent.buttonAction(
-                      loadingController: loadingController,
-                      action: widget
-                          .auditTLReviu
-                          ?.listAuditTL
-                          ?.first
-                          ?.listRekomendasi
-                          ?.first
-                          ?.listItem
-                          ?.first
-                          ?.action?[index],
-                      data: widget.auditTLReviu,
-                      beforeAction: () {
-                        if (catatanController.text == "") {
-                          loadingController.stopLoading(
-                            message: "Catatan tidak boleh kosong",
-                            isError: true,
-                          );
-                          return false;
-                        } else {
-                          return true;
-                        }
-                      },
-                      onCofirmAction: (data) {
-                        postReviu(widget
+          child: IntrinsicHeight(
+            child: Row(
+              children: List.generate(
+                widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi?.first
+                        ?.listItem?.first?.action?.length ??
+                    0,
+                (index) {
+                  return Expanded(
+                    child: DecorationComponent.buttonAction(
+                        loadingController: loadingController,
+                        action: widget
                             .auditTLReviu
                             ?.listAuditTL
                             ?.first
@@ -66,11 +44,34 @@ class View extends PresenterState {
                             ?.first
                             ?.listItem
                             ?.first
-                            ?.action?[index]
-                            ?.value);
-                      }),
-                );
-              },
+                            ?.action?[index],
+                        data: widget.auditTLReviu,
+                        beforeAction: () {
+                          if (catatanController.text == "") {
+                            loadingController.stopLoading(
+                              message: "Catatan tidak boleh kosong",
+                              isError: true,
+                            );
+                            return false;
+                          } else {
+                            return true;
+                          }
+                        },
+                        onCofirmAction: (data) {
+                          postReviu(widget
+                              .auditTLReviu
+                              ?.listAuditTL
+                              ?.first
+                              ?.listRekomendasi
+                              ?.first
+                              ?.listItem
+                              ?.first
+                              ?.action?[index]
+                              ?.value);
+                        }),
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -199,7 +200,12 @@ class View extends PresenterState {
             ),
             komentar(widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
                 ?.first?.listItem?.first?.komentar),
-            catatan(),
+            (widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi?.first
+                            ?.listItem?.first?.action ??
+                        [])
+                    .isNotEmpty
+                ? catatan()
+                : const SizedBox(),
           ],
         ),
       ),

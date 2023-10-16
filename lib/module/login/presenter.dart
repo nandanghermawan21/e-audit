@@ -72,11 +72,17 @@ abstract class PresenterState extends State<Presenter> {
   }
 
   bool? validateCapcha() {
-    if (capchaController.text != "" && capchaController.text == capcha) {
+    if (capchaController.text == "") {
+      capchaErrorState.add(true);
+      loadingController.stopLoading(isError: true, message: "Harap isi capcha");
+      return false;
+    } else if (capchaController.text != "" && capchaController.text == capcha) {
       capchaErrorState.add(false);
       return null;
     } else {
       capchaErrorState.add(true);
+      loadingController.stopLoading(
+          isError: true, message: "Capcha tidak sesuai");
       return false;
     }
   }

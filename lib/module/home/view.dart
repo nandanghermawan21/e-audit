@@ -429,7 +429,7 @@ class View extends PresenterState {
               label: "Reviu",
               onTap: () {
                 checkAccess(
-                  method: "mobile_report",
+                  method: "mobile_review",
                   onGrandted: widget.onTapReviu,
                 );
               }),

@@ -61,7 +61,7 @@ class AuditkaReviuModel {
       rawResult: true,
       querys: {
         "method": "data_kertas_kerja",
-        "assign_id": "0924c0e7f4990df837a7527445cef77bf9a09f9f", // "$assignId",
+        "assign_id": "$assignId",
         "token": "$token",
       },
       headers: {

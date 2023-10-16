@@ -32,8 +32,8 @@ class AuditTLItemModel {
       tindakLanjut: json['tl_desc'],
       tanggal: json['tl_date'] != null ? DateTime.parse(json['tl_date']) : null,
       status: json['tl_status'],
-      lampiran: json['lampiran'] != null
-          ? (json['lampiran'] as List?)
+      lampiran: json['tindaklanjut_lampiran'] != null
+          ? (json['tindaklanjut_lampiran'] as List?)
               ?.map((e) => AuditFileModel.fromJson(e))
               .toList()
           : null,
@@ -47,12 +47,12 @@ class AuditTLItemModel {
                   ))
               .toList()
           : null,
-      action: ActionModel.dummy(),
-      // action: json['action'] != null
-      //     ? (json['action'] as List?)
-      //         ?.map((e) => ActionModel.fromJson(e))
-      //         .toList()
-      //     : null,
+      // action: ActionModel.dummy(),
+      action: json['action'] != null
+          ? (json['action'] as List?)
+              ?.map((e) => ActionModel.fromJson(e))
+              .toList()
+          : null,
     );
   }
 
