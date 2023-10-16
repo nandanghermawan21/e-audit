@@ -20,6 +20,7 @@ class View extends PresenterState {
       child: ChangeNotifierProvider.value(
         value: model,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: System.data.color!.primaryColor,
             centerTitle: true,
@@ -74,58 +75,65 @@ class View extends PresenterState {
                     ),
                   },
                 )),
-            DecorationComponent.item(
-              title: "Status Rekomendasi",
-              value: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
-                  ?.first?.statusRekomendasi,
-              valueWidget: Consumer<ViewModel>(builder: (c, d, w) {
-                return Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
-                                  ?.first?.rekomendasiStatusNumber ==
-                              "0"
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Text(widget
-                                      .auditTLReviu
-                                      ?.listAuditTL
-                                      ?.first
-                                      ?.listRekomendasi
-                                      ?.first
-                                      ?.statusRekomendasi ??
-                                  ""),
-                            )
-                          : const SizedBox(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          buttonSetStatusRecomendation(
-                            data: model.auditTLReviuModel?.listAuditTL?.first
-                                ?.listRekomendasi?.first,
-                            status: "Selesai",
-                            statusNumber: "1",
-                          ),
-                          buttonSetStatusRecomendation(
-                            data: model.auditTLReviuModel?.listAuditTL?.first
-                                ?.listRekomendasi?.first,
-                            status: "Dalam Proses",
-                            statusNumber: "2",
-                          ),
-                          buttonSetStatusRecomendation(
-                            data: model.auditTLReviuModel?.listAuditTL?.first
-                                ?.listRekomendasi?.first,
-                            status: "TDTL",
-                            statusNumber: "3",
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              }),
-            ),
+            System.data.global.user?.groupName == "QA"
+                ? DecorationComponent.item(
+                    title: "Status Rekomendasi",
+                    value: widget.auditTLReviu?.listAuditTL?.first
+                        ?.listRekomendasi?.first?.statusRekomendasi,
+                    valueWidget: Consumer<ViewModel>(builder: (c, d, w) {
+                      return Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            widget
+                                        .auditTLReviu
+                                        ?.listAuditTL
+                                        ?.first
+                                        ?.listRekomendasi
+                                        ?.first
+                                        ?.rekomendasiStatusNumber ==
+                                    "0"
+                                ? Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Text(widget
+                                            .auditTLReviu
+                                            ?.listAuditTL
+                                            ?.first
+                                            ?.listRekomendasi
+                                            ?.first
+                                            ?.statusRekomendasi ??
+                                        ""),
+                                  )
+                                : const SizedBox(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                buttonSetStatusRecomendation(
+                                  data: model.auditTLReviuModel?.listAuditTL
+                                      ?.first?.listRekomendasi?.first,
+                                  status: "Selesai",
+                                  statusNumber: "1",
+                                ),
+                                buttonSetStatusRecomendation(
+                                  data: model.auditTLReviuModel?.listAuditTL
+                                      ?.first?.listRekomendasi?.first,
+                                  status: "Dalam Proses",
+                                  statusNumber: "2",
+                                ),
+                                buttonSetStatusRecomendation(
+                                  data: model.auditTLReviuModel?.listAuditTL
+                                      ?.first?.listRekomendasi?.first,
+                                  status: "TDTL",
+                                  statusNumber: "3",
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  )
+                : const SizedBox(),
             // Row(
             //   children: [
             //     const SizedBox(

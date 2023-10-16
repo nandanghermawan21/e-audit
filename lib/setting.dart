@@ -15,7 +15,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:eaudit/route.dart' as route;
 
 void setting() {
-  System.data.versionName = "2.0.16";
+  System.data.versionName = "2.0.17";
   System.data.global.token = "MjAyMi0wNC0yMCAxMDowNjozMd6DKZ6cWXLIY-DODMQD37A";
   System.data.route = route.route;
   System.data.apiEndPoint = ApiEndPoint();

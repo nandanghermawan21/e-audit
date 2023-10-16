@@ -14,6 +14,7 @@ class View extends PresenterState {
     return ChangeNotifierProvider.value(
       value: model,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: System.data.color!.primaryColor,

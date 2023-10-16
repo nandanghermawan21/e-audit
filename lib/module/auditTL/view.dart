@@ -10,6 +10,7 @@ class View extends PresenterState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: System.data.color!.primaryColor,
         centerTitle: true,
@@ -156,11 +157,10 @@ class View extends PresenterState {
                             ),
                             Expanded(
                               child: button(
-                                label: "TL ML",
-                                icon: "assets/icons/tindak_lanjut.png",
-                                data: item,
-                                type: "data_tl_management_letter"
-                              ),
+                                  label: "TL ML",
+                                  icon: "assets/icons/tindak_lanjut.png",
+                                  data: item,
+                                  type: "data_tl_management_letter"),
                             ),
                           ],
                         ),
