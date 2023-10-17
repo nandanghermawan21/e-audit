@@ -191,4 +191,59 @@ class DecorationComponent {
       ),
     );
   }
+
+  static Widget itemColumn({
+    String? title = "",
+    String? value = "",
+    Widget? valueWidget,
+    Color? valueColor,
+    VoidCallback? onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  width: 100,
+                  child: Text(
+                    title ?? "",
+                    style: System.data.textStyles!.basicLabel,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  ":",
+                  style: System.data.textStyles!.basicLabel,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              child: valueWidget ??
+                  Text(
+                    value ?? "",
+                    style: System.data.textStyles!.basicLabel.copyWith(
+                      color: valueColor,
+                    ),
+                  ),
+            ),
+            const SizedBox(
+              height: 10,
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }

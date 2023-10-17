@@ -40,7 +40,8 @@ class View extends PresenterState {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: List.generate(
-                      widget.kkpt?.listKKPT?.first?.actions?.length ?? 0, (index) {
+                      widget.kkpt?.listKKPT?.first?.actions?.length ?? 0,
+                      (index) {
                     return Expanded(
                       child: DecorationComponent.buttonAction(
                         loadingController: loadingController,
@@ -58,8 +59,8 @@ class View extends PresenterState {
                           }
                         },
                         onCofirmAction: (data) {
-                          postReviu(
-                              widget.kkpt?.listKKPT?.first?.actions?[index].value);
+                          postReviu(widget
+                              .kkpt?.listKKPT?.first?.actions?[index].value);
                         },
                       ),
                     );
@@ -68,15 +69,17 @@ class View extends PresenterState {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: List.generate(
-                      widget.kkpt?.listKKPT?.first?.actionsLHA?.length ?? 0, (index) {
+                      widget.kkpt?.listKKPT?.first?.actionsLHA?.length ?? 0,
+                      (index) {
                     return Expanded(
                       child: DecorationComponent.buttonAction(
                         loadingController: loadingController,
-                        action: widget.kkpt?.listKKPT?.first?.actionsLHA?[index],
+                        action:
+                            widget.kkpt?.listKKPT?.first?.actionsLHA?[index],
                         data: widget.kkpt,
                         onCofirmAction: (data) {
-                          postReviuLha(
-                              widget.kkpt?.listKKPT?.first?.actionsLHA?[index].value);
+                          postReviuLha(widget
+                              .kkpt?.listKKPT?.first?.actionsLHA?[index].value);
                         },
                       ),
                     );
@@ -186,7 +189,7 @@ class View extends PresenterState {
                   (data!.tanggalTemuan!),
                 ),
         ),
-        DecorationComponent.item(
+        DecorationComponent.itemColumn(
           title: "Kriteria",
           valueWidget: Expanded(
             child: SizedBox(
@@ -210,7 +213,7 @@ class View extends PresenterState {
             ),
           ),
         ),
-        DecorationComponent.item(
+        DecorationComponent.itemColumn(
             title: "Sebab",
             valueWidget: Html(
               data: data?.sebab,
@@ -226,7 +229,7 @@ class View extends PresenterState {
                 ),
               },
             )),
-        DecorationComponent.item(
+        DecorationComponent.itemColumn(
             title: "Akibat",
             valueWidget: Html(
               data: data?.akibat,

@@ -5,6 +5,7 @@ import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:eaudit/component/decoration_component.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
 
 import 'presenter.dart';
 
@@ -98,11 +99,11 @@ class View extends PresenterState {
               title: "No Temuan",
               value: widget.auditTLReviu?.listAuditTL?.first?.noTemuan,
             ),
-            DecorationComponent.item(
+            DecorationComponent.itemColumn(
               title: "Judul Temuan",
               value: widget.auditTLReviu?.listAuditTL?.first?.judulTemuan,
             ),
-            DecorationComponent.item(
+            DecorationComponent.itemColumn(
                 title: "Rekomendasi",
                 valueWidget: Html(
                   data: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
@@ -135,8 +136,54 @@ class View extends PresenterState {
               height: 10,
             ),
             DecorationComponent.item(
+              title: "Tanggal",
+              value: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
+                          ?.first?.listItem?.first?.tanggal !=
+                      null
+                  ? DateFormat("dd MMMM yyyy", System.data.strings!.locale)
+                      .format(widget.auditTLReviu!.listAuditTL!.first!
+                          .listRekomendasi!.first!.listItem!.first!.tanggal!)
+                  : "",
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            DecorationComponent.item(
+              title: "Tipe Audit",
+              value: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
+                      ?.first?.listItem?.first?.typeAudit ??
+                  "",
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            DecorationComponent.item(
+              title: "Judul Kegiatan",
+              value: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
+                      ?.first?.listItem?.first?.judulKegiatan ??
+                  "",
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            DecorationComponent.itemColumn(
               title: "Tindak Lanjut",
-              value: "Test",
+              valueWidget: Html(
+                data: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
+                        ?.first?.listItem?.first?.tindakLanjut ??
+                    "",
+                shrinkWrap: true,
+                style: {
+                  "body": Style(
+                    fontSize: const FontSize(17),
+                    fontFamily: System.data.font!.primary,
+                  ),
+                  "*": Style(
+                    fontSize: const FontSize(17),
+                    fontFamily: System.data.font!.primary,
+                  ),
+                },
+              ),
             ),
             DecorationComponent.item(
               title: "Lampiran",

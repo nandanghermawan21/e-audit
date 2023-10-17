@@ -46,7 +46,7 @@ class View extends PresenterState {
               ),
             ),
             child: Text(
-              "Simpan",
+              "Simpan Semua",
               style: System.data.textStyles!.boldTitleLightLabel,
             ),
           ),

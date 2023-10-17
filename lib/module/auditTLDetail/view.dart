@@ -54,11 +54,11 @@ class View extends PresenterState {
               title: "No Temuan",
               value: widget.auditTLReviu?.listAuditTL?.first?.noTemuan,
             ),
-            DecorationComponent.item(
+            DecorationComponent.itemColumn(
               title: "Judul Temuan",
               value: widget.auditTLReviu?.listAuditTL?.first?.judulTemuan,
             ),
-            DecorationComponent.item(
+            DecorationComponent.itemColumn(
                 title: "Rekomendasi",
                 valueWidget: Html(
                   data: widget.auditTLReviu?.listAuditTL?.first?.listRekomendasi
@@ -269,6 +269,7 @@ class View extends PresenterState {
                       ],
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,12 +279,24 @@ class View extends PresenterState {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Tindak Lanjut",
+                                    "Tipe Audit",
                                     style:
                                         System.data.textStyles!.boldTitleLabel,
                                   ),
                                   const SizedBox(
                                     height: 5,
+                                  ),
+                                  Text(
+                                    widget
+                                            .auditTLReviu
+                                            ?.listAuditTL
+                                            ?.first
+                                            ?.listRekomendasi
+                                            ?.first
+                                            ?.listItem?[index]
+                                            ?.typeAudit ??
+                                        "",
+                                    style: System.data.textStyles!.basicLabel,
                                   ),
                                 ],
                               ),
@@ -327,6 +340,48 @@ class View extends PresenterState {
                               ),
                             )
                           ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Judul Kegiatan",
+                                    style:
+                                        System.data.textStyles!.boldTitleLabel,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    widget
+                                            .auditTLReviu
+                                            ?.listAuditTL
+                                            ?.first
+                                            ?.listRekomendasi
+                                            ?.first
+                                            ?.listItem?[index]
+                                            ?.judulKegiatan ??
+                                        "",
+                                    style: System.data.textStyles!.basicLabel,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Tindak Lanjut",
+                          style: System.data.textStyles!.boldTitleLabel,
                         ),
                         Html(
                           data: widget

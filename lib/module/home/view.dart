@@ -5,6 +5,7 @@ import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'presenter.dart';
 
 class View extends PresenterState {
@@ -148,7 +149,6 @@ class View extends PresenterState {
                                 style: System.data.textStyles!.boldTitleLabel
                                     .copyWith(
                                   color: Colors.white,
-                                  fontSize: 18,
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
@@ -547,8 +547,9 @@ class View extends PresenterState {
                 drawerMenuItem(
                     label: "E-Audit",
                     onTap: () {
-                      widget.onTapUrl("E-Audit", System.data.global.urlEaudit,
-                          "Anda mungkin harus menggunakan jaringan lokal atau menggunakan VPN untuk mengakses halaman ini");
+                      launchUrl(Uri.parse( System.data.global.urlEaudit));
+                      // widget.onTapUrl("E-Audit", System.data.global.urlEaudit,
+                      //     "Anda mungkin harus menggunakan jaringan lokal atau menggunakan VPN untuk mengakses halaman ini");
                     }),
                 drawerMenuItem(
                     label: "Jamkrindo",

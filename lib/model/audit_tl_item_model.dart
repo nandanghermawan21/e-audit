@@ -9,6 +9,8 @@ import 'package:eaudit/util/system.dart';
 
 class AuditTLItemModel {
   String? id;
+  String? typeAudit;
+  String? judulKegiatan;
   String? tindakLanjut;
   DateTime? tanggal;
   String? status;
@@ -18,6 +20,8 @@ class AuditTLItemModel {
 
   AuditTLItemModel({
     this.id,
+    this.typeAudit,
+    this.judulKegiatan,
     this.tindakLanjut,
     this.tanggal,
     this.status,
@@ -29,6 +33,8 @@ class AuditTLItemModel {
   factory AuditTLItemModel.fromJson(Map<String, dynamic> json) {
     return AuditTLItemModel(
       id: json['tl_id'],
+      typeAudit: json['audit_type_name'],
+      judulKegiatan: json['assign_kegiatan'],
       tindakLanjut: json['tl_desc'],
       tanggal: json['tl_date'] != null ? DateTime.parse(json['tl_date']) : null,
       status: json['tl_status'],
@@ -58,6 +64,9 @@ class AuditTLItemModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
+      'type_audit': typeAudit,
+      'judul_kegiatan': judulKegiatan,
       'tindak_lanjut': tindakLanjut,
       'tanggal': tanggal?.millisecondsSinceEpoch,
       'status': status,
