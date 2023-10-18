@@ -229,14 +229,16 @@ class DecorationComponent {
             const SizedBox(
               height: 5,
             ),
-            SizedBox(
-              child: valueWidget ??
-                  Text(
-                    value ?? "",
-                    style: System.data.textStyles!.basicLabel.copyWith(
-                      color: valueColor,
+            IntrinsicHeight(
+              child: SizedBox(
+                child: valueWidget ??
+                    Text(
+                      value ?? "",
+                      style: System.data.textStyles!.basicLabel.copyWith(
+                        color: valueColor,
+                      ),
                     ),
-                  ),
+              ),
             ),
             const SizedBox(
               height: 10,

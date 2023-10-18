@@ -149,11 +149,11 @@ class View extends PresenterState {
         ),
         DecorationComponent.item(
           title: "Tanggal Audit",
-          value: data?.tanggalAudit == null
-              ? "-"
-              : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
-                  (data!.tanggalAudit!),
-                ),
+          value: "${data?.tanggalAudit == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+              (data!.tanggalAudit!),
+            )} s/d ${data?.tanggalAuditEnd == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+              (data!.tanggalAuditEnd!),
+            )}",
         ),
         // DecorationComponent.item(
         //   title: "No KKA",
@@ -191,24 +191,22 @@ class View extends PresenterState {
         ),
         DecorationComponent.itemColumn(
           title: "Kriteria",
-          valueWidget: Expanded(
-            child: SizedBox(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Html(
-                  data: data?.kriteria ?? "",
-                  shrinkWrap: true,
-                  style: {
-                    "body": Style(
-                      fontSize: const FontSize(17),
-                      fontFamily: System.data.font!.primary,
-                    ),
-                    "*": Style(
-                      fontSize: const FontSize(17),
-                      fontFamily: System.data.font!.primary,
-                    ),
-                  },
-                ),
+          valueWidget: SizedBox(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Html(
+                data: data?.kriteria ?? "",
+                shrinkWrap: true,
+                style: {
+                  "body": Style(
+                    fontSize: const FontSize(17),
+                    fontFamily: System.data.font!.primary,
+                  ),
+                  "*": Style(
+                    fontSize: const FontSize(17),
+                    fontFamily: System.data.font!.primary,
+                  ),
+                },
               ),
             ),
           ),

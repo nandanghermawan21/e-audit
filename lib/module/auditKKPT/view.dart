@@ -106,11 +106,11 @@ class View extends PresenterState {
         ),
         DecorationComponent.item(
           title: "Tanggal Audit",
-          value: data?.tanggalAudit == null
-              ? "-"
-              : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
-                  (data!.tanggalAudit!),
-                ),
+          value: "${data?.tanggalAudit == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+              (data!.tanggalAudit!),
+            )} s/d ${data?.tanggalAuditEnd == null ? "-" : DateFormat("dd MMMM yyyy", System.data.strings!.locale).format(
+              (data!.tanggalAuditEnd!),
+            )}",
         ),
         // DecorationComponent.item(
         //   title: "No KKA",

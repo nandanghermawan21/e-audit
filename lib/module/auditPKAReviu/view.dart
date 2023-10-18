@@ -194,7 +194,7 @@ class View extends PresenterState {
                                 },
                               ),
                               Text(
-                                "Approve",
+                                "Setujui",
                                 style: System.data.textStyles!.basicLabel,
                               ),
                               Radio(
@@ -225,9 +225,9 @@ class View extends PresenterState {
                           ),
                           Text(
                             data?.approve == "2"
-                                ? "Approved"
+                                ? "Disetujui"
                                 : data?.approve == "3"
-                                    ? "Rejected"
+                                    ? "Ditolak"
                                     : "",
                             style: System.data.textStyles!.boldTitleLabel,
                           ),

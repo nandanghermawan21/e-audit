@@ -112,6 +112,7 @@ class View extends PresenterState {
                     ],
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,6 +126,13 @@ class View extends PresenterState {
                             style: System.data.textStyles!.boldTitleLabel,
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        item?.judulKegiatan ?? "-",
+                        style: System.data.textStyles!.basicLabel,
                       ),
                       const Divider(
                         color: Colors.grey,

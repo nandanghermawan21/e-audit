@@ -8,12 +8,16 @@ import '../util/system.dart';
 
 class AuditTLReviuModel {
   String? id;
+  String? tipeAudit;
+  String? judulKegiatan;
   String? obyekAudit;
   String? nomorLha;
   List<AuditTLModel?>? listAuditTL;
 
   AuditTLReviuModel({
     this.id,
+    this.tipeAudit,
+    this.judulKegiatan,
     this.obyekAudit,
     this.nomorLha,
     this.listAuditTL,
@@ -31,6 +35,8 @@ class AuditTLReviuModel {
   static AuditTLReviuModel fromJson(Map<String, dynamic> json) {
     return AuditTLReviuModel(
       id: json["assign_id"],
+      tipeAudit: json['audit_type_name'],
+      judulKegiatan: json['assign_kegiatan'],
       obyekAudit: json["auditee_name"],
       nomorLha: json["nomor_lha"],
       listAuditTL: json["listAuditTL"] != null
