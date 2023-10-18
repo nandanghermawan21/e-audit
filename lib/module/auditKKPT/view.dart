@@ -136,6 +136,7 @@ class View extends PresenterState {
               noKKa: data?.noKKa,
               tipeAudit: data?.tipeAudit,
               tanggalAudit: data?.tanggalAudit,
+              tanggalAuditEnd: data?.tanggalAuditEnd,
               listKKPT: [kkpt]),
           listController,
         );

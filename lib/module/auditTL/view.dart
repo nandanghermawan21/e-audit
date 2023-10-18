@@ -131,6 +131,10 @@ class View extends PresenterState {
                         height: 5,
                       ),
                       Text(
+                        item?.tipeAudit ?? "-",
+                        style: System.data.textStyles!.boldTitleLabel,
+                      ),
+                      Text(
                         item?.judulKegiatan ?? "-",
                         style: System.data.textStyles!.basicLabel,
                       ),
