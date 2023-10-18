@@ -89,7 +89,7 @@ class View extends PresenterState {
         width: double.infinity,
         color: Colors.transparent,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
               onTap: () {
@@ -109,25 +109,26 @@ class View extends PresenterState {
             Container(
               color: Colors.transparent,
               width: 100,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "assets/logo_jamkrindo_putih.png",
-                    width: 100,
-                  ),
-                  const Divider(
-                    height: 10,
-                    color: Colors.white,
-                    thickness: 1,
-                  ),
-                  Image.asset(
-                    "assets/logo_ifg_horizontal.png",
-                    width: 70,
-                  ),
-                ],
-              ),
+              child: Image.asset("assets/logo-footer.png"),
+              // child: Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Image.asset(
+              //       "assets/logo_jamkrindo_putih.png",
+              //       width: 100,
+              //     ),
+              //     const Divider(
+              //       height: 10,
+              //       color: Colors.white,
+              //       thickness: 1,
+              //     ),
+              //     Image.asset(
+              //       "assets/logo_ifg_horizontal.png",
+              //       width: 70,
+              //     ),
+              //   ],
+              // ),
             ),
             Expanded(
               child: Container(
@@ -515,29 +516,33 @@ class View extends PresenterState {
         children: [
           Container(
             height: 200,
-            color: System.data.color!.primaryColor,
-            child: Stack(
-              children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Image.asset(
-                      "assets/logo_jamkrindo_putih.png",
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Image.asset(
-                      "assets/logo_ifg_horizontal.png",
-                      width: 120,
-                    ),
-                  ),
-                )
-              ],
+            color: Colors.white,
+            // color: System.data.color!.primaryColor,
+            child: Image.asset(
+              "assets/logo-dark.png",
             ),
+            // child: Stack(
+            //   children: [
+            //     Center(
+            //       child: Padding(
+            //         padding: const EdgeInsets.all(20),
+            //         child: Image.asset(
+            //           "assets/logo_jamkrindo_baru.png",
+            //         ),
+            //       ),
+            //     ),
+            //     Align(
+            //       alignment: Alignment.bottomRight,
+            //       child: Padding(
+            //         padding: const EdgeInsets.all(20),
+            //         child: Image.asset(
+            //           "assets/logo_ifg_horizontal.png",
+            //           width: 120,
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
           ),
           Expanded(
               child: Container(
@@ -547,9 +552,8 @@ class View extends PresenterState {
                 drawerMenuItem(
                     label: "E-Audit",
                     onTap: () {
-                      launchUrl(Uri.parse( System.data.global.urlEaudit));
-                      // widget.onTapUrl("E-Audit", System.data.global.urlEaudit,
-                      //     "Anda mungkin harus menggunakan jaringan lokal atau menggunakan VPN untuk mengakses halaman ini");
+                      widget.onTapUrl("E-Audit", System.data.global.urlEaudit,
+                          "Anda mungkin harus menggunakan jaringan lokal atau menggunakan VPN untuk mengakses halaman ini");
                     }),
                 drawerMenuItem(
                     label: "Jamkrindo",
@@ -560,11 +564,13 @@ class View extends PresenterState {
                 drawerMenuItem(
                     label: "IFG",
                     onTap: () {
-                      widget.onTapUrl(
-                        "IFG",
-                        "https://ifg.id/id",
-                        "",
-                      );
+                      System.data.sendToBackGround = false;
+                      launchUrl(Uri.parse(System.data.global.urlEaudit));
+                      // widget.onTapUrl(
+                      //   "IFG",
+                      //   "https://ifg.id/id",
+                      //   "",
+                      // );
                     }),
                 drawerMenuItem(
                   label: "Logout",
