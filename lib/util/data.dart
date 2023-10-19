@@ -22,7 +22,7 @@ import 'global.dart';
 class Data extends ChangeNotifier {
   String versionName = "2.0.6";
   int versionCode = 0;
-  String copyrightName = "E-Audit Jamkrindo \u00A9 2022";
+  String copyrightName = "E-Audit Jamkrindo \u00A9 2023";
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   CircularLoaderController loadingController = CircularLoaderController();
   bool sendToBackGround = true;

@@ -254,9 +254,10 @@ class View extends PresenterState {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: TextField(
+                          controller: data?.catatan,
                           onChanged: (val) {
-                            data?.catatan = val;
-                            listController.commit();
+                            // data?.catatan = val;
+                            // listController.commit();
                           },
                           maxLines: 5,
                           decoration: InputDecoration.collapsed(

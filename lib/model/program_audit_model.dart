@@ -1,4 +1,5 @@
 import 'package:eaudit/model/komentar_model.dart';
+import 'package:flutter/material.dart';
 
 class ProgramAuditModel {
   String? id;
@@ -12,7 +13,7 @@ class ProgramAuditModel {
   int? totalRekomendasi;
   List<KomentarModel>? komentar;
 
-  String? catatan;
+  TextEditingController catatan = TextEditingController();
   String? approve;
 
   ///for view only
@@ -30,7 +31,6 @@ class ProgramAuditModel {
     this.totalTemuan,
     this.totalRekomendasi,
     this.komentar,
-    this.catatan,
     this.approve,
   });
 
@@ -61,7 +61,7 @@ class ProgramAuditModel {
     return {
       "program_id": id,
       "status": approve,
-      "note": catatan,
+      "note": catatan.text,
     };
   }
 

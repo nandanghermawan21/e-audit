@@ -41,7 +41,7 @@ abstract class PresenterState extends State<Presenter> {
     }
 
     if (listController.value.data
-        .where((e) => e.catatan == null || e.catatan == "")
+        .where((e) => e.catatan.text == "")
         .isNotEmpty) {
       loadingController.stopLoading(
         isError: true,
@@ -82,7 +82,7 @@ abstract class PresenterState extends State<Presenter> {
       return;
     }
 
-    if (data.catatan == null || data.catatan == "") {
+    if (data.catatan.text == "") {
       loadingController.stopLoading(
         isError: true,
         message: "harap isi catatan reviu",
@@ -107,7 +107,7 @@ abstract class PresenterState extends State<Presenter> {
           data.komentar?.add(
             KomentarModel(
               tanggal: DateTime.now(),
-              komentar: data.catatan,
+              komentar: data.catatan.text,
               name: System.data.global.user?.auditorName,
             ),
           );
@@ -124,21 +124,45 @@ abstract class PresenterState extends State<Presenter> {
 
   void submit() {
     if (listController.value.data
-        .where((e) => e.isFinishedReviu == false)
+        .where((e) => e.isFinishedReviu != true && e.approve == null)
         .isNotEmpty) {
       loadingController.stopLoading(
         isError: true,
-        message: "harap isi semua reviu",
+        message: "harap isi semua status reviu",
       );
       return;
     }
-    loadingController.stopLoading(
-      message: "Data Berhasil Tersimpan",
-      isError: false,
-      duration: const Duration(seconds: 3),
-      onCloseCallBack: () {
-        widget.onSubmitSuccess?.call();
-      },
-    );
+
+    if (listController.value.data
+        .where((e) => e.isFinishedReviu != true && e.catatan.text == "")
+        .isNotEmpty) {
+      loadingController.stopLoading(
+        isError: true,
+        message: "harap isi semua catatan reviu",
+      );
+      return;
+    }
+
+    AuditPKAModel.postReviu(
+      token: System.data.global.token,
+      assignedId: widget.auditPA!.id,
+      paModel: listController.value.data
+          .where((e) => e.isFinishedReviu != true)
+          .toList(),
+    ).then((value) {
+      loadingController.stopLoading(
+        message: "Data Berhasil Tersimpan",
+        isError: false,
+        duration: const Duration(seconds: 3),
+        onCloseCallBack: () {
+          widget.onSubmitSuccess?.call();
+        },
+      );
+    }).catchError((onError) {
+      loadingController.stopLoading(
+        isError: true,
+        message: ErrorHandlingUtil.handleApiError(onError),
+      );
+    });
   }
 }
