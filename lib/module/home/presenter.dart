@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:eaudit/component/circular_loader_component.dart';
+import 'package:eaudit/model/audit_notifikasi_model.dart';
 import 'package:eaudit/model/check_access_model.dart';
 import 'package:eaudit/model/realisasi_detail_model.dart';
 import 'package:eaudit/util/error_handling_util.dart';
@@ -43,10 +44,12 @@ abstract class PresenterState extends State<Presenter> {
   CircularLoaderController loadingController = CircularLoaderController();
   final dataRealisasiStream = StreamController<RealisasiDetailModel?>();
 
+
   @override
   void initState() {
     super.initState();
     getRealisasiData();
+    System.data.global.getNotifikasiData();
   }
 
   void openDrawer() {

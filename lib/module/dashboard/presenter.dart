@@ -38,4 +38,10 @@ abstract class PresenterState extends State<Presenter> {
       ];
     });
   }
+
+  @override
+  void dispose() {
+    System.data.global.getNotifikasiData();
+    super.dispose();
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'main.dart' as main;
 import 'view_model.dart';
@@ -27,4 +28,10 @@ class Presenter extends StatefulWidget {
 
 abstract class PresenterState extends State<Presenter> {
   ViewModel model = ViewModel();
+
+  @override
+  void dispose() {
+    System.data.global.getNotifikasiData();
+    super.dispose();
+  }
 }

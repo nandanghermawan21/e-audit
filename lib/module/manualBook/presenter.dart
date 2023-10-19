@@ -1,5 +1,6 @@
 import 'package:eaudit/component/list_data_component.dart';
 import 'package:eaudit/model/manual_book_model.dart';
+import 'package:eaudit/util/system.dart';
 import 'package:eaudit/util/type.dart';
 import 'package:flutter/material.dart';
 import 'main.dart' as main;
@@ -22,4 +23,10 @@ class Presenter extends StatefulWidget {
 abstract class PresenterState extends State<Presenter> {
   ListDataComponentController<ManualBookModel> listController =
       ListDataComponentController<ManualBookModel>();
+
+  @override
+  void dispose() {
+    System.data.global.getNotifikasiData();
+    super.dispose();
+  }
 }

@@ -16,6 +16,8 @@ class AuditRekomendasiModel {
   String? rekomendasiStatusNumber;
   Color? statusTindakLanjutColor;
   String? sisaHariTindakLanjut;
+  String? findingNo;
+  String? findingJudul;
   List<AuditTLItemModel?>? listItem;
   List<KomentarModel?>? komentar;
 
@@ -28,6 +30,8 @@ class AuditRekomendasiModel {
     this.sisaHariTindakLanjut,
     this.statusRekomendasiColor,
     this.rekomendasiStatusNumber,
+    this.findingNo,
+    this.findingJudul,
     this.listItem,
     this.komentar,
   });
@@ -48,6 +52,8 @@ class AuditRekomendasiModel {
               .replaceAll("#", "0xFF")))
           : Colors.green,
       rekomendasiStatusNumber: json["rekomendasi_status_number"],
+      findingNo: json["finding_no"],
+      findingJudul: json["finding_judul"],
       listItem: json["tindak_lanjut"] != null
           ? (json["tindak_lanjut"] as List)
               .map((e) => AuditTLItemModel.fromJson(e))
@@ -78,6 +84,45 @@ class AuditRekomendasiModel {
       "komentar": komentar?.map((e) => e?.toJson()).toList(),
       "list_item": listItem?.map((e) => e?.toJson()).toList(),
     };
+  }
+
+  static Future<List<AuditRekomendasiModel>> get({
+    required String? token,
+    required String? method,
+    required String? rekomendasiId,
+  }) {
+    return Network.get(
+      url: Uri.parse(System.data.apiEndPoint.url),
+      rawResult: true,
+      querys: {
+        "method": "$method",
+        "token": "$token",
+        "rekomendasi_id": "$rekomendasiId",
+      },
+      headers: {
+        "UserId": System.data.global.user?.userId ?? "",
+        "groupName": System.data.global.user?.groupName ?? "",
+      },
+    ).then((value) {
+      value = json.decode(value);
+      if (value == false) {
+        throw BasicResponse(message: "Data gagal ditemukan");
+      }
+      try {
+        if ((value)["message"] != "" && (value)["message"] != null) {
+          throw BasicResponse(message: (value)["message"]);
+        }
+      } catch (e) {
+        //
+      }
+      return (value as List)
+          .map((e) => AuditRekomendasiModel.fromJson(e))
+          .toList();
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
   }
 
   static Future<void> postReviu({

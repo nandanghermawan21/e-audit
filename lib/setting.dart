@@ -1,3 +1,4 @@
+import 'package:eaudit/model/audit_notifikasi_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -15,7 +16,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:eaudit/route.dart' as route;
 
 void setting() {
-  System.data.versionName = "2.0.29";
+  System.data.versionName = "2.0.30";
   System.data.global.token = "MjAyMi0wNC0yMCAxMDowNjozMd6DKZ6cWXLIY-DODMQD37A";
   System.data.route = route.route;
   System.data.apiEndPoint = ApiEndPoint();
@@ -52,13 +53,41 @@ void setting() {
       appId:
           "d94c96d3-2b89-47e6-9fd0-3a4530a935a2", //e6286e77-62fe-45f1-add6-5dbe06d5db3b
       notificationHandler: (notification) {
-        ModeUtil.debugPrint("notification notificationHandler fire");
+        System.data.global.getNotifikasiData();
       },
       notificationOpenedHandler: (notification) {
-        ModeUtil.debugPrint("notification notificationOpenedHandler fire");
+        System.data.global.getNotifikasiData();
+        if (ModalRoute.of(System.data.navigatorKey.currentState!.context)!
+                .settings
+                .name ==
+            RouteName.auditNotification) {
+          Navigator.pushReplacementNamed(
+              System.data.navigatorKey.currentState!.context,
+              RouteName.auditNotification,
+              arguments: {
+                ParamName.auditNotification: AuditNotificationModel(
+                  notificationType:
+                      notification.notification.additionalData!["type"],
+                  notificationDataId:
+                      notification.notification.additionalData!["id"],
+                )
+              });
+        } else {
+          System.data.navigatorKey.currentState!.pushNamed(
+            RouteName.auditNotification,
+            arguments: {
+              ParamName.auditNotification: AuditNotificationModel(
+                notificationType:
+                    notification.notification.additionalData!["type"],
+                notificationDataId:
+                    notification.notification.additionalData!["id"],
+              )
+            },
+          );
+        }
       },
       notificationClickedHandler: (notification) {
-        ModeUtil.debugPrint("notification notificationClickedHandler fire");
+        System.data.global.getNotifikasiData();
       },
     );
   }

@@ -55,7 +55,7 @@ void getDeviceId({int trial = 0}) {
         getDeviceId(
           trial: trial + 1,
         );
-      }else{
+      } else {
         System.data.onOnesignalCreated?.call();
       }
     },

@@ -1,5 +1,3 @@
-import 'package:eaudit/model/audit_kka_reviu_model.dart';
-import 'package:eaudit/model/audit_kkpt_reviu_model.dart';
 import 'package:eaudit/util/enum.dart';
 import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +25,8 @@ import 'package:eaudit/module/auditTLRekomendasi/main.dart'
 import 'package:eaudit/module/auditTLDetail/main.dart' as audit_tl_detail;
 import 'package:eaudit/module/auditTLReviu/main.dart' as audit_tl_reviu;
 import 'package:eaudit/module/notification/main.dart' as notification;
-
-import 'model/audit_tl_reviu_model.dart';
+import 'package:eaudit/module/auditNotification/main.dart'
+    as audit_notification;
 
 String initialRouteName = RouteName.splashScreen;
 
@@ -56,6 +54,8 @@ class RouteName {
   static const String auditTlDetail = "auditTlDetail";
   static const String auditTlReviu = "auditTlReviu";
   static const String notification = "Notification";
+  static const String auditNotification = "auditNotification";
+  static const String auditNotificationOpener = "auditNotificationOpener";
 }
 
 enum ParamName {
@@ -71,6 +71,7 @@ enum ParamName {
   persiapanAudit,
   tlType,
   controller,
+  auditNotification,
 }
 
 Map<String, WidgetBuilder> route = {
@@ -102,7 +103,7 @@ Map<String, WidgetBuilder> route = {
   RouteName.home: (BuildContext context) {
     return home.Presenter(
       onTapNotification: () {
-        Navigator.of(context).pushNamed(RouteName.notification);
+        Navigator.of(context).pushNamed(RouteName.auditNotification);
       },
       onTapUrl: (title, url, message) {
         Navigator.of(context).pushNamed(
@@ -481,5 +482,27 @@ Map<String, WidgetBuilder> route = {
         }
       },
     );
-  }
+  },
+  RouteName.auditNotification: (BuildContext context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>? ??
+            {};
+    return audit_notification.Presenter(
+      openNotification: arg[ParamName.auditNotification],
+      onOpenAuditTl: (dataTl) {
+        if (arg[ParamName.auditNotification] != null) {
+          Navigator.of(context)
+              .pushReplacementNamed(RouteName.auditTlDetail, arguments: {
+            ParamName.tlType: "internal",
+            ParamName.tL: dataTl,
+          });
+        } else {
+          Navigator.of(context).pushNamed(RouteName.auditTlDetail, arguments: {
+            ParamName.tlType: "internal",
+            ParamName.tL: dataTl,
+          });
+        }
+      },
+    );
+  },
 };
