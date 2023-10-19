@@ -15,7 +15,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:eaudit/route.dart' as route;
 
 void setting() {
-  System.data.versionName = "2.0.23";
+  System.data.versionName = "2.0.27";
   System.data.global.token = "MjAyMi0wNC0yMCAxMDowNjozMd6DKZ6cWXLIY-DODMQD37A";
   System.data.route = route.route;
   System.data.apiEndPoint = ApiEndPoint();
@@ -28,6 +28,7 @@ void setting() {
         "http://dev-jamkrindo.banggasolution.com/Api/";
     System.data.apiEndPoint.baseUrlDebug =
         "http://dev-jamkrindo.banggasolution.com/Api/";
+    System.data.global.urlEaudit = "https://dev-jamkrindo.banggasolution.com/";
   } else {
     if (System.data.versionName.split(".")[1] == "2") {
       System.data.apiEndPoint.baseUrl =

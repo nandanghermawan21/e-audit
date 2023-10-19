@@ -516,10 +516,11 @@ class View extends PresenterState {
         children: [
           Container(
             height: 200,
-            color: Colors.white,
-            // color: System.data.color!.primaryColor,
+            padding: const EdgeInsets.all(20),
+            // color: Colors.white,
+            color: System.data.color!.primaryColor,
             child: Image.asset(
-              "assets/logo-dark.png",
+              "assets/logo-footer.png",
             ),
             // child: Stack(
             //   children: [
@@ -558,14 +559,18 @@ class View extends PresenterState {
                 drawerMenuItem(
                     label: "Jamkrindo",
                     onTap: () {
-                      widget.onTapUrl(
-                          "Jamkrindo", "https://www.jamkrindo.co.id/", "");
+                      // widget.onTapUrl(
+                      //     "Jamkrindo", "https://www.jamkrindo.co.id/", "");
+                      System.data.sendToBackGround = false;
+                      launchUrl(Uri.parse(
+                          "https://www.jamkrindo.co.id/"));
                     }),
                 drawerMenuItem(
-                    label: "IFG",
+                    label: "Instagram SPI Jamkrindo",
                     onTap: () {
                       System.data.sendToBackGround = false;
-                      launchUrl(Uri.parse(System.data.global.urlEaudit));
+                      launchUrl(Uri.parse(
+                          "https://www.instagram.com/spi.jamkrindo/"));
                       // widget.onTapUrl(
                       //   "IFG",
                       //   "https://ifg.id/id",

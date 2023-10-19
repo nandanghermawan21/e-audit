@@ -433,7 +433,8 @@ class View extends PresenterState {
                 ),
               );
             }
-            return Wrap(
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(
                 (s.data ?? []).length,
                 (index) {
