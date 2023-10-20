@@ -13,8 +13,7 @@ class Presenter extends StatefulWidget {
   final AuditNotificationModel? openNotification;
   final ValueChanged<AuditTLReviuModel?>? onOpenAuditTl;
 
-  const Presenter(
-      {Key? key, this.openNotification, this.onOpenAuditTl})
+  const Presenter({Key? key, this.openNotification, this.onOpenAuditTl})
       : super(key: key);
 
   @override
@@ -23,7 +22,8 @@ class Presenter extends StatefulWidget {
   }
 }
 
-abstract class PresenterState extends State<Presenter> with SingleTickerProviderStateMixin {
+abstract class PresenterState extends State<Presenter>
+    with SingleTickerProviderStateMixin {
   CircularLoaderController loadingController = CircularLoaderController();
   ListDataComponentController<AuditNotificationModel>
       listDataComponentController =
@@ -67,17 +67,25 @@ abstract class PresenterState extends State<Presenter> with SingleTickerProvider
         .then(
       (value) {
         loadingController.forceStop();
-        widget.onOpenAuditTl?.call(
-          AuditTLReviuModel(
-            listAuditTL: [
-              AuditTLModel(
-                noTemuan: value.first.findingNo ,
-                judulTemuan: value.first.findingJudul,
-                listRekomendasi: value,
-              )
-            ],
-          ),
-        );
+        if (value.isEmpty) {
+          loadingController.stopLoading(
+            isError: true,
+            message:
+                "Data rekomendasi  tidak ditemukan\n${AuditNotificationModel.getTypeTitle(type)} - $rekomendasiId",
+          );
+        } else {
+          widget.onOpenAuditTl?.call(
+            AuditTLReviuModel(
+              listAuditTL: [
+                AuditTLModel(
+                  noTemuan: value.first.findingNo,
+                  judulTemuan: value.first.findingJudul,
+                  listRekomendasi: value,
+                )
+              ],
+            ),
+          );
+        }
       },
     ).catchError(
       (onError) {

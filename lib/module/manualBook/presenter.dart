@@ -26,7 +26,7 @@ abstract class PresenterState extends State<Presenter> {
 
   @override
   void dispose() {
-    System.data.global.getNotifikasiData();
+   System.data.getNotifikasiData(System.data.global.token ?? "");
     super.dispose();
   }
 }

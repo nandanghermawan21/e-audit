@@ -49,7 +49,7 @@ abstract class PresenterState extends State<Presenter> {
   void initState() {
     super.initState();
     getRealisasiData();
-    System.data.global.getNotifikasiData();
+    System.data.getNotifikasiData(System.data.global.token ?? "");
   }
 
   void openDrawer() {
@@ -148,5 +148,10 @@ abstract class PresenterState extends State<Presenter> {
         message: ErrorHandlingUtil.handleApiError(onError),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

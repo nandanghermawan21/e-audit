@@ -25,6 +25,17 @@ class AuditNotificationModel {
     }
   }
 
+   static String getTypeTitle(String? type) {
+    switch (type) {
+      case "matrikstindaklanjut_ml":
+        return "TL ML";
+      case "matrikstindaklanjut":
+        return "TL";
+      default:
+        return type ?? "";
+    }
+  }
+
   AuditNotificationModel({
     this.auditeeName,
     this.senderName,

@@ -207,8 +207,8 @@ class View extends PresenterState {
                                     child: IntrinsicHeight(
                                       child: StreamBuilder<String?>(
                                         initialData: "",
-                                        stream: System.data.global
-                                            .dataNotifikasiStream.stream,
+                                        stream: System
+                                            .data.dataNotifikasiStream.stream,
                                         builder: (c, s) {
                                           if (s.connectionState ==
                                                   ConnectionState.active &&

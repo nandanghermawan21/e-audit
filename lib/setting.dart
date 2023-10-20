@@ -16,7 +16,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:eaudit/route.dart' as route;
 
 void setting() {
-  System.data.versionName = "2.0.30";
+  System.data.versionName = "2.0.32";
   System.data.global.token = "MjAyMi0wNC0yMCAxMDowNjozMd6DKZ6cWXLIY-DODMQD37A";
   System.data.route = route.route;
   System.data.apiEndPoint = ApiEndPoint();
@@ -53,10 +53,10 @@ void setting() {
       appId:
           "d94c96d3-2b89-47e6-9fd0-3a4530a935a2", //e6286e77-62fe-45f1-add6-5dbe06d5db3b
       notificationHandler: (notification) {
-        System.data.global.getNotifikasiData();
+        System.data.getNotifikasiData(System.data.global.token ?? "");
       },
       notificationOpenedHandler: (notification) {
-        System.data.global.getNotifikasiData();
+        System.data.getNotifikasiData(System.data.global.token ?? "");
         if (ModalRoute.of(System.data.navigatorKey.currentState!.context)!
                 .settings
                 .name ==
@@ -87,7 +87,7 @@ void setting() {
         }
       },
       notificationClickedHandler: (notification) {
-        System.data.global.getNotifikasiData();
+        System.data.getNotifikasiData(System.data.global.token ?? "");
       },
     );
   }

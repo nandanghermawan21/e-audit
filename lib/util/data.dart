@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:eaudit/model/audit_notifikasi_model.dart';
+import 'package:eaudit/util/system.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -53,6 +55,20 @@ class Data extends ChangeNotifier {
   Map<String, String> directories = {};
   Map<String, FileInit> files = {};
   DeviceInfo? deviceInfo;
+  StreamController<String?> dataNotifikasiStream = StreamController<String?>.broadcast();
+
+  void getNotifikasiData(String token) {
+    // dataNotifikasiStream.add(null);
+    AuditNotificationModel.count(
+      token: token,
+    ).then((value) {
+      dataNotifikasiStream.add(value ?? "");
+    }).catchError(
+      (onError) {
+        throw onError;
+      },
+    );
+  }
 
   Data();
 
