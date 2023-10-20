@@ -23,15 +23,17 @@ class Presenter extends StatefulWidget {
   }
 }
 
-abstract class PresenterState extends State<Presenter> {
+abstract class PresenterState extends State<Presenter> with SingleTickerProviderStateMixin {
   CircularLoaderController loadingController = CircularLoaderController();
   ListDataComponentController<AuditNotificationModel>
       listDataComponentController =
       ListDataComponentController<AuditNotificationModel>();
+  TabController? tabController;
 
   @override
   void initState() {
     super.initState();
+    tabController = TabController(length: 2, vsync: this);
     if (widget.openNotification != null) {
       openNotification(widget.openNotification);
     }
@@ -69,7 +71,7 @@ abstract class PresenterState extends State<Presenter> {
           AuditTLReviuModel(
             listAuditTL: [
               AuditTLModel(
-                noTemuan: value.first.findingJudul,
+                noTemuan: value.first.findingNo ,
                 judulTemuan: value.first.findingJudul,
                 listRekomendasi: value,
               )

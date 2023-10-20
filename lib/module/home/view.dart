@@ -234,7 +234,10 @@ class View extends PresenterState {
                                               ),
                                             );
                                           } else {
-                                            return const SizedBox();
+                                            return const SizedBox(
+                                              width: 0,
+                                              height: 0,
+                                            );
                                           }
                                         },
                                       ),

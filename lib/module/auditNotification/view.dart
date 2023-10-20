@@ -36,16 +36,54 @@ class View extends PresenterState {
   }
 
   Widget body() {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: TabBar(controller: tabController, tabs: [
+            Tab(
+              child: Text(
+                "TL",
+                style: System.data.textStyles!.basicLabel,
+              ),
+            ),
+            Tab(
+              child: Text(
+                "TL ML",
+                style: System.data.textStyles!.basicLabel,
+              ),
+            ),
+          ]),
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: tabController,
+            children: [
+              notifList(type: "matrikstindaklanjut"),
+              notifList(type: "matrikstindaklanjut_ml"),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget notifList({
+    String? type,
+  }) {
     return SizedBox(
       child: ListDataComponent<AuditNotificationModel>(
-        controller: listDataComponentController,
+        controller: ListDataComponentController<AuditNotificationModel>(),
         canRefresh: true,
         enableDrag: false,
         enableGetMore: false,
         dataSource: (skip, key) {
           return AuditNotificationModel.get(
             token: System.data.global.token,
-          );
+          ).then((value) {
+            return value.where((e) => e.notificationType == type).toList();
+          });
         },
         itemBuilder: (data, index) {
           return GestureDetector(
