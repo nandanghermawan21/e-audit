@@ -194,19 +194,26 @@ class View extends PresenterState {
           valueWidget: SizedBox(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Html(
-                data: data?.kriteria ?? "",
-                shrinkWrap: true,
-                style: {
-                  "body": Style(
-                    fontSize: const FontSize(17),
-                    fontFamily: System.data.font!.primary,
+              child: SizedBox(
+                width: (data?.kriteria?.trim() ?? "").contains("<table")
+                    ? MediaQuery.of(context).size.width * 1.5
+                    : MediaQuery.of(context).size.width - 30,
+                child: Center(
+                  child: Html(
+                    data: data?.kriteria?.trim() ?? "",
+                    shrinkWrap: true,
+                    style: {
+                      "body": Style(
+                        fontSize: const FontSize(17),
+                        fontFamily: System.data.font!.primary,
+                      ),
+                      "*": Style(
+                        fontSize: const FontSize(17),
+                        fontFamily: System.data.font!.primary,
+                      ),
+                    },
                   ),
-                  "*": Style(
-                    fontSize: const FontSize(17),
-                    fontFamily: System.data.font!.primary,
-                  ),
-                },
+                ),
               ),
             ),
           ),

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:eaudit/util/basic_response.dart';
 import 'package:eaudit/util/network.dart';
 import 'package:eaudit/util/system.dart';
-import 'package:intl/intl.dart';
 
 class ManualBookModel {
   final String? name;
@@ -14,17 +13,11 @@ class ManualBookModel {
     this.url,
   });
 
-  static List<ManualBookModel> fromJson(Map<String, dynamic> json) {
-    List<ManualBookModel> data = [];
-
-    for (var a in json.keys) {
-      data.add(ManualBookModel(
-        name: toBeginningOfSentenceCase(a.replaceAll("_", " ")),
-        url: json[a],
-      ));
-    }
-
-    return data;
+  static ManualBookModel fromJson(Map<String, dynamic> json) {
+    return ManualBookModel(
+      name: json["manual_book_title"],
+      url: json["manual_book_link"],
+    );
   }
 
   static Future<List<ManualBookModel>> get({
@@ -39,10 +32,16 @@ class ManualBookModel {
       },
     ).then((value) {
       value = json.decode(value);
-      if ((value)["message"] == "" || (value)["message"] == null) {
-        return ManualBookModel.fromJson(((value)["result"]));
+      try {
+        if ((value)["message"] != "" && (value)["message"] != null) {
+          throw BasicResponse(message: (value)["message"]);
+        }
+      } catch (e) {
+        //
       }
-      throw BasicResponse(message: (value)["message"]);
+      return (value as List)
+          .map<ManualBookModel>((e) => ManualBookModel.fromJson(e))
+          .toList();
     }).catchError(
       (onError) {
         throw onError;

@@ -198,23 +198,20 @@ class View extends PresenterState {
         ),
         DecorationComponent.item(
           title: "Uraian",
-          valueWidget: Center(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Html(
-                data: data?.uraian,
-                shrinkWrap: true,
-                style: {
-                  "body": Style(
-                    fontSize: const FontSize(17),
-                    fontFamily: System.data.font!.primary,
-                  ),
-                  "*": Style(
-                    fontSize: const FontSize(17),
-                    fontFamily: System.data.font!.primary,
-                  ),
-                },
-              ),
+          valueWidget: Center( //horizonal scroll
+            child: Html(
+              data: data?.uraian,
+              shrinkWrap: true,
+              style: {
+                "body": Style(
+                  fontSize: const FontSize(17),
+                  fontFamily: System.data.font!.primary,
+                ),
+                "*": Style(
+                  fontSize: const FontSize(17),
+                  fontFamily: System.data.font!.primary,
+                ),
+              },
             ),
           ),
         ),

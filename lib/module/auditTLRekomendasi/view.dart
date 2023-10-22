@@ -111,22 +111,19 @@ class View extends PresenterState {
           Container(
             color: Colors.transparent,
             width: double.infinity,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Html(
-                data: data?.judulTemuan ?? "",
-                shrinkWrap: true,
-                style: {
-                  "body": Style(
-                    fontSize: const FontSize(17),
-                    fontFamily: System.data.font!.primary,
-                  ),
-                  "*": Style(
-                    fontSize: const FontSize(17),
-                    fontFamily: System.data.font!.primary,
-                  ),
-                },
-              ),
+            child: Html( // horizontal scroll
+              data: data?.judulTemuan ?? "",
+              shrinkWrap: true,
+              style: {
+                "body": Style(
+                  fontSize: const FontSize(17),
+                  fontFamily: System.data.font!.primary,
+                ),
+                "*": Style(
+                  fontSize: const FontSize(17),
+                  fontFamily: System.data.font!.primary,
+                ),
+              },
             ),
           ),
           const SizedBox(
